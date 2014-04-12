@@ -2,6 +2,8 @@
 // -------------
 // Runs the core gameplay loop
 Crafty.scene('Game', function() {
+
+	console.log('running')
 	// A 2D array to keep track of all occupied tiles
 	this.occupied = new Array(Game.map_grid.width);
 	for (var i = 0; i < Game.map_grid.width; i++) {
@@ -10,9 +12,16 @@ Crafty.scene('Game', function() {
 			this.occupied[i][y] = false;
 		}
 	}
+	
+	var score = Crafty.e("2D, DOM, Text")
+		.text("Capital: $1000000")
+		.attr({x: 10, y: Crafty.viewport.height - 20, w: 200, h:50})
+		.css({color: "#fff"});
 
 	// Player character, placed at 5, 5 on our grid
-	this.player = Crafty.e('PlayerCharacter').at(5, 5);
+	this.player = Crafty.e('PlayerCharacter').at(5, 5).bind("enterframe",function(){
+		console.log('frame!');
+	});
 	this.occupied[this.player.at().x][this.player.at().y] = true;
 
 	// Place a tree at every edge square on our grid of 16x16 tiles
@@ -24,8 +33,7 @@ Crafty.scene('Game', function() {
 				//var bush_or_rock = (Math.random() > 0.3) ? 'Bush' : 'Rock'
 				var asteroid = 'Rock';
 				var ast = Crafty.e(asteroid).at(x, y);
-				console.log('added');
-				ast.bind('Click',function(){console.log('clicked');alert('clicked!');})
+				//ast.bind('Click',function(){console.log('clicked');alert('clicked!');})
 				
 				
 				this.occupied[x][y] = true;
@@ -46,7 +54,7 @@ Crafty.scene('Game', function() {
 	}*/
 
 	// Play a ringing sound to indicate the start of the journey
-	Crafty.audio.play('ring');
+	//Crafty.audio.play('ring');
 
 	// Show the victory screen once all villages are visisted
 	this.show_victory = this.bind('VillageVisited', function() {

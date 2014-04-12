@@ -102,8 +102,8 @@ Crafty.c('PlayerCharacter', {
 
 	// Respond to this player visiting a village
 	visitVillage: function(data) {
-		villlage = data[0].obj;
-		villlage.visit();
+		village = data[0].obj;
+		village.visit();
 	}
 });
 
