@@ -33,6 +33,9 @@ Crafty.scene('Game', function() {
 				//var bush_or_rock = (Math.random() > 0.3) ? 'Bush' : 'Rock'
 				var asteroid = 'Rock';
 				var ast = Crafty.e(asteroid).at(x, y);
+ 				ast.asteroid_data = { 'price': y, 'earth_height': y, 'spectral_type': 'A', 'delta_v': x };
+ 				ast.bind('Click',function(){console.log('clicked');alert('clicked!');})
+
 				//ast.bind('Click',function(){console.log('clicked');alert('clicked!');})
 				
 				

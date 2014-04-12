@@ -19,6 +19,7 @@ Crafty.c('Grid', {
 	}
 });
 
+
 // An "Actor" is an entity that is drawn in 2D on canvas
 //  via our logical coordinate grid
 Crafty.c('Actor', {
@@ -41,17 +42,21 @@ Crafty.c('Bush', {
 	},
 });
 
+
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
 	init: function() {
-    this.requires('Actor, Solid, spr_rock');
+		this.requires('Actor, Solid, spr_rock, Mouse');
+		this.bind('MouseOver', function(data) { $('#info_box').html('Hello world.'); $('#info_box').show(); console.log('Hey! ' + this.asteroid_data.price); } );
+		this.bind('MouseOut', function(data) { $('#info_box').html('Goodbye world.'); $('#info_box').hide(); console.log('Hey! ' + this.asteroid_data.price); } );
+
 	},
 });
 
 // This is the player-controlled character
 Crafty.c('PlayerCharacter', {
 	init: function() {
-		this.requires('Actor, Fourway, Collision, spr_player, SpriteAnimation')
+		this.requires('Actor, Fourway, Collision, spr_player, SpriteAnimation, Mouse')
 			.fourway(2)
 			.stopOnSolids()
 			.onHit('Village', this.visitVillage)
@@ -81,6 +86,7 @@ Crafty.c('PlayerCharacter', {
 				this.stop();
 			}
 		});
+		this.bind('MouseOver', function(data) { console.log('Hey!' + data); } );
 	},
 
 	// Registers a stop-movement function to be called when
@@ -102,8 +108,8 @@ Crafty.c('PlayerCharacter', {
 
 	// Respond to this player visiting a village
 	visitVillage: function(data) {
-		village = data[0].obj;
-		village.visit();
+		villlage = data[0].obj;
+		villlage.visit();
 	}
 });
 

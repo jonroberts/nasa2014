@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="lib/crafty.js"></script>
   <script src="src/game.js"></script>
   <script src="src/components.js"></script>
@@ -35,6 +36,13 @@
     .bottom a {
       color: #AAA;
     }
+    
+    .popup {
+      display: none;
+      margin: 10px 10px;
+      background-color: white;
+    }
+    
   </style>
 </head>
 <body>
@@ -43,7 +51,7 @@
   <p>Deflect and mine asteroids as they come past earth</p>
 
   <p class="controls">Controls: Use W, A, S, and D or arrow keys to move around.</p>-->
-
+  <div id="info_box" class="popup"></div>
   <div id="cr-stage"></div>
 
   <!--<p class="bottom">Protect earth from the asteroids!</p>-->
