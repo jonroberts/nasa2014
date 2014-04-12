@@ -1,6 +1,9 @@
 // Game scene
 // -------------
 // Runs the core gameplay loop
+
+var activeShip=undefined;
+
 Crafty.scene('Game', function() {
 
 	console.log('running')
@@ -18,11 +21,13 @@ Crafty.scene('Game', function() {
 		.attr({x: 10, y: Crafty.viewport.height - 20, w: 200, h:50})
 		.css({color: "#fff"});
 
-	// Player character, placed at 5, 5 on our grid
-	this.player = Crafty.e('PlayerCharacter').at(5, 5).bind("enterframe",function(){
-		console.log('frame!');
-	});
+	this.player = Crafty.e('PlayerCharacter').at(38, 39);
+	this.player2 = Crafty.e('PlayerCharacter').at(39, 39);
+	this.buyProbe = Crafty.e('BuyProbe').at(1,39);
 	this.occupied[this.player.at().x][this.player.at().y] = true;
+
+	activeShip=this.player;
+	this.probes=[];
 
 	// Place a tree at every edge square on our grid of 16x16 tiles
 	for (var x = 0; x < Game.map_grid.width; x++) {

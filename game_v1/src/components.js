@@ -42,6 +42,16 @@ Crafty.c('Bush', {
 	},
 });
 
+// A Bush is just an Actor with a certain sprite
+Crafty.c('BuyProbe', {
+	init: function() {
+		this.requires('Actor, spr_bush,Mouse');
+
+		this.bind('Click', function(data) {
+			
+		});
+	},
+});
 
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
@@ -99,6 +109,7 @@ Crafty.c('PlayerCharacter', {
 			}
 		});
 		this.bind('MouseOver', function(data) { console.log('Hey!' + data); } );
+		this.bind('Click',function(data){console.log(this);})
 	},
 
 	// Registers a stop-movement function to be called when
