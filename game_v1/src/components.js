@@ -56,10 +56,16 @@ Crafty.c('BuyProbe', {
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
 	init: function() {
+		this.isprobed=false;
 		this.requires('Actor, spr_rock, Mouse');
 		this.bind('MouseOver', function(data) {
 			$('#info_title').html('An Asteroid!');
-			$('#info_desc').html('$'+this.asteroid_data.price);
+			if(this.isprobed){
+				$('#info_desc').html('$'+this.asteroid_data.price);
+			}
+			else{
+				this.isprobed=true;
+			}
 			$('#info_box').show();
 		} );
 		this.bind('MouseOut', function(data) {
