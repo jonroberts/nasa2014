@@ -46,6 +46,11 @@ Crafty.c('Bush', {
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
 	init: function() {
+<<<<<<< HEAD
+		this.requires('Actor, spr_rock, Mouse');
+		this.bind('MouseOver', function(data) { $('#info_box').html('Hello world.'); $('#info_box').show(); console.log('Hey! ' + this.asteroid_data.price); } );
+		this.bind('MouseOut', function(data) { $('#info_box').html('Goodbye world.'); $('#info_box').hide(); console.log('Hey! ' + this.asteroid_data.price); } );
+=======
 		this.requires('Actor, Solid, spr_rock, Mouse');
 		this.bind('MouseOver', function(data) {
 			$('#info_title').html('An Asteroid!');
@@ -57,7 +62,11 @@ Crafty.c('Rock', {
 			$('#info_desc').text('');
 			$('#info_box').hide();
 		} );
+>>>>>>> 334f7ed38e27097aa2fa4cc4734ecd576c71d40f
 
+	},
+	hit: function() {
+		this.destroy();
 	},
 });
 
@@ -67,6 +76,7 @@ Crafty.c('PlayerCharacter', {
 		this.requires('Actor, Fourway, Collision, spr_player, SpriteAnimation, Mouse')
 			.fourway(2)
 			.stopOnSolids()
+			.onHit('Rock',this.hitAsteroid)
 			.onHit('Village', this.visitVillage)
 			// These next lines define our four animations
 			//  each call to .animate specifies:
@@ -118,6 +128,14 @@ Crafty.c('PlayerCharacter', {
 	visitVillage: function(data) {
 		villlage = data[0].obj;
 		villlage.visit();
+	},
+	hitAsteroid: function(data) {
+		this.stopMovement();
+		console.log('hitting asteroid.');
+		asteroid = data[0].obj;
+		ast_price = asteroid.price;
+		console.log('hitAsteroid: ' + ast_price);
+		asteroid.hit();
 	}
 });
 
