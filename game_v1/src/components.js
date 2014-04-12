@@ -67,6 +67,9 @@ Crafty.c('Rock', {
 			$('#info_desc').text('');
 			$('#info_box').hide();
 		} );
+        this.bind("EnterFrame", function(frame) {
+            if (!Game.paused) this.move('e',.2);
+        });
 
 	},
 	hit: function() {
