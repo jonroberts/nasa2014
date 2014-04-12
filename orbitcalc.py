@@ -97,8 +97,8 @@ def FindByHeight():
     return jsonify(results=found_asteroids)
 
 
-files = ['asteroids1.json.gz','asteroids2.json.gz','asteroids3.json.gz']
-#files=['asteroids.json.gz']
+#files = ['asteroids1.json.gz','asteroids2.json.gz','asteroids3.json.gz']
+files=['asteroids.json.gz']
 f = []
 for name in files:
     f.append( gzip.open(name) )
