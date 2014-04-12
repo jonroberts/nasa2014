@@ -46,12 +46,7 @@ Crafty.c('Bush', {
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
 	init: function() {
-<<<<<<< HEAD
 		this.requires('Actor, spr_rock, Mouse');
-		this.bind('MouseOver', function(data) { $('#info_box').html('Hello world.'); $('#info_box').show(); console.log('Hey! ' + this.asteroid_data.price); } );
-		this.bind('MouseOut', function(data) { $('#info_box').html('Goodbye world.'); $('#info_box').hide(); console.log('Hey! ' + this.asteroid_data.price); } );
-=======
-		this.requires('Actor, Solid, spr_rock, Mouse');
 		this.bind('MouseOver', function(data) {
 			$('#info_title').html('An Asteroid!');
 			$('#info_desc').html('$'+this.asteroid_data.price);
@@ -62,7 +57,6 @@ Crafty.c('Rock', {
 			$('#info_desc').text('');
 			$('#info_box').hide();
 		} );
->>>>>>> 334f7ed38e27097aa2fa4cc4734ecd576c71d40f
 
 	},
 	hit: function() {
