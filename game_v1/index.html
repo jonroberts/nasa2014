@@ -42,7 +42,22 @@
       margin: 10px 10px;
       background-color: white;
     }
-    
+	#info_box {
+	    display: none; /* ensures it’s invisible until it’s called */
+	    position: absolute; /* makes the div go into a position that’s absolute to the browser viewing area */
+	    left: 35%; /* positions the div halfway horizontally */
+	    top: 25%; /* positions the div halfway vertically */
+	    padding: 25px; 
+	    border: 2px solid #454545;
+	    border-radius: 10px;
+	    background-color: #000000;
+	    color: white;
+	    width: 200px;
+	    margin-left: auto;
+	    margin-right: auto;
+	    height: 30%;
+	    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+	}    
   </style>
 </head>
 <body>
@@ -51,7 +66,10 @@
   <p>Deflect and mine asteroids as they come past earth</p>
 
   <p class="controls">Controls: Use W, A, S, and D or arrow keys to move around.</p>-->
-  <div id="info_box" class="popup"></div>
+  <div id="info_box" class="popup">
+	  <h3 id='info_title'></h3>
+	  <div id='info_desc'></div>
+  </div>
   <div id="cr-stage"></div>
 
   <!--<p class="bottom">Protect earth from the asteroids!</p>-->

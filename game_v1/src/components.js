@@ -47,8 +47,16 @@ Crafty.c('Bush', {
 Crafty.c('Rock', {
 	init: function() {
 		this.requires('Actor, Solid, spr_rock, Mouse');
-		this.bind('MouseOver', function(data) { $('#info_box').html('Hello world.'); $('#info_box').show(); console.log('Hey! ' + this.asteroid_data.price); } );
-		this.bind('MouseOut', function(data) { $('#info_box').html('Goodbye world.'); $('#info_box').hide(); console.log('Hey! ' + this.asteroid_data.price); } );
+		this.bind('MouseOver', function(data) {
+			$('#info_title').html('An Asteroid!');
+			$('#info_desc').html('$'+this.asteroid_data.price);
+			$('#info_box').show();
+		} );
+		this.bind('MouseOut', function(data) {
+			$('#info_title').text('');
+			$('#info_desc').text('');
+			$('#info_box').hide();
+		} );
 
 	},
 });
