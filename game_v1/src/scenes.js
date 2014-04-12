@@ -49,6 +49,16 @@ Crafty.scene('Game', function() {
 		}
 	}
 
+//    this.pause_scene = Crafty.bind('Space', function() {
+//        Game.paused = !Game.paused;
+//	});
+
+    this.pause_scene = Crafty.bind('KeyDown', function(e) {
+        if(e.key == Crafty.keys.SPACE) {
+            Game.paused = !Game.paused;
+        }
+    });
+
 	// Generate five villages on the map in random locations
 	/*var max_villages = 5;
 	for (var x = 0; x < Game.map_grid.width; x++) {
