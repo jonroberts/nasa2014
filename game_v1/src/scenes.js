@@ -34,8 +34,7 @@ Crafty.scene('Game', function() {
 	activeShip=this.player;
 	this.probes=[];
 
-	for (var i=0; i<asteroids.length; i++)
-	{
+	for (var i=0; i<asteroids.length; i++) {
 		x=Math.floor( Math.random()*Game.map_grid.width );
 		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
@@ -45,35 +44,20 @@ Crafty.scene('Game', function() {
 		this.occupied[x][y] = true;
 	}
 
-/*
-	// Place a tree at every edge square on our grid of 16x16 tiles
-	for (var x = 0; x < Game.map_grid.width; x++) {
-		for (var y = 0; y < Game.map_grid.height; y++) {
-			if(y>32){continue;}
-			if (Math.random() < 0.01 && !this.occupied[x][y]) {
-				// Place a bush entity at the current tile
-				//var bush_or_rock = (Math.random() > 0.3) ? 'Bush' : 'Rock'
-				var asteroid = 'Rock';
-				var ast = Crafty.e(asteroid).at(x, y);
- 				ast.asteroid_data = { 'price': y, 'earth_height': y, 'spectral_type': 'A', 'delta_v': x };
- 				ast.bind('Click',function(){console.log('clicked');alert('clicked!');})
-
-				//ast.bind('Click',function(){console.log('clicked');alert('clicked!');})
-				
-				
-				this.occupied[x][y] = true;
-			}
-		}
-	}
-*/
-//    this.pause_scene = Crafty.bind('Space', function() {
-//        Game.paused = !Game.paused;
-//	});
-
     Crafty.bind('KeyDown', function(e) {
         if(e.key == Crafty.keys.SPACE) {
             Game.paused = !Game.paused;
         }
+    });
+
+    this.create_asteroid = this.bind('CreateAsteroid', function() {
+		x=0;
+		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
+		var ast = Crafty.e('Rock').at(x,y);
+		ast.asteroid_data = asteroids[i];
+		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+		this.occupied[x][y] = true;
     });
 
 	// Generate five villages on the map in random locations
@@ -87,9 +71,6 @@ Crafty.scene('Game', function() {
 			}
 		}
 	}*/
-
-	// Play a ringing sound to indicate the start of the journey
-	//Crafty.audio.play('ring');
 
 	// Show the victory screen once all villages are visisted
 	this.show_victory = this.bind('VillageVisited', function() {

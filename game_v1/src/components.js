@@ -137,7 +137,17 @@ Crafty.c('Rock', {
             info_box.css({display: 'None'});
         });
         this.bind("EnterFrame", function (frame) {
-            if (!Game.paused) this.move('e', x_speed);
+            if (!Game.paused) {
+                this.move('e', x_speed);
+                console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
+                if (this._x >= Game.map_grid.tile.width) {
+                    console.log('Out of frame');
+                    this.destroy();
+                    Crafty.trigger('CreateAsteroid', this);
+                } else {
+                    console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
+                }
+            }
         });
 
     },
@@ -183,7 +193,7 @@ Crafty.c('PlayerCharacter', {
         this.bind('Moved', function () {
             score.value -= 100;
             score.text('Capital: $' + score.value);
-        })
+        });
         this.bind('MouseOver', function (data) {
             console.log('Hey!' + data);
         });
