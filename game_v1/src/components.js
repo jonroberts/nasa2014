@@ -73,8 +73,7 @@ Crafty.c('BuyShip', {
         this.replace('<div class="buy_button">Buy Ship ($300000)</div>');
         this.bind('Click', function (data) {
             activeShip.destroy();
-            activeShip = Crafty.e('PlayerCharacter').at(38, 38);
-
+			activeShip = Crafty.e('Ship').at(38, 38);
             score.value -= 300000;
             score.text('Capital: $' + score.value);
         });
@@ -148,7 +147,7 @@ Crafty.c('Rock', {
 });
 
 // This is the player-controlled character
-Crafty.c('PlayerCharacter', {
+Crafty.c('Ship', {
     init: function () {
         this.requires('Actor, Fourway, Collision, spr_player, SpriteAnimation, Mouse')
             .fourway(2)
