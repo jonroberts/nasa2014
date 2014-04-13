@@ -40,7 +40,7 @@ Crafty.scene('Game', function() {
 
     function addAsteroid(asteroid) {
         x=Math.floor( Math.random()*Game.map_grid.width );
-		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 10.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
 		ast.asteroid_data = asteroid;
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
@@ -49,7 +49,7 @@ Crafty.scene('Game', function() {
 
     function addSingleAsteroid(asteroid) {
         x=0;
-		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 10.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
 		ast.asteroid_data = asteroid;
 //		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
