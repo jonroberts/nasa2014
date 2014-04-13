@@ -72,6 +72,9 @@ Crafty.c('Rock', {
 	init: function() {
 		this.isprobed=false;
 		this.requires('Actor, spr_rock, Mouse');
+
+        var x_speed = Math.random()/-Math.log(Math.sqrt(Math.random())/10);
+
 		this.bind('MouseOver', function(data) {
 			$('#info_title').html('An Asteroid!');
 			if(this.isprobed){
@@ -85,7 +88,7 @@ Crafty.c('Rock', {
 			$('#info_box').hide();
 		} );
         this.bind("EnterFrame", function(frame) {
-            if (!Game.paused) this.move('e',.2);
+            if (!Game.paused) this.move('e', x_speed);
         });
 
 	},
