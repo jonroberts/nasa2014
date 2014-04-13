@@ -55,4 +55,10 @@ def GetAsteroids():
     return jsonify(results=oc.GetClosestAsteroids(limit,day))
 
 
+@app.route('/get_random_asteroids')
+@crossdomain(origin='*')
+def GetRandomAsteroids():
+    limit = int(request.args.get('limit'))
+    day = float(request.args.get('day'))
+    return jsonify(results=oc.GetRandomAsteroids(limit,day))
 app.run(host="0.0.0.0",port=8100)
