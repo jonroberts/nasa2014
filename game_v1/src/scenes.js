@@ -64,6 +64,7 @@ Crafty.scene('Game', function() {
 		ast.asteroid_data = asteroid;
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
 		Game.occupied[x][y] = true;
+        Crafty.trigger('SetSpeed', ast);
     }
 
     function addSingleAsteroid(asteroid) {
@@ -73,6 +74,7 @@ Crafty.scene('Game', function() {
 		ast.asteroid_data = asteroid;
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
 		Game.occupied[x][y] = true;
+        Crafty.trigger('SetSpeed', ast);
     }
 
     Crafty.e('ISS').at(0, 37);
