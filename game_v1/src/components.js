@@ -163,7 +163,6 @@ Crafty.c('Rock', {
                 info_box.text('Asteroid ' + this.asteroid_data.prov_des + ': $' + this.asteroid_data.price);
             } else {
                 info_box.text('Asteroid ' + this.asteroid_data.prov_des);
-                this.isprobed = true;
             }
             this.attach(info_box);
             info_box.css({ display: 'block' });
