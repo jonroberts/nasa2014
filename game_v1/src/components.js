@@ -73,8 +73,7 @@ Crafty.c('BuyShip', {
         this.replace('<div class="buy_button">Buy Ship ($300000)</div>');
         this.bind('Click', function (data) {
             activeShip.destroy();
-            activeShip = Crafty.e('PlayerCharacter').at(38, 38);
-
+			activeShip = Crafty.e('Ship').at(38, 38);
             score.value -= 300000;
             score.text('Capital: $' + score.value);
         });
@@ -111,8 +110,9 @@ Crafty.c('Rock', {
             info_box.y = this._y - 45;
 
             if (this.isprobed) {
-                info_box.text('An Asteroid! $' + this.asteroid_data.price);
+                info_box.text('Asteroid ' + this.asteroid_data.prov_des + ': $' + this.asteroid_data.price);
             } else {
+                info_box.text('Asteroid ' + this.asteroid_data.prov_des);
                 this.isprobed = true;
             }
             this.attach(info_box);
@@ -125,16 +125,18 @@ Crafty.c('Rock', {
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
                 this.move('e', x_speed);
-//                console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
-//                if (this._x >= Game.map_grid.tile.width) {
-//                    console.log('Out of frame');
-//                    this.destroy();
-//                    Crafty.trigger('CreateAsteroid', this);
-//                } else {
-//                    console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
-//                }
+                if (this._x >= (Game.map_grid.width*Game.map_grid.tile.width)) {
+                    this.destroy();
+                    Crafty.trigger('CreateAsteroid', this);
+                }
             }
         });
+
+        this.bind("Click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.prov_des,'_blank')
+        })
 
     },
     hit: function () {
@@ -143,7 +145,7 @@ Crafty.c('Rock', {
 });
 
 // This is the player-controlled character
-Crafty.c('PlayerCharacter', {
+Crafty.c('Ship', {
     init: function () {
         this.requires('Actor, Fourway, Collision, spr_player, SpriteAnimation, Mouse')
             .fourway(2)
@@ -164,16 +166,18 @@ Crafty.c('PlayerCharacter', {
         // Watch for a change of direction and switch animations accordingly
         var animation_speed = 4;
         this.bind('NewDirection', function (data) {
-            if (data.x > 0) {
-                this.animate('PlayerMovingRight', animation_speed, -1);
-            } else if (data.x < 0) {
-                this.animate('PlayerMovingLeft', animation_speed, -1);
-            } else if (data.y > 0) {
-                this.animate('PlayerMovingDown', animation_speed, -1);
-            } else if (data.y < 0) {
-                this.animate('PlayerMovingUp', animation_speed, -1);
-            } else {
-                this.stop();
+            if (!Game.paused) {
+                if (data.x > 0) {
+                    this.animate('PlayerMovingRight', animation_speed, -1);
+                } else if (data.x < 0) {
+                    this.animate('PlayerMovingLeft', animation_speed, -1);
+                } else if (data.y > 0) {
+                    this.animate('PlayerMovingDown', animation_speed, -1);
+                } else if (data.y < 0) {
+                    this.animate('PlayerMovingUp', animation_speed, -1);
+                } else {
+                    this.stop();
+                }
             }
         });
         this.bind('Moved', function () {

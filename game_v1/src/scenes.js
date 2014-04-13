@@ -9,11 +9,11 @@ Crafty.scene('Game', function() {
 
 	console.log('running')
 	// A 2D array to keep track of all occupied tiles
-	this.occupied = new Array(Game.map_grid.width);
+	Game.occupied = new Array(Game.map_grid.width);
 	for (var i = 0; i < Game.map_grid.width; i++) {
-		this.occupied[i] = new Array(Game.map_grid.height);
+		Game.occupied[i] = new Array(Game.map_grid.height);
 		for (var y = 0; y < Game.map_grid.height; y++) {
-			this.occupied[i][y] = false;
+			Game.occupied[i][y] = false;
 		}
 	}
 	
@@ -29,20 +29,34 @@ Crafty.scene('Game', function() {
 	this.buyShip = Crafty.e('BuyShip').at(15,37);
 	this.base = Crafty.e('BaseProngs').at(38,38);
 	this.base = Crafty.e('Base').at(38,39);
-	this.occupied[this.player.at().x][this.player.at().y] = true;
+	Game.occupied[this.player.at().x][this.player.at().y] = true;
 
 	activeShip=this.player;
 	this.probes=[];
 
-	for (var i=0; i<asteroids.length; i++) {
-		x=Math.floor( Math.random()*Game.map_grid.width );
-		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
-		var ast = Crafty.e('Rock').at(x,y);
-		ast.asteroid_data = asteroids[i];
-		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
-		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
-		this.occupied[x][y] = true;
+	for (var i=0; i<Game.asteroids.length; i++) {
+        addAsteroid(Game.asteroids[i]);
 	}
+
+    function addAsteroid(asteroid) {
+        x=Math.floor( Math.random()*Game.map_grid.width );
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+		var ast = Crafty.e('Rock').at(x,y);
+		ast.asteroid_data = asteroid;
+//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+		Game.occupied[x][y] = true;
+    }
+
+    function addSingleAsteroid(asteroid) {
+        x=0;
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+		var ast = Crafty.e('Rock').at(x,y);
+		ast.asteroid_data = asteroid;
+//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+		Game.occupied[x][y] = true;
+    }
 
     Crafty.bind('KeyDown', function(e) {
         if(e.key == Crafty.keys.SPACE) {
@@ -50,39 +64,39 @@ Crafty.scene('Game', function() {
         }
     });
 
-//    this.create_asteroid = this.bind('CreateAsteroid', function() {
-//		x=0;
-//		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
-//		var ast = Crafty.e('Rock').at(x,y);
-//		ast.asteroid_data = asteroids[i];
-//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
-//		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
-//		this.occupied[x][y] = true;
-//    });
+    Game.day = 0;
 
-	// Generate five villages on the map in random locations
-	/*var max_villages = 5;
-	for (var x = 0; x < Game.map_grid.width; x++) {
-		for (var y = 0; y < Game.map_grid.height; y++) {
-			if (Math.random() < 0.03) {
-				if (Crafty('Village').length < max_villages && !this.occupied[x][y]) {
-					Crafty.e('Village').at(x, y);
-				}
-			}
-		}
-	}*/
+    this.bind('DayLoop', function() {
+        Crafty.e("Delay").delay(function() {
+          Crafty.trigger('IncrementDay', this);
+        }, 100, -1);
+    });
 
-	// Show the victory screen once all villages are visisted
-	this.show_victory = this.bind('VillageVisited', function() {
-		if (!Crafty('Village').length) {
-			Crafty.scene('Victory');
-		}
-	});
+    this.bind('IncrementDay', function() {
+        Game.day += 1;
+        Crafty.trigger('DayLoop', this);
+    });
+    Crafty.trigger('DayLoop', this);
+
+    Crafty.bind('CreateAsteroid', function() {
+        url = 'http://localhost:8100/get_asteroids?limit=' + 10 + '&day=' + Game.day;
+
+        $.ajax({
+            url: url,
+            success: function(data, status, jqXHR) {
+                Game.asteroids=data.results;
+                var asteroid = Game.asteroids[Math.floor(Math.random()*Game.asteroids.length)];
+                addSingleAsteroid(asteroid);
+            },
+            dataType: 'json'
+        });
+    })
+
 }, function() {
 	// Remove our event binding from above so that we don't
 	//  end up having multiple redundant event watchers after
 	//  multiple restarts of the game
-	this.unbind('VillageVisited', this.show_victory);
+	//this.unbind('VillageVisited', this.show_victory);
 });
 
 
@@ -92,7 +106,7 @@ Crafty.scene('Game', function() {
 Crafty.scene('Victory', function() {
 	// Display some text in celebration of the victory
 	Crafty.e('2D, DOM, Text')
-		.text('All villages visited!')
+		.text('All asteroids mined!')
 		.attr({ x: 0, y: Game.height()/2 - 24, w: Game.width() })
 		.css($text_css);
 
@@ -134,15 +148,6 @@ Crafty.scene('Loading', function(){
 		'assets/ship.png',
 		'assets/base.png',
 		'assets/probe.png',
-		'assets/door_knock_3x.mp3',
-		'assets/door_knock_3x.ogg',
-		'assets/door_knock_3x.aac',
-		'assets/board_room_applause.mp3',
-		'assets/board_room_applause.ogg',
-		'assets/board_room_applause.aac',
-		'assets/candy_dish_lid.mp3',
-		'assets/candy_dish_lid.ogg',
-		'assets/candy_dish_lid.aac'
 		], function(){
 		// Once the images are loaded...
 
@@ -173,13 +178,6 @@ Crafty.scene('Loading', function(){
 		Crafty.sprite(16, 'assets/probe.png', {
 			spr_probe:  [0, 0],
 		}, 0, 0);
-
-		// Define our sounds for later use
-		Crafty.audio.add({
-			knock: 	  ['assets/door_knock_3x.mp3', 'assets/door_knock_3x.ogg', 'assets/door_knock_3x.aac'],
-			applause: ['assets/board_room_applause.mp3', 'assets/board_room_applause.ogg', 'assets/board_room_applause.aac'],
-			ring:     ['assets/candy_dish_lid.mp3', 'assets/candy_dish_lid.ogg', 'assets/candy_dish_lid.aac']
-		});
 
 		// Now that our sprites are ready to draw, start the game
 		Crafty.scene('Game');

@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="lib/crafty.js"></script>
-    <script src="src/asteroids.js"></script>
-    <script src="src/game.js"></script>
-    <script src="src/components.js"></script>
-    <script src="src/scenes.js"></script>
-
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="src/techTree.js"></script>
+  <script src="lib/crafty.js"></script>
+  <script src="src/game.js"></script>
+  <script src="src/asteroids.js"></script>
+  <script src="src/components.js"></script>
+  <script src="src/scenes.js"></script>
     <script>
-        window.addEventListener('load', GetAsteroids(20, 0));
+        window.addEventListener('load', StartAsteroids(20, 0));
     </script>
-    <style type="text/css" media="screen">
-        body {
-            /*background: black;*/
-            background-image: url('assets/Background2.jpg');
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            color: #DDD;
-            font-family: Arial;
-        }
-
-        .controls {
-            color: #BBB;
-        }
+  <style type="text/css" media="screen">
+		body {
+		  /*background: black;*/
+		  background-image: url('assets/Background2.jpg');
+		  background-repeat:no-repeat;
+		  background-color: black;
+		  margin:0;
+		  padding:0;
+		  text-align: center;
+		  color: #DDD;
+		  font-family: Arial;
+		}
+		.controls {
+		    color: #BBB;
+		}
 
         #cr-stage {
             margin: 20px auto 0;
