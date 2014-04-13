@@ -11,6 +11,10 @@ Game = {
 
     paused: false,
 
+    asteroids: undefined,
+
+    day: 0,
+
 	// The total width of the game screen. Since our grid takes up the entire screen
 	//  this is just the width of a tile times the width of the grid
 	width: function() {
@@ -31,7 +35,6 @@ Game = {
 
 		// Simply start the "Loading" scene to get things going
 		Crafty.scene('Loading');
-//        GetAsteroids(20, 0);
 	}
 }
 

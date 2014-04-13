@@ -127,6 +127,7 @@ Crafty.c('Rock', {
                 if (this._x >= (Game.map_grid.width*Game.map_grid.tile.width)) {
                     this.destroy();
                     Crafty.trigger('CreateAsteroid', this);
+//                    GetAsteroids(10, Game.day);
 //                    console.log('current x: ' + this._x + ', map width: ' + (Game.map_grid.width*Game.map_grid.tile.width));
                 }
 //                console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
