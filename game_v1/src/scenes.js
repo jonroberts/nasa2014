@@ -19,14 +19,16 @@ Crafty.scene('Game', function() {
 	
 	score = Crafty.e("2D, DOM, Text")
 		.text("Capital: $1000000")
-		.attr({x: Crafty.viewport.width - 180, y: Crafty.viewport.height - 20, w: 200, h:50})
+		.attr({x: Crafty.viewport.width - 180, y: Crafty.viewport.height - 35, w: 200, h:50})
 		.css({color: "#fff"});
 	score.value=1000000;
 
-	this.player = Crafty.e('Probe').at(38, 39);
+	this.player = Crafty.e('Probe').at(38, 38);
 
 	this.buyProbe = Crafty.e('BuyProbe').at(1,39);
 	this.buyShip = Crafty.e('BuyShip').at(2,39);
+	this.base = Crafty.e('BaseProngs').at(38,38);
+	this.base = Crafty.e('Base').at(38,39);
 	this.occupied[this.player.at().x][this.player.at().y] = true;
 
 	activeShip=this.player;
@@ -133,9 +135,11 @@ Crafty.scene('Loading', function(){
 
 	// Load our sprite map image
 	Crafty.load([
+		'assets/16x16_forest_1.gif',
 		'assets/16x16_forest_2.gif',
 		//'assets/hunter.png',
 		'assets/ship.png',
+		'assets/base.png',
 		'assets/probe.png',
 		'assets/door_knock_3x.mp3',
 		'assets/door_knock_3x.ogg',
@@ -154,6 +158,12 @@ Crafty.scene('Loading', function(){
 		// These components' names are prefixed with "spr_"
 		//  to remind us that they simply cause the entity
 		//  to be drawn with a certain sprite
+		Crafty.sprite(16, 'assets/16x16_forest_1.gif', {
+			spr_base:      [0, 0],
+			spr_baseProngs:[0, 1],
+			spr_2:         [1, 0],
+			spr_3:         [1, 1]
+		});
 		Crafty.sprite(16, 'assets/16x16_forest_2.gif', {
 			spr_buy_probe:[1, 0],
 			spr_buy_ship: [0, 0],

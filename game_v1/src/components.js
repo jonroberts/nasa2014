@@ -27,28 +27,22 @@ Crafty.c('Actor', {
 		this.requires('2D, Canvas, Grid');
 	},
 });
-
-// A Tree is just an Actor with a certain sprite
-Crafty.c('Tree', {
+Crafty.c('Base', {
 	init: function() {
-		this.requires('Actor, Solid, spr_tree');
+		this.requires('Actor, Solid, spr_base');
 	},
 });
-
-// A Bush is just an Actor with a certain sprite
-Crafty.c('Bush', {
+Crafty.c('BaseProngs', {
 	init: function() {
-		this.requires('Actor, Solid, spr_bush');
+		this.requires('Actor, spr_baseProngs');
 	},
 });
-
-// A Bush is just an Actor with a certain sprite
 Crafty.c('BuyProbe', {
 	init: function() {
 		this.requires('Actor, spr_buy_probe, Mouse');
 		this.bind('Click', function(data) {
 			activeShip.destroy();
-			activeShip = Crafty.e('Probe').at(38, 39);
+			activeShip = Crafty.e('Probe').at(38, 38);
 			score.value-=100000;
 			score.text('Capital: $'+score.value);
 		});
@@ -62,7 +56,7 @@ Crafty.c('BuyShip', {
 		this.requires('Actor, spr_buy_ship, Mouse');
 		this.bind('Click', function(data) {
 			activeShip.destroy();
-			activeShip = Crafty.e('PlayerCharacter').at(38, 39);
+			activeShip = Crafty.e('PlayerCharacter').at(38, 38);
 
 			score.value-=300000;
 			score.text('Capital: $'+score.value);
@@ -110,6 +104,7 @@ Crafty.c('PlayerCharacter', {
 			.fourway(2)
 			.stopOnSolids()
 			.onHit('Rock',this.hitAsteroid)
+			.onHit('BaseProngs',this.hitDock)
 			// These next lines define our four animations
 			//  each call to .animate specifies:
 			//  - the name of the animation
@@ -136,15 +131,20 @@ Crafty.c('PlayerCharacter', {
 				this.stop();
 			}
 		});
+		this.bind('Moved', function(){
+			score.value-=100;
+			score.text('Capital: $'+score.value);
+		})
 		this.bind('MouseOver', function(data) { console.log('Hey!' + data); } );
-		this.bind('Click',function(data){console.log(this);})
+		this.bind('Click',function(data){console.log(this);});
+
+		this.cargo=0;
 	},
 
 	// Registers a stop-movement function to be called when
 	//  this entity hits an entity with the "Solid" component
 	stopOnSolids: function() {
 		this.onHit('Solid', this.stopMovement);
-
 		return this;
 	},
 
@@ -167,8 +167,16 @@ Crafty.c('PlayerCharacter', {
 		console.log('hitting asteroid.');
 		asteroid = data[0].obj;
 		ast_price = asteroid.price;
-		console.log('hitAsteroid: ' + ast_price);
+		console.log(this.cargo);
+		console.log(ast_price);
+		this.cargo+= +1000000;
+		console.log(this.cargo);
 		asteroid.hit();
+	},
+	hitDock: function(data){
+		dock = data[0].obj;
+		score.value+=this.cargo;
+		this.cargo=0;
 	}
 });
 
@@ -205,6 +213,11 @@ Crafty.c('Probe', {
 				this.stop();
 			}
 		});
+		this.bind('Moved', function(){
+			score.value-=50;
+			score.text('Capital: $'+score.value);
+		})
+
 		this.bind('MouseOver', function(data) { console.log('Hey!' + data); } );
 		this.bind('Click',function(data){console.log(this);})
 	},
