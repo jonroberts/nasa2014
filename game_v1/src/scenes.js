@@ -18,11 +18,11 @@ Crafty.scene('Game', function() {
 	}
 	
 	score = Crafty.e("2D, DOM, Text")
-		.text("Capital: $1000000")
 		.attr({x: Crafty.viewport.width - 180, y: Crafty.viewport.height - 35, w: 200, h:50})
 		.css({color: "#fff"});
-	score.value=1000000;
-
+	score.value=10000000;
+	updateScore(0);
+	
 	this.player = Crafty.e('Probe').at(38, 38);
 
 	this.buyProbe = Crafty.e('BuyProbe').at(1,37);

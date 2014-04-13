@@ -141,6 +141,15 @@ Crafty.c('Rock', {
     }
 });
 
+function updateScore(val){
+    score.value += val;
+    score.text('Capital: $' + (score.value/1000000.).toFixed(3)+'m');
+    if(score.value<0){
+	    alert('You have run out of money and will remain trapped on earth!');
+	    location.reload();
+    }
+}
+
 // This is the player-controlled character
 Crafty.c('Ship', {
     init: function () {
@@ -178,8 +187,7 @@ Crafty.c('Ship', {
             }
         });
         this.bind('Moved', function () {
-            score.value -= 100;
-            score.text('Capital: $' + score.value);
+			updateScore(-100);
         });
         this.bind('MouseOver', function (data) {
             console.log('Hey!' + data);
@@ -214,18 +222,14 @@ Crafty.c('Ship', {
     },
     hitAsteroid: function (data) {
         this.stopMovement();
-        console.log('hitting asteroid.');
         asteroid = data[0].obj;
         ast_price = asteroid.price;
-        console.log(this.cargo);
-        console.log(ast_price);
         this.cargo += +1000000;
-        console.log(this.cargo);
         asteroid.hit();
     },
     hitDock: function (data) {
         dock = data[0].obj;
-        score.value += this.cargo;
+		updateScore(this.cargo);
         this.cargo = 0;
     }
 });
@@ -264,8 +268,7 @@ Crafty.c('Probe', {
             }
         });
         this.bind('Moved', function () {
-            score.value -= 50;
-            score.text('Capital: $' + score.value);
+			updateScore(-50);
         })
 
         this.bind('MouseOver', function (data) {
