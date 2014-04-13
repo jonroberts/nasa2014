@@ -31,6 +31,7 @@ Game = {
 
 		// Simply start the "Loading" scene to get things going
 		Crafty.scene('Loading');
+        GetAsteroids(20, 0);
 	}
 }
 

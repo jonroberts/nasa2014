@@ -25,8 +25,8 @@ Crafty.scene('Game', function() {
 
 	this.player = Crafty.e('Probe').at(38, 38);
 
-	this.buyProbe = Crafty.e('BuyProbe').at(1,39);
-	this.buyShip = Crafty.e('BuyShip').at(2,39);
+	this.buyProbe = Crafty.e('BuyProbe').at(1,37);
+	this.buyShip = Crafty.e('BuyShip').at(15,37);
 	this.base = Crafty.e('BaseProngs').at(38,38);
 	this.base = Crafty.e('Base').at(38,39);
 	this.occupied[this.player.at().x][this.player.at().y] = true;
@@ -34,8 +34,7 @@ Crafty.scene('Game', function() {
 	activeShip=this.player;
 	this.probes=[];
 
-	for (var i=0; i<asteroids.length; i++)
-	{
+	for (var i=0; i<asteroids.length; i++) {
 		x=Math.floor( Math.random()*Game.map_grid.width );
 		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
@@ -50,6 +49,7 @@ Crafty.scene('Game', function() {
             Game.paused = !Game.paused;
         }
     });
+
 }, function() {
 	// Remove our event binding from above so that we don't
 	//  end up having multiple redundant event watchers after

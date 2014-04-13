@@ -1,7 +1,7 @@
-
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="lib/techTree.js"></script>
   <script src="lib/crafty.js"></script>
@@ -9,61 +9,62 @@
   <script src="src/asteroids.js"></script>
   <script src="src/components.js"></script>
   <script src="src/scenes.js"></script>
-  <script>
-    //window.addEventListener('load', Game.start);
-    window.addEventListener('load',GetAsteroids(20,0.0));
-  </script>
+    <script>
+        window.addEventListener('load', GetAsteroids(20, 0));
+    </script>
   <style type="text/css" media="screen">
-    body {
-      /*background: black;*/
-	  background-image: url('assets/Background2.jpg');
-	  background-repeat:no-repeat;
-	  background-color: black;
-	  margin:0;
-	  padding:0;
-      text-align: center;
-      color: #DDD;
-      font-family: Arial;
-    }
+		body {
+		  /*background: black;*/
+		  background-image: url('assets/Background2.jpg');
+		  background-repeat:no-repeat;
+		  background-color: black;
+		  margin:0;
+		  padding:0;
+		  text-align: center;
+		  color: #DDD;
+		  font-family: Arial;
+		}
+		.controls {
+		    color: #BBB;
+		}
 
-    .controls {
-      color: #BBB;
-    }
+        #cr-stage {
+            margin: 20px auto 0;
+        }
 
-    #cr-stage { margin: 20px auto 0; }
+        .bottom {
+            font-size: 12px;
+            color: #888;
+            margin-top: 50px;
+        }
 
-    .bottom {
-      font-size: 12px;
-      color: #888;
-      margin-top: 50px;
-    }
+        .bottom a {
+            color: #AAA;
+        }
 
-    .bottom a {
-      color: #AAA;
-    }
-    
-    .popup {
-      display: none;
-      margin: 10px 10px;
-      background-color: white;
-    }
-	#info_box {
-	    display: none; /* ensures it’s invisible until it’s called */
-	    position: absolute; /* makes the div go into a position that’s absolute to the browser viewing area */
-	    left: 35%; /* positions the div halfway horizontally */
-	    top: 25%; /* positions the div halfway vertically */
-	    padding: 25px; 
-	    border: 2px solid #454545;
-	    border-radius: 10px;
-	    background-color: #000000;
-	    color: white;
-	    width: 200px;
-	    margin-left: auto;
-	    margin-right: auto;
-	    height: 30%;
-	    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
-	}    
-  </style>
+        .popup {
+            display: none;
+            margin: 10px 10px;
+            background-color: white;
+        }
+
+        #info_box {
+            display: none; /* ensures it’s invisible until it’s called */
+            position: absolute; /* makes the div go into a position that’s absolute to the browser viewing area */
+            left: 35%; /* positions the div halfway horizontally */
+            top: 25%; /* positions the div halfway vertically */
+            padding: 25px;
+            border: 2px solid #454545;
+            border-radius: 10px;
+            background-color: #000000;
+            color: white;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30%;
+            z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+        }
+    </style>
 </head>
 <body>
 <!--  <h2>Asteroiding</h2>
@@ -71,12 +72,13 @@
   <p>Deflect and mine asteroids as they come past earth</p>
 
   <p class="controls">Controls: Use W, A, S, and D or arrow keys to move around.</p>-->
-  <div id="info_box" class="popup">
-	  <h3 id='info_title'></h3>
-	  <div id='info_desc'></div>
-  </div>
-  <div id="cr-stage"></div>
+<div id="info_box" class="popup">
+    <h3 id='info_title'></h3>
 
-  <!--<p class="bottom">Protect earth from the asteroids!</p>-->
+    <div id='info_desc'></div>
+</div>
+<div id="cr-stage"></div>
+
+<!--<p class="bottom">Protect earth from the asteroids!</p>-->
 </body>
 </html>
