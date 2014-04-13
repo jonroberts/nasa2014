@@ -110,9 +110,9 @@ Crafty.c('Rock', {
             info_box.y = this._y - 45;
 
             if (this.isprobed) {
-                info_box.text('Asteroid ' + this.asteroid_data.full_name + ': $' + this.asteroid_data.price);
+                info_box.text('Asteroid ' + this.asteroid_data.prov_des + ': $' + this.asteroid_data.price);
             } else {
-                info_box.text('Asteroid ' + this.asteroid_data.full_name);
+                info_box.text('Asteroid ' + this.asteroid_data.prov_des);
                 this.isprobed = true;
             }
             this.attach(info_box);
@@ -128,19 +128,15 @@ Crafty.c('Rock', {
                 if (this._x >= (Game.map_grid.width*Game.map_grid.tile.width)) {
                     this.destroy();
                     Crafty.trigger('CreateAsteroid', this);
-//                    GetAsteroids(10, Game.day);
-//                    console.log('current x: ' + this._x + ', map width: ' + (Game.map_grid.width*Game.map_grid.tile.width));
                 }
-//                console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
-//                if (this._x >= Game.map_grid.tile.width) {
-//                    console.log('Out of frame');
-//                    this.destroy();
-//                    Crafty.trigger('CreateAsteroid', this);
-//                } else {
-//                    console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
-//                }
             }
         });
+
+        this.bind("Click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.prov_des,'_blank')
+        })
 
     },
     hit: function () {
