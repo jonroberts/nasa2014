@@ -50,15 +50,15 @@ Crafty.scene('Game', function() {
         }
     });
 
-    this.create_asteroid = this.bind('CreateAsteroid', function() {
-		x=0;
-		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
-		var ast = Crafty.e('Rock').at(x,y);
-		ast.asteroid_data = asteroids[i];
-		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
-		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
-		this.occupied[x][y] = true;
-    });
+//    this.create_asteroid = this.bind('CreateAsteroid', function() {
+//		x=0;
+//		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
+//		var ast = Crafty.e('Rock').at(x,y);
+//		ast.asteroid_data = asteroids[i];
+//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+//		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+//		this.occupied[x][y] = true;
+//    });
 
 	// Generate five villages on the map in random locations
 	/*var max_villages = 5;

@@ -68,22 +68,8 @@ Crafty.c('BuyProbe', {
     }
 });
 Crafty.c('BuyShip', {
-//    init: function () {
-//        this.requires('Actor, spr_buy_ship, Mouse');
-//        this.bind('Click', function (data) {
-//            activeShip.destroy();
-//            activeShip = Crafty.e('PlayerCharacter').at(38, 38);
-//
-//            score.value -= 300000;
-//            score.text('Capital: $' + score.value);
-//        });
-//        this.bind('MouseOver', function (data) {
-//            console.log(this);
-//        });
-//    }
     init: function () {
         this.requires('Actor, spr_buy_ship, Mouse, HTML');
-//        this.replace('<div style="background-color: #fff; width: 180px">Buy Ship ($300000)</div>');
         this.replace('<div class="buy_button">Buy Ship ($300000)</div>');
         this.bind('Click', function (data) {
             activeShip.destroy();
@@ -139,14 +125,14 @@ Crafty.c('Rock', {
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
                 this.move('e', x_speed);
-                console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
-                if (this._x >= Game.map_grid.tile.width) {
-                    console.log('Out of frame');
-                    this.destroy();
-                    Crafty.trigger('CreateAsteroid', this);
-                } else {
-                    console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
-                }
+//                console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
+//                if (this._x >= Game.map_grid.tile.width) {
+//                    console.log('Out of frame');
+//                    this.destroy();
+//                    Crafty.trigger('CreateAsteroid', this);
+//                } else {
+//                    console.log('current x: ' + this._x + ', map width: ' + Game.map_grid.tile.width);
+//                }
             }
         });
 
