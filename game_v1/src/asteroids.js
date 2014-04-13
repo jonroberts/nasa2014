@@ -1,7 +1,7 @@
 //var asteroids = undefined;
 
 function StartAsteroids(limit,day) {
-	url = 'http://localhost:8100/get_asteroids?limit=' + limit + '&day=' + day;
+	url = 'http://localhost:8100/get_random_asteroids?limit=' + limit + '&day=' + day;
 	
 	$.ajax({
 		url: url,
@@ -17,7 +17,7 @@ function success_start(data, textStatus, jqXHR) {
 }
 
 function GetAsteroids(limit,day) {
-	url = 'http://localhost:8100/get_asteroids?limit=' + limit + '&day=' + day;
+	url = 'http://localhost:8100/get_random_asteroids?limit=' + limit + '&day=' + day;
 
 	$.ajax({
 		url: url,
@@ -29,4 +29,5 @@ function GetAsteroids(limit,day) {
 function success(data, textStatus, jqXHR) {
 	console.log('NEW ASTEROIDS APICALL: ' + textStatus);
 	Game.asteroids=data.results;
+	console.log(data.results);
 }

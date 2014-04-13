@@ -20,7 +20,7 @@ Crafty.scene('Game', function() {
 	score = Crafty.e("2D, DOM, Text")
 		.attr({x: Crafty.viewport.width - 180, y: Crafty.viewport.height - 35, w: 200, h:50})
 		.css({color: "#fff"});
-	score.value=10000000;
+	score.value=11000000;
 	updateScore(0);
 
     dateDisplay = Crafty.e("2D, DOM, Text")
@@ -34,8 +34,8 @@ Crafty.scene('Game', function() {
 
 	this.player = Crafty.e('Probe').at(38, 38);
 
-	this.buyProbe = Crafty.e('BuyProbe').at(1,37);
-	this.buyShip = Crafty.e('BuyShip').at(15,37);
+	this.buyProbe = Crafty.e('BuyProbe').at(1,39);
+	this.buyShip = Crafty.e('BuyShip').at(3,39);
 	this.base = Crafty.e('BaseProngs').at(38,38);
 	this.base = Crafty.e('Base').at(38,39);
 	Game.occupied[this.player.at().x][this.player.at().y] = true;
@@ -49,7 +49,7 @@ Crafty.scene('Game', function() {
 
     function addAsteroid(asteroid) {
         x=Math.floor( Math.random()*Game.map_grid.width );
-		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 10.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
 		ast.asteroid_data = asteroid;
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
@@ -58,7 +58,7 @@ Crafty.scene('Game', function() {
 
     function addSingleAsteroid(asteroid) {
         x=0;
-		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 10.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
 		ast.asteroid_data = asteroid;
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
@@ -159,6 +159,7 @@ Crafty.scene('Loading', function(){
 		'assets/ship.png',
 		'assets/base.png',
 		'assets/probe.png',
+		'assets/ISS.png',
 		], function(){
 		// Once the images are loaded...
 
@@ -188,6 +189,10 @@ Crafty.scene('Loading', function(){
 
 		Crafty.sprite(16, 'assets/probe.png', {
 			spr_probe:  [0, 0],
+		}, 0, 0);
+
+		Crafty.sprite(16, 'assets/iss.png', {
+			spr_iss:  [0, 0],
 		}, 0, 0);
 
 		// Now that our sprites are ready to draw, start the game
