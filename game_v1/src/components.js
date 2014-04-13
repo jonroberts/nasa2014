@@ -45,10 +45,30 @@ Crafty.c('Bush', {
 // A Bush is just an Actor with a certain sprite
 Crafty.c('BuyProbe', {
 	init: function() {
-		this.requires('Actor, spr_bush,Mouse');
-
+		this.requires('Actor, spr_buy_probe, Mouse');
 		this.bind('Click', function(data) {
-			
+			activeShip.destroy();
+			activeShip = Crafty.e('Probe').at(38, 39);
+			score.value-=100000;
+			score.text('Capital: $'+score.value);
+		});
+		this.bind('MouseOver', function(data) {
+			console.log(this);
+		});
+	},
+});
+Crafty.c('BuyShip', {
+	init: function() {
+		this.requires('Actor, spr_buy_ship, Mouse');
+		this.bind('Click', function(data) {
+			activeShip.destroy();
+			activeShip = Crafty.e('PlayerCharacter').at(38, 39);
+
+			score.value-=300000;
+			score.text('Capital: $'+score.value);
+		});
+		this.bind('MouseOver', function(data) {
+			console.log(this);
 		});
 	},
 });
@@ -62,9 +82,6 @@ Crafty.c('Rock', {
 			$('#info_title').html('An Asteroid!');
 			if(this.isprobed){
 				$('#info_desc').html('$'+this.asteroid_data.price);
-			}
-			else{
-				this.isprobed=true;
 			}
 			$('#info_box').show();
 		} );
@@ -90,7 +107,6 @@ Crafty.c('PlayerCharacter', {
 			.fourway(2)
 			.stopOnSolids()
 			.onHit('Rock',this.hitAsteroid)
-			.onHit('Village', this.visitVillage)
 			// These next lines define our four animations
 			//  each call to .animate specifies:
 			//  - the name of the animation
@@ -150,6 +166,73 @@ Crafty.c('PlayerCharacter', {
 		ast_price = asteroid.price;
 		console.log('hitAsteroid: ' + ast_price);
 		asteroid.hit();
+	}
+});
+
+// This is the player-controlled character
+Crafty.c('Probe', {
+	init: function() {
+		this.requires('Actor, Fourway, Collision, spr_probe, SpriteAnimation, Mouse')
+			.fourway(2)
+			.stopOnSolids()
+			.onHit('Rock',this.hitAsteroid)
+			// These next lines define our four animations
+			//  each call to .animate specifies:
+			//  - the name of the animation
+			//  - the x and y coordinates within the sprite
+			//     map at which the animation set begins
+			//  - the number of animation frames *in addition to* the first one
+			.animate('PlayerMovingUp',    0, 0, 2)
+			.animate('PlayerMovingRight', 0, 0, 2)
+			.animate('PlayerMovingDown',  0, 0, 2)
+			.animate('PlayerMovingLeft',  0, 0, 2);
+
+		// Watch for a change of direction and switch animations accordingly
+		var animation_speed = 4;
+		this.bind('NewDirection', function(data) {
+			if (data.x > 0) {
+				this.animate('PlayerMovingRight', animation_speed, -1);
+			} else if (data.x < 0) {
+				this.animate('PlayerMovingLeft', animation_speed, -1);
+			} else if (data.y > 0) {
+				this.animate('PlayerMovingDown', animation_speed, -1);
+			} else if (data.y < 0) {
+				this.animate('PlayerMovingUp', animation_speed, -1);
+			} else {
+				this.stop();
+			}
+		});
+		this.bind('MouseOver', function(data) { console.log('Hey!' + data); } );
+		this.bind('Click',function(data){console.log(this);})
+	},
+
+	// Registers a stop-movement function to be called when
+	//  this entity hits an entity with the "Solid" component
+	stopOnSolids: function() {
+		this.onHit('Solid', this.stopMovement);
+
+		return this;
+	},
+
+	// Stops the movement
+	stopMovement: function() {
+		this._speed = 0;
+		if (this._movement) {
+			this.x -= this._movement.x;
+			this.y -= this._movement.y;
+		}
+	},
+
+	// Respond to this player visiting a village
+	/*visitVillage: function(data) {
+		villlage = data[0].obj;
+		villlage.visit();
+	},*/
+	hitAsteroid: function(data) {
+		asteroid = data[0].obj;
+		asteroid.isprobed=true;
+		asteroid.sprite(0,1);
+		this.destroy();
 	}
 });
 

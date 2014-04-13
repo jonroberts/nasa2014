@@ -3,6 +3,7 @@
 // Runs the core gameplay loop
 
 var activeShip=undefined;
+var score=undefined;
 
 Crafty.scene('Game', function() {
 
@@ -16,14 +17,16 @@ Crafty.scene('Game', function() {
 		}
 	}
 	
-	var score = Crafty.e("2D, DOM, Text")
+	score = Crafty.e("2D, DOM, Text")
 		.text("Capital: $1000000")
-		.attr({x: 10, y: Crafty.viewport.height - 20, w: 200, h:50})
+		.attr({x: Crafty.viewport.width - 180, y: Crafty.viewport.height - 20, w: 200, h:50})
 		.css({color: "#fff"});
+	score.value=1000000;
 
-	this.player = Crafty.e('PlayerCharacter').at(38, 39);
-	this.player2 = Crafty.e('PlayerCharacter').at(39, 39);
+	this.player = Crafty.e('Probe').at(38, 39);
+
 	this.buyProbe = Crafty.e('BuyProbe').at(1,39);
+	this.buyShip = Crafty.e('BuyShip').at(2,39);
 	this.occupied[this.player.at().x][this.player.at().y] = true;
 
 	activeShip=this.player;
@@ -53,7 +56,7 @@ Crafty.scene('Game', function() {
 //        Game.paused = !Game.paused;
 //	});
 
-    this.pause_scene = Crafty.bind('KeyDown', function(e) {
+    Crafty.bind('KeyDown', function(e) {
         if(e.key == Crafty.keys.SPACE) {
             Game.paused = !Game.paused;
         }
@@ -133,6 +136,7 @@ Crafty.scene('Loading', function(){
 		'assets/16x16_forest_2.gif',
 		//'assets/hunter.png',
 		'assets/ship.png',
+		'assets/probe.png',
 		'assets/door_knock_3x.mp3',
 		'assets/door_knock_3x.ogg',
 		'assets/door_knock_3x.aac',
@@ -151,17 +155,21 @@ Crafty.scene('Loading', function(){
 		//  to remind us that they simply cause the entity
 		//  to be drawn with a certain sprite
 		Crafty.sprite(16, 'assets/16x16_forest_2.gif', {
-			spr_tree:    [0, 0],
-			spr_bush:    [1, 0],
-			spr_village: [0, 1],
-			spr_rock:    [1, 1]
+			spr_buy_probe:[1, 0],
+			spr_buy_ship: [0, 0],
+			spr_visited:  [0, 1],
+			spr_rock:     [1, 1]
 		});
 
 		// Define the PC's sprite to be the first sprite in the third row of the
 		//  animation sprite map
 		Crafty.sprite(16, 'assets/ship.png', {
-			spr_player:  [0, 2],
+			spr_player:  [0, 0],
 		}, 0, 2);
+
+		Crafty.sprite(16, 'assets/probe.png', {
+			spr_probe:  [0, 0],
+		}, 0, 0);
 
 		// Define our sounds for later use
 		Crafty.audio.add({
