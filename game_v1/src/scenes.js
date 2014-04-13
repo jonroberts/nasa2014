@@ -45,63 +45,16 @@ Crafty.scene('Game', function() {
 		this.occupied[x][y] = true;
 	}
 
-/*
-	// Place a tree at every edge square on our grid of 16x16 tiles
-	for (var x = 0; x < Game.map_grid.width; x++) {
-		for (var y = 0; y < Game.map_grid.height; y++) {
-			if(y>32){continue;}
-			if (Math.random() < 0.01 && !this.occupied[x][y]) {
-				// Place a bush entity at the current tile
-				//var bush_or_rock = (Math.random() > 0.3) ? 'Bush' : 'Rock'
-				var asteroid = 'Rock';
-				var ast = Crafty.e(asteroid).at(x, y);
- 				ast.asteroid_data = { 'price': y, 'earth_height': y, 'spectral_type': 'A', 'delta_v': x };
- 				ast.bind('Click',function(){console.log('clicked');alert('clicked!');})
-
-				//ast.bind('Click',function(){console.log('clicked');alert('clicked!');})
-				
-				
-				this.occupied[x][y] = true;
-			}
-		}
-	}
-*/
-//    this.pause_scene = Crafty.bind('Space', function() {
-//        Game.paused = !Game.paused;
-//	});
-
     Crafty.bind('KeyDown', function(e) {
         if(e.key == Crafty.keys.SPACE) {
             Game.paused = !Game.paused;
         }
     });
-
-	// Generate five villages on the map in random locations
-	/*var max_villages = 5;
-	for (var x = 0; x < Game.map_grid.width; x++) {
-		for (var y = 0; y < Game.map_grid.height; y++) {
-			if (Math.random() < 0.03) {
-				if (Crafty('Village').length < max_villages && !this.occupied[x][y]) {
-					Crafty.e('Village').at(x, y);
-				}
-			}
-		}
-	}*/
-
-	// Play a ringing sound to indicate the start of the journey
-	//Crafty.audio.play('ring');
-
-	// Show the victory screen once all villages are visisted
-	this.show_victory = this.bind('VillageVisited', function() {
-		if (!Crafty('Village').length) {
-			Crafty.scene('Victory');
-		}
-	});
 }, function() {
 	// Remove our event binding from above so that we don't
 	//  end up having multiple redundant event watchers after
 	//  multiple restarts of the game
-	this.unbind('VillageVisited', this.show_victory);
+	//this.unbind('VillageVisited', this.show_victory);
 });
 
 
@@ -111,7 +64,7 @@ Crafty.scene('Game', function() {
 Crafty.scene('Victory', function() {
 	// Display some text in celebration of the victory
 	Crafty.e('2D, DOM, Text')
-		.text('All villages visited!')
+		.text('All asteroids mined!')
 		.attr({ x: 0, y: Game.height()/2 - 24, w: Game.width() })
 		.css($text_css);
 
@@ -153,15 +106,6 @@ Crafty.scene('Loading', function(){
 		'assets/ship.png',
 		'assets/base.png',
 		'assets/probe.png',
-		'assets/door_knock_3x.mp3',
-		'assets/door_knock_3x.ogg',
-		'assets/door_knock_3x.aac',
-		'assets/board_room_applause.mp3',
-		'assets/board_room_applause.ogg',
-		'assets/board_room_applause.aac',
-		'assets/candy_dish_lid.mp3',
-		'assets/candy_dish_lid.ogg',
-		'assets/candy_dish_lid.aac'
 		], function(){
 		// Once the images are loaded...
 
@@ -192,13 +136,6 @@ Crafty.scene('Loading', function(){
 		Crafty.sprite(16, 'assets/probe.png', {
 			spr_probe:  [0, 0],
 		}, 0, 0);
-
-		// Define our sounds for later use
-		Crafty.audio.add({
-			knock: 	  ['assets/door_knock_3x.mp3', 'assets/door_knock_3x.ogg', 'assets/door_knock_3x.aac'],
-			applause: ['assets/board_room_applause.mp3', 'assets/board_room_applause.ogg', 'assets/board_room_applause.aac'],
-			ring:     ['assets/candy_dish_lid.mp3', 'assets/candy_dish_lid.ogg', 'assets/candy_dish_lid.aac']
-		});
 
 		// Now that our sprites are ready to draw, start the game
 		Crafty.scene('Game');
