@@ -22,7 +22,16 @@ Crafty.scene('Game', function() {
 		.css({color: "#fff"});
 	score.value=10000000;
 	updateScore(0);
-	
+
+    dateDisplay = Crafty.e("2D, DOM, Text")
+        .attr({x: Crafty.viewport.width - 180, y: 35, w: 200, h: 50})
+        .css({color: "#fff"});
+    dateDisplay.value=new Date();
+    dateDisplay.text((dateDisplay.value.getMonth()+1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
+
+
+
+
 	this.player = Crafty.e('Probe').at(38, 38);
 
 	this.buyProbe = Crafty.e('BuyProbe').at(1,37);
@@ -52,7 +61,6 @@ Crafty.scene('Game', function() {
 		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
 		ast.asteroid_data = asteroid;
-//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
 		Game.occupied[x][y] = true;
     }
@@ -72,7 +80,11 @@ Crafty.scene('Game', function() {
     });
 
     this.bind('IncrementDay', function() {
-        Game.day += 1;
+        if (!Game.paused){
+            Game.day += 1;
+            dateDisplay.value.setTime(dateDisplay.value.getTime() + 86400000);
+            dateDisplay.text((dateDisplay.value.getMonth()+1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
+        }
         Crafty.trigger('DayLoop', this);
     });
     Crafty.trigger('DayLoop', this);
