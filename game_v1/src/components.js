@@ -82,33 +82,33 @@ Crafty.c('BuyProbe', {
             info_box.y = this._y - 45;
 
 
-            unprobed = '<p>Unexplored!</p>';
-            spec_type = 'Unknown';
-            value = 'Unknown';
-            dist = this.asteroid_data.earth_dist.toFixed(2) + ' AU';
-            deltav = this.asteroid_data.earch_dv.toFixed(2) + ' km/s';
-            minerals = 'Unknown';
-            price_per_kg = 'Unknown';
-            pha = this.asteroid_data.pha == 'Y' ? '<p class="hazard">Potentially Hazardous Object!</p>' : '';
-            neo = this.asteroid_data.neo == 'Y' ? '<p>Near Earth Object</p>' : '';
-
-            if (this.isprobed) {
-                unprobed = '';
-                spec_type = this.asteroid_data.spec;
-                value = '$' + this.asteroid_data.price.toLocaleString();
-                minerals = MineralsBySpec[this.asteroid_data.spec];
-                price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
-            }
-            html = '<p>Asteroid ' + this.asteroid_data.full_name + '</p>';
-            html = html + unprobed;
-            html = html + '<p>Spectral Type: ' + spec_type + '</p>';
-            html = html + '<p>Minerals: ' + minerals + '</p>';
-            html = html + '<p>Price per kg: ' + price_per_kg + '</p>';
-            html = html + '<p>Total Value: ' + value + '</p>';
-            html = html + '<p>Distance: ' + dist + '</p>';
-            html = html + '<p>Delta-V: ' + deltav + '</p>';
-            html = html + neo + pha;
-            info_box.html(html);
+//            unprobed = '<p>Unexplored!</p>';
+//            spec_type = 'Unknown';
+//            value = 'Unknown';
+//            dist = this.asteroid_data.earth_dist.toFixed(2) + ' AU';
+//            deltav = this.asteroid_data.earch_dv.toFixed(2) + ' km/s';
+//            minerals = 'Unknown';
+//            price_per_kg = 'Unknown';
+//            pha = this.asteroid_data.pha == 'Y' ? '<p class="hazard">Potentially Hazardous Object!</p>' : '';
+//            neo = this.asteroid_data.neo == 'Y' ? '<p>Near Earth Object</p>' : '';
+//
+//            if (this.isprobed) {
+//                unprobed = '';
+//                spec_type = this.asteroid_data.spec;
+//                value = '$' + this.asteroid_data.price.toLocaleString();
+//                minerals = MineralsBySpec[this.asteroid_data.spec];
+//                price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
+//            }
+//            html = '<p>Asteroid ' + this.asteroid_data.full_name + '</p>';
+//            html = html + unprobed;
+//            html = html + '<p>Spectral Type: ' + spec_type + '</p>';
+//            html = html + '<p>Minerals: ' + minerals + '</p>';
+//            html = html + '<p>Price per kg: ' + price_per_kg + '</p>';
+//            html = html + '<p>Total Value: ' + value + '</p>';
+//            html = html + '<p>Distance: ' + dist + '</p>';
+//            html = html + '<p>Delta-V: ' + deltav + '</p>';
+//            html = html + neo + pha;
+//            info_box.html(html);
 
 
             this.attach(info_box);
