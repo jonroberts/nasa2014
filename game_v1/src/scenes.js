@@ -34,6 +34,18 @@ Crafty.scene('Game', function() {
 	activeShip=this.player;
 	this.probes=[];
 
+	for (var i=0; i<asteroids.length; i++)
+	{
+		x=Math.floor( Math.random()*Game.map_grid.width );
+		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
+		var ast = Crafty.e('Rock').at(x,y);
+		ast.asteroid_data = asteroids[i];
+		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+		this.occupied[x][y] = true;
+	}
+
+/*
 	// Place a tree at every edge square on our grid of 16x16 tiles
 	for (var x = 0; x < Game.map_grid.width; x++) {
 		for (var y = 0; y < Game.map_grid.height; y++) {
@@ -53,7 +65,7 @@ Crafty.scene('Game', function() {
 			}
 		}
 	}
-
+*/
 //    this.pause_scene = Crafty.bind('Space', function() {
 //        Game.paused = !Game.paused;
 //	});
