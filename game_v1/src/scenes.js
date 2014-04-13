@@ -4,6 +4,7 @@
 
 var activeShip=undefined;
 var score=undefined;
+var dateDisplay=undefined;
 
 Crafty.scene('Game', function() {
 
