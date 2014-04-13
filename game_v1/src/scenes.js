@@ -39,6 +39,9 @@ Crafty.scene('Game', function() {
     dateDisplay.value=new Date();
     dateDisplay.text((dateDisplay.value.getMonth()+1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
 
+
+
+
 	this.player = Crafty.e('Probe').at(38, 38);
 
 	this.buyProbe = Crafty.e('BuyProbe').at(1,39);
