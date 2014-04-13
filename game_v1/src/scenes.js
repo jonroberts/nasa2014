@@ -4,6 +4,15 @@
 
 var activeShip=undefined;
 var score=undefined;
+function updateScore(val){
+    score.value += val;
+    score.text('Capital: $' + (score.value/1000000.).toFixed(3)+'m');
+    if(score.value<0){
+	    alert('You have run out of money and will remain trapped on earth!');
+	    location.reload();
+    }
+}
+
 var dateDisplay=undefined;
 
 Crafty.scene('Game', function() {

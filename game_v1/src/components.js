@@ -75,13 +75,44 @@ Crafty.c('BuyProbe', {
         this.bind('Click', function (data) {
             activeShip.destroy();
             activeShip = Crafty.e('Probe').at(38, 38);
-
-            score.value -= 100000;
-            score.text('Capital: $' + score.value);
+			updateScore(-100000);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
             info_box.y = this._y - 45;
+
+
+ 	    unprobed = '<p>Unexplored!</p>';
+ 	    spec_type = 'Unknown';
+             value = 'Unknown';
+             dist = this.asteroid_data.earth_dist.toFixed(2) + ' AU';
+ 	    deltav = this.asteroid_data.earch_dv.toFixed(2) + ' km/s';
+ 	    minerals = 'Unknown';
+ 	    price_per_kg = 'Unknown';
+ 	    pha = this.asteroid_data.pha=='Y' ? '<p class="hazard">Potentially Hazardous Object!</p>' : '';
+ 	    neo = this.asteroid_data.neo=='Y' ? '<p>Near Earth Object</p>' : '';  
+	    
+            if (this.isprobed)
+	    {
+ 		unprobed = '';
+ 		spec_type = this.asteroid_data.spec;
+ 		value = '$' + this.asteroid_data.price.toLocaleString();
+ 		minerals = MineralsBySpec[this.asteroid_data.spec];
+ 		price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
+ 	    }
+ 	    html = '<p>Asteroid ' + this.asteroid_data.full_name + '</p>';
+ 	    html = html + unprobed;
+ 	    html = html + '<p>Spectral Type: ' + spec_type + '</p>';
+             html = html + '<p>Minerals: ' + minerals + '</p>';
+             html = html + '<p>Price per kg: ' + price_per_kg + '</p>;
+ 	    html = html + '<p>Total Value: ' + value + '</p>';
+             html = html + '<p>Distance: ' + dist + '</p>';
+             html = html + '<p>Delta-V: ' + deltav + '</p>';
+             html = html + neo + pha;
+             info_box.html(html);
+
+
+
             this.attach(info_box);
             info_box.css({ display: 'block' });
 
@@ -116,8 +147,7 @@ Crafty.c('BuyShip', {
         this.bind('Click', function (data) {
             activeShip.destroy();
 			activeShip = Crafty.e('Ship').at(38, 38);
-            score.value -= 300000;
-            score.text('Capital: $' + score.value);
+			updateScore(-300000);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -239,14 +269,6 @@ Crafty.c('ISS', {
 
     }
 });
-function updateScore(val){
-    score.value += val;
-    score.text('Capital: $' + (score.value/1000000.).toFixed(3)+'m');
-    if(score.value<0){
-	    alert('You have run out of money and will remain trapped on earth!');
-	    location.reload();
-    }
-}
 
 
 
