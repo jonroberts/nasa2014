@@ -193,7 +193,53 @@ Crafty.c('Rock', {
         this.destroy();
     }
 });
+Crafty.c('ISS', {
+    init: function () {
+        this.requires('Actor, spr_iss, Mouse');
 
+        var x_speed = Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .text('The ISS')
+            .css({
+                color: '#111',
+                textShadow: '0 -1px 1px #666',
+                'background-color': '#999',
+                width: 175,
+                'border-radius': '5px',
+                padding: '7px 10px',
+                border: '1px solid AAA',
+                'box-shadow': '0 -1px 1px #666',
+                display: 'none'
+            });
+
+        this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+
+            if (this.isprobed) {
+                info_box.text('The ISS');
+            }
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+        });
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
+        });
+		// needs to be set for the ISS
+        this.bind("EnterFrame", function (frame) {
+            if (!Game.paused) {
+                this.move('e', x_speed);
+                if (this._x >= (Game.map_grid.width*Game.map_grid.tile.width)) {
+                    this.destroy();
+                    Crafty.trigger('CreateAsteroid', this);
+                }
+            }
+        });
+
+
+    }
+});
 function updateScore(val){
     score.value += val;
     score.text('Capital: $' + (score.value/1000000.).toFixed(3)+'m');
