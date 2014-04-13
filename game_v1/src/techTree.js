@@ -51,14 +51,14 @@ var tech = {
 	'liquidHydrogenRefining':{
 		'name':'Liquid Hydrogen Refining',
 		'description':'Turn water into liquid hydrogen and oxygen, and you have rocket fuel in space.',
-		'cost':5000000,
+		'cost':1000000,
 		'researched':false,
 		'reqs':['waterMining']
 	},
 	'spaceGasStation':{
 		'name':'Orbiting Gas Station',
 		'description':'Once you have rocket fuel in space, new missions from earth only need to get to the gas station, refuel before venturing further into the cosmos. Required to build a space based hydrogen fuel station.',
-		'cost':5000000,
+		'cost':1000000,
 		'researched':false,
 		'reqs':['liquidHydrogenRefining']
 	},
@@ -144,13 +144,16 @@ function buildTechTree(){
 	}
 }
 function research(key){
-	console.log(key);
 	if(score.value<tech[key].cost){
 		alert('Too little money to perform research!');
 		return false;
 	}
+	if(key=='waterMining'){
+		Crafty.e('BuyShip').at(3,39);
+	}
 	updateScore(-tech[key].cost);
 	tech[key].researched=true;
 	buildTechTree();
+	$('#techTree').hide();
 }
 

@@ -399,7 +399,7 @@ var testGlobal=undefined;
 Crafty.c('Rock', {
     init: function () {
         this.isprobed = false;
-        this.requires('Actor, spr_rock, Mouse');
+        this.requires('Actor, spr_rock,Mouse');
 
         var x_speed = Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
 
@@ -488,6 +488,12 @@ Crafty.c('Rock', {
     },
     hit: function () {
         this.destroy();
+    },
+    hitShip: function (data) {
+		if(data[0]==activeShip){
+			activeShip.destroy();
+			activeShip=undefined;
+		}
     }
 });
 Crafty.c('ISS', {
