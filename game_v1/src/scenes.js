@@ -25,8 +25,8 @@ Crafty.scene('Game', function() {
 
 	this.player = Crafty.e('Probe').at(38, 38);
 
-	this.buyProbe = Crafty.e('BuyProbe').at(1,39);
-	this.buyShip = Crafty.e('BuyShip').at(2,39);
+	this.buyProbe = Crafty.e('BuyProbe').at(1,37);
+	this.buyShip = Crafty.e('BuyShip').at(15,37);
 	this.base = Crafty.e('BaseProngs').at(38,38);
 	this.base = Crafty.e('Base').at(38,39);
 	this.occupied[this.player.at().x][this.player.at().y] = true;

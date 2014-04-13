@@ -25,35 +25,66 @@ Crafty.c('Grid', {
 Crafty.c('Actor', {
     init: function () {
         this.requires('2D, Canvas, Grid');
-    },
+    }
 });
 Crafty.c('Base', {
     init: function () {
         this.requires('Actor, Solid, spr_base');
-    },
+    }
 });
 Crafty.c('BaseProngs', {
     init: function () {
         this.requires('Actor, spr_baseProngs');
-    },
+    }
 });
+//Crafty.c('BuyProbe', {
+//    init: function () {
+//        this.requires('Actor, spr_buy_probe, Mouse');
+//        this.bind('Click', function (data) {
+//            activeShip.destroy();
+//            activeShip = Crafty.e('Probe').at(38, 38);
+//            score.value -= 100000;
+//            score.text('Capital: $' + score.value);
+//        });
+//        this.bind('MouseOver', function (data) {
+//            console.log(this);
+//        });
+//    }
+//});
 Crafty.c('BuyProbe', {
     init: function () {
-        this.requires('Actor, spr_buy_probe, Mouse');
+        this.requires('Actor, spr_buy_probe, Mouse, HTML');
+        this.replace('<div class="buy_button">Buy Probe ($100000)</div>');
         this.bind('Click', function (data) {
             activeShip.destroy();
             activeShip = Crafty.e('Probe').at(38, 38);
+
             score.value -= 100000;
             score.text('Capital: $' + score.value);
         });
         this.bind('MouseOver', function (data) {
             console.log(this);
         });
-    },
+    }
 });
 Crafty.c('BuyShip', {
+//    init: function () {
+//        this.requires('Actor, spr_buy_ship, Mouse');
+//        this.bind('Click', function (data) {
+//            activeShip.destroy();
+//            activeShip = Crafty.e('PlayerCharacter').at(38, 38);
+//
+//            score.value -= 300000;
+//            score.text('Capital: $' + score.value);
+//        });
+//        this.bind('MouseOver', function (data) {
+//            console.log(this);
+//        });
+//    }
     init: function () {
-        this.requires('Actor, spr_buy_ship, Mouse');
+        this.requires('Actor, spr_buy_ship, Mouse, HTML');
+//        this.replace('<div style="background-color: #fff; width: 180px">Buy Ship ($300000)</div>');
+        this.replace('<div class="buy_button">Buy Ship ($300000)</div>');
         this.bind('Click', function (data) {
             activeShip.destroy();
             activeShip = Crafty.e('PlayerCharacter').at(38, 38);
@@ -64,7 +95,7 @@ Crafty.c('BuyShip', {
         this.bind('MouseOver', function (data) {
             console.log(this);
         });
-    },
+    }
 });
 
 // A Rock is just an Actor with a certain sprite
@@ -112,7 +143,7 @@ Crafty.c('Rock', {
     },
     hit: function () {
         this.destroy();
-    },
+    }
 });
 
 // This is the player-controlled character

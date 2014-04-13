@@ -1,64 +1,88 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script src="lib/crafty.js"></script>
-  <script src="src/game.js"></script>
-  <script src="src/components.js"></script>
-  <script src="src/scenes.js"></script>
-  <script>
-    window.addEventListener('load', Game.start);
-  </script>
-  <style type="text/css" media="screen">
-    body {
-      /*background: black;*/
-	  background-image: url('assets/Background2.jpg');
-	  margin:0;
-	  padding:0;
-      text-align: center;
-      color: #DDD;
-      font-family: Arial;
-    }
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="lib/crafty.js"></script>
+    <script src="src/game.js"></script>
+    <script src="src/components.js"></script>
+    <script src="src/scenes.js"></script>
+    <script>
+        window.addEventListener('load', Game.start);
+    </script>
+    <style type="text/css" media="screen">
+        body {
+            /*background: black;*/
+            background-image: url('assets/Background2.jpg');
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #DDD;
+            font-family: Arial;
+        }
 
-    .controls {
-      color: #BBB;
-    }
+        .controls {
+            color: #BBB;
+        }
 
-    #cr-stage { margin: 20px auto 0; }
+        #cr-stage {
+            margin: 20px auto 0;
+        }
 
-    .bottom {
-      font-size: 12px;
-      color: #888;
-      margin-top: 50px;
-    }
+        .bottom {
+            font-size: 12px;
+            color: #888;
+            margin-top: 50px;
+        }
 
-    .bottom a {
-      color: #AAA;
-    }
-    
-    .popup {
-      display: none;
-      margin: 10px 10px;
-      background-color: white;
-    }
-	#info_box {
-	    display: none; /* ensures it’s invisible until it’s called */
-	    position: absolute; /* makes the div go into a position that’s absolute to the browser viewing area */
-	    left: 35%; /* positions the div halfway horizontally */
-	    top: 25%; /* positions the div halfway vertically */
-	    padding: 25px; 
-	    border: 2px solid #454545;
-	    border-radius: 10px;
-	    background-color: #000000;
-	    color: white;
-	    width: 200px;
-	    margin-left: auto;
-	    margin-right: auto;
-	    height: 30%;
-	    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
-	}    
-  </style>
+        .bottom a {
+            color: #AAA;
+        }
+
+        .popup {
+            display: none;
+            margin: 10px 10px;
+            background-color: white;
+        }
+
+        #info_box {
+            display: none; /* ensures it’s invisible until it’s called */
+            position: absolute; /* makes the div go into a position that’s absolute to the browser viewing area */
+            left: 35%; /* positions the div halfway horizontally */
+            top: 25%; /* positions the div halfway vertically */
+            padding: 25px;
+            border: 2px solid #454545;
+            border-radius: 10px;
+            background-color: #000000;
+            color: white;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30%;
+            z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+        }
+
+        .outer-dialog {
+            background-color: #999999;
+            border: 1px solid #AAAAAA;
+            border-radius: 5px;
+            box-shadow: 0 -1px 1px #666666;
+            font-family: sans-serif;
+            margin: 10px 15px;
+        }
+
+        .buy_button {
+            background: -moz-linear-gradient(center top, #84f6e6 0%, #196 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+            border: 2px solid #CCCCCC;
+            border-radius: 25px;
+            box-shadow: 0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+            font-size: 18px;
+            margin: 0 15px;
+            padding: 7px 15px;
+            text-shadow: 0 1px 2px #FFFFFF;
+            width: 180px;
+        }
+
+    </style>
 </head>
 <body>
 <!--  <h2>Asteroiding</h2>
@@ -66,12 +90,13 @@
   <p>Deflect and mine asteroids as they come past earth</p>
 
   <p class="controls">Controls: Use W, A, S, and D or arrow keys to move around.</p>-->
-  <div id="info_box" class="popup">
-	  <h3 id='info_title'></h3>
-	  <div id='info_desc'></div>
-  </div>
-  <div id="cr-stage"></div>
+<div id="info_box" class="popup">
+    <h3 id='info_title'></h3>
 
-  <!--<p class="bottom">Protect earth from the asteroids!</p>-->
+    <div id='info_desc'></div>
+</div>
+<div id="cr-stage"></div>
+
+<!--<p class="bottom">Protect earth from the asteroids!</p>-->
 </body>
 </html>
