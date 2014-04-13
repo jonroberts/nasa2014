@@ -34,7 +34,28 @@ Crafty.scene('Game', function() {
 	activeShip=this.player;
 	this.probes=[];
 
-	for (var i=0; i<asteroids.length; i++) {
+//	for (var i=0; i<asteroids.length; i++) {
+//		x=Math.floor( Math.random()*Game.map_grid.width );
+//		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
+//		var ast = Crafty.e('Rock').at(x,y);
+//		ast.asteroid_data = asteroids[i];
+//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+//		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+//		this.occupied[x][y] = true;
+//	}
+
+//    i = 0;
+//    $(asteroids).each(function(i, asteroid) {
+//        x=Math.floor( Math.random()*Game.map_grid.width );
+//		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+//		var ast = Crafty.e('Rock').at(x,y);
+//		ast.asteroid_data = asteroid;
+//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+//		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+//		this.occupied[x][y] = true;
+//    });
+
+    for (var i=0; i<asteroids.length; i++) {
 		x=Math.floor( Math.random()*Game.map_grid.width );
 		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
@@ -44,9 +65,24 @@ Crafty.scene('Game', function() {
 		this.occupied[x][y] = true;
 	}
 
+    asteroids = [];
+
     Crafty.bind('KeyDown', function(e) {
         if(e.key == Crafty.keys.SPACE) {
             Game.paused = !Game.paused;
+        }
+    });
+
+    this.create_asteroid = this.bind('CreateAsteroid', function() {
+        GetAsteroids(1, 30);
+        for (var i=0; i<asteroids.length; i++) {
+            x=0;
+            y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
+            var ast = Crafty.e('Rock').at(x,y);
+            ast.asteroid_data = asteroids[i];
+            ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+            console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+            this.occupied[x][y] = true;
         }
     });
 
