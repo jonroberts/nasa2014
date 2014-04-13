@@ -9,11 +9,11 @@ Crafty.scene('Game', function() {
 
 	console.log('running')
 	// A 2D array to keep track of all occupied tiles
-	this.occupied = new Array(Game.map_grid.width);
+	Game.occupied = new Array(Game.map_grid.width);
 	for (var i = 0; i < Game.map_grid.width; i++) {
-		this.occupied[i] = new Array(Game.map_grid.height);
+		Game.occupied[i] = new Array(Game.map_grid.height);
 		for (var y = 0; y < Game.map_grid.height; y++) {
-			this.occupied[i][y] = false;
+			Game.occupied[i][y] = false;
 		}
 	}
 	
@@ -29,26 +29,67 @@ Crafty.scene('Game', function() {
 	this.buyShip = Crafty.e('BuyShip').at(15,37);
 	this.base = Crafty.e('BaseProngs').at(38,38);
 	this.base = Crafty.e('Base').at(38,39);
-	this.occupied[this.player.at().x][this.player.at().y] = true;
+	Game.occupied[this.player.at().x][this.player.at().y] = true;
 
 	activeShip=this.player;
 	this.probes=[];
 
-	for (var i=0; i<asteroids.length; i++) {
-		x=Math.floor( Math.random()*Game.map_grid.width );
-		y=Game.map_grid.height - (Math.round( asteroids[i]['earth_dist'] * 200.0 ) + 2);
-		var ast = Crafty.e('Rock').at(x,y);
-		ast.asteroid_data = asteroids[i];
-		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
-		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
-		this.occupied[x][y] = true;
+	for (var i=0; i<Game.asteroids.length; i++) {
+        addAsteroid(Game.asteroids[i]);
 	}
+
+    function addAsteroid(asteroid) {
+        x=Math.floor( Math.random()*Game.map_grid.width );
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+		var ast = Crafty.e('Rock').at(x,y);
+		ast.asteroid_data = asteroid;
+		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+		Game.occupied[x][y] = true;
+    }
+
+    function addSingleAsteroid(asteroid) {
+        x=0;
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
+		var ast = Crafty.e('Rock').at(x,y);
+		ast.asteroid_data = asteroid;
+//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
+		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
+		Game.occupied[x][y] = true;
+    }
 
     Crafty.bind('KeyDown', function(e) {
         if(e.key == Crafty.keys.SPACE) {
             Game.paused = !Game.paused;
         }
     });
+
+    Game.day = 0;
+
+    this.bind('DayLoop', function() {
+        Crafty.e("Delay").delay(function() {
+          Crafty.trigger('IncrementDay', this);
+        }, 100, -1);
+    });
+
+    this.bind('IncrementDay', function() {
+        Game.day += 1;
+        Crafty.trigger('DayLoop', this);
+    });
+    Crafty.trigger('DayLoop', this);
+
+    Crafty.bind('CreateAsteroid', function() {
+        url = 'http://localhost:8100/get_asteroids?limit=' + 10 + '&day=' + Game.day;
+
+        $.ajax({
+            url: url,
+            success: function(data, status, jqXHR) {
+                Game.asteroids=data.results;
+                var asteroid = Game.asteroids[Math.floor(Math.random()*Game.asteroids.length)];
+                addSingleAsteroid(asteroid);
+            },
+            dataType: 'json'
+        });
+    })
 
 }, function() {
 	// Remove our event binding from above so that we don't

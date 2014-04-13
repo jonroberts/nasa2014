@@ -2,6 +2,11 @@ import numpy as np
 import json
 import math
 import gzip
+from random import randrange
+import estimate
+import scoring
+
+
 ##
 #Globals
 asteroids = []
@@ -13,7 +18,7 @@ earth = { 'L': 100.46457166, 'P': 365.256, 'a': 1.00000261, 'e': 0.01671123, 'ep
 ##
 
 #Load asteroid data
-rootdir='./'#'/home/jeff/Work/NASA2014/nasa2014/'
+rootdir='./'#'/home/jeff/Work/NASA2014/nasa2014/astro_api/'
 files=['asteroids_neo.json.gz']
 fs = []
 for name in files:
@@ -21,6 +26,9 @@ for name in files:
 
 for f in fs:
     asteroids = asteroids + json.load(f)
+
+asteroids = filter(lambda x: x['spec']!="?" and x['spec']!='comet',asteroids)
+
 
 ##
 def AsteroidPositionVector(ast,jed=jed_cur):
@@ -112,23 +120,84 @@ def GetClosestAsteroids(limit,day):
         ast[i]['pos_vec_earth_2']=0
     return ast
     
+##
+
+def GetRandomList(limit,leng):
+    ret = []
+    while len(ret) < limit:
+        cur = randrange(leng)
+        if not cur in ret:
+            ret.append(cur)
+    
+    return ret
+
+##
+def GetRandomAsteroids(limit, day):    
+    day = day + jed_apr142014
+    jed_cur = day
+    
+    earth_pos_vec = EarthPositionVector(day)
+    earth_pos_vec_2 = EarthPositionVector(day + 1)
+    
+   
+    sel = GetRandomList(limit,len(asteroids))
+    
+    ast = []
     
     
+    
+    for i in sel:
+        ast.append(asteroids[i])
+    
+    
+    for i,a in enumerate(ast):
+        ast[i]['pos_vec']=AsteroidPositionVector(a,day)
+        ast[i]['pos_vec_earth'] = ast[i]['pos_vec']-earth_pos_vec
+        ast[i]['earth_dist'] = math.sqrt( np.dot(ast[i]['pos_vec_earth'] , ast[i]['pos_vec_earth'] ) )
+        ast[i]['pos_vec_2']=AsteroidPositionVector(a,day+1)
+        ast[i]['pos_vec_earth_2'] = a['pos_vec_2']-earth_pos_vec_2
+        ast[i]['earth_dist_2'] = math.sqrt( np.dot(ast[i]['pos_vec_earth_2'] , ast[i]['pos_vec_earth_2'] ) )
+        ast[i]['earth_dv'] = (ast[i]['earth_dist_2'] - ast[i]['earth_dist']) * 149597871.0 / 86400.0
+        
+        ast[i]['price'] = estimate.valuePerKg(ast[i]['spec']) * scoring.DEFAULT_MASS
+        ast[i]['value'] = estimate.valuePerKg(ast[i]['spec'])
+        ast[i]['pos_vec']=0
+        ast[i]['pos_vec_2']=0
+        ast[i]['pos_vec_earth']=0
+        ast[i]['pos_vec_earth_2']=0
+      
+      
+    return ast
+        
 ##
 
 
+#GetRandomAsteroids(5,0)
 
-def LoadFullAsteroidData():
+##
+
+def LoadFullData():
     rootdir='/home/jeff/Work/NASA2014/nasa2014/'
     files=['asteroids1.json.gz','asteroids2.json.gz','asteroids3.json.gz']
     fs = []
     for name in files:
         fs.append( gzip.open(rootdir + name) )
-
+    
     asteroids = []
+    maxc = 20000
+    c=0
     for f in fs:
+        if c>maxc:
+            break
         for line in f:
-            asteroids.append( json.loads(line) )
+            if c>maxc:
+                break
+            cur_a = json.loads(line)
+            if isinstance(cur_a['diameter'], float):
+                c=c+1
+                asteroids.append( cur_a )
+                if c%1000:
+                    print "DBG",c,cur_a['diameter']
             
     ast_neo = filter(lambda x: x['neo']=='Y', asteroids)
     print len(asteroids), len(ast_neo)
