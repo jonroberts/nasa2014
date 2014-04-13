@@ -38,7 +38,7 @@ Crafty.scene('Game', function() {
         .css({color: "#fff"});
     dateDisplay.value=new Date();
     dateDisplay.text((dateDisplay.value.getMonth()+1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
-
+	
 
 
 
@@ -98,6 +98,7 @@ Crafty.scene('Game', function() {
         Crafty.trigger('DayLoop', this);
     });
     Crafty.trigger('DayLoop', this);
+    
 
     Crafty.bind('CreateAsteroid', function() {
         url = 'http://localhost:8100/get_asteroids?limit=' + 10 + '&day=' + Game.day;
