@@ -84,7 +84,7 @@ Crafty.c('BuyProbe', {
 
  	    unprobed = '<p>Unexplored!</p>';
  	    spec_type = 'Unknown';
-             value = 'Unknown';
+             tval = 'Unknown';
              dist = this.asteroid_data.earth_dist.toFixed(2) + ' AU';
  	    deltav = this.asteroid_data.earch_dv.toFixed(2) + ' km/s';
  	    minerals = 'Unknown';
@@ -96,7 +96,7 @@ Crafty.c('BuyProbe', {
 	    {
  		unprobed = '';
  		spec_type = this.asteroid_data.spec;
- 		value = '$' + this.asteroid_data.price.toLocaleString();
+ 		tval = '$' + this.asteroid_data.price.toLocaleString();
  		minerals = MineralsBySpec[this.asteroid_data.spec];
  		price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
  	    }
@@ -104,8 +104,8 @@ Crafty.c('BuyProbe', {
  	    html = html + unprobed;
  	    html = html + '<p>Spectral Type: ' + spec_type + '</p>';
              html = html + '<p>Minerals: ' + minerals + '</p>';
-             html = html + '<p>Price per kg: ' + price_per_kg + '</p>;
- 	    html = html + '<p>Total Value: ' + value + '</p>';
+             html = html + '<p>Price per kg: ' + price_per_kg + '</p>';
+ 	    html = html + '<p>Total Value: ' + tval + '</p>';
              html = html + '<p>Distance: ' + dist + '</p>';
              html = html + '<p>Delta-V: ' + deltav + '</p>';
              html = html + neo + pha;
