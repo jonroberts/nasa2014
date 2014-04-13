@@ -110,8 +110,9 @@ Crafty.c('Rock', {
             info_box.y = this._y - 45;
 
             if (this.isprobed) {
-                info_box.text('An Asteroid! $' + this.asteroid_data.price);
+                info_box.text('Asteroid ' + this.asteroid_data.full_name + ': $' + this.asteroid_data.price);
             } else {
+                info_box.text('Asteroid ' + this.asteroid_data.full_name);
                 this.isprobed = true;
             }
             this.attach(info_box);
