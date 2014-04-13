@@ -384,8 +384,25 @@ Crafty.c('Rock', {
             });
 
         this.bind('MouseOver', function (data) {
-            info_box.x = this._x + 15;
-            info_box.y = this._y - 45;
+//            console.log(this._x + ',' + (Game.map_grid.width * Game.map_grid.tile.width));
+//            console.log(this._y + ',' + (Game.map_grid.height * Game.map_grid.tile.height));
+
+            if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width) - 275) {
+                info_box.x = this._x - 275;
+            } else {
+                info_box.x = this._x + 20;
+            }
+
+//            if (this._y <= (Game.map_grid.height * Game.map_grid.tile.height) - 400) {
+//                info_box.y = this._y + 450;
+//            } else {
+//                info_box.y = this._y - 45;
+//            }
+
+            info_box.y = this._y - 25;
+
+
+
 
 
             unprobed = '<p>Unexplored!</p>';
@@ -409,7 +426,7 @@ Crafty.c('Rock', {
                 }
                 price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
             }
-            html = '<p>Asteroid ' + this.asteroid_data.full_name + '</p>';
+            html = '<h3 style="border-bottom: 1px solid #111">Asteroid ' + this.asteroid_data.full_name + '</h3>';
             html = html + unprobed;
             html = html + '<p>Spectral Type: ' + spec_type + '</p>';
             html = html + '<p>Minerals: ' + minerals + '</p>';
@@ -450,11 +467,11 @@ Crafty.c('Rock', {
             window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.prov_des, '_blank')
         });
 
-        this.bind("SetSpeed", function(){
-           this.x_speed = Math.abs(this.asteroid_data['earth_dv']/100);
+        this.bind("SetSpeed", function () {
+            this.x_speed = Math.abs(this.asteroid_data['earth_dv'] / 100);
         });
 
-        this.bind("SetRotPer", function() {
+        this.bind("SetRotPer", function () {
             this.rot_per = Math.random() * 180;
 //            if (!this.asteroid_data['rot_per']) {
 //                this.rot_per = (this.asteroid_data['rot_per']*12)/360;
@@ -468,10 +485,10 @@ Crafty.c('Rock', {
         this.destroy();
     },
     hitShip: function (data) {
-		if(data[0]==activeShip){
-			activeShip.destroy();
-			activeShip=undefined;
-		}
+        if (data[0] == activeShip) {
+            activeShip.destroy();
+            activeShip = undefined;
+        }
     }
 });
 Crafty.c('ISS', {
