@@ -75,11 +75,42 @@ Crafty.c('BuyProbe', {
         this.bind('Click', function (data) {
             activeShip.destroy();
             activeShip = Crafty.e('Probe').at(38, 38);
-			updateScore(-100000);
+            updateScore(-100000);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
             info_box.y = this._y - 45;
+
+
+            unprobed = '<p>Unexplored!</p>';
+            spec_type = 'Unknown';
+            value = 'Unknown';
+            dist = this.asteroid_data.earth_dist.toFixed(2) + ' AU';
+            deltav = this.asteroid_data.earch_dv.toFixed(2) + ' km/s';
+            minerals = 'Unknown';
+            price_per_kg = 'Unknown';
+            pha = this.asteroid_data.pha == 'Y' ? '<p class="hazard">Potentially Hazardous Object!</p>' : '';
+            neo = this.asteroid_data.neo == 'Y' ? '<p>Near Earth Object</p>' : '';
+
+            if (this.isprobed) {
+                unprobed = '';
+                spec_type = this.asteroid_data.spec;
+                value = '$' + this.asteroid_data.price.toLocaleString();
+                minerals = MineralsBySpec[this.asteroid_data.spec];
+                price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
+            }
+            html = '<p>Asteroid ' + this.asteroid_data.full_name + '</p>';
+            html = html + unprobed;
+            html = html + '<p>Spectral Type: ' + spec_type + '</p>';
+            html = html + '<p>Minerals: ' + minerals + '</p>';
+            html = html + '<p>Price per kg: ' + price_per_kg + '</p>';
+            html = html + '<p>Total Value: ' + value + '</p>';
+            html = html + '<p>Distance: ' + dist + '</p>';
+            html = html + '<p>Delta-V: ' + deltav + '</p>';
+            html = html + neo + pha;
+            info_box.html(html);
+
+
             this.attach(info_box);
             info_box.css({ display: 'block' });
         });
@@ -111,8 +142,8 @@ Crafty.c('BuyShip', {
 //        this.replace('<div class="buy_button">Buy Ship ($300000)</div>');
         this.bind('Click', function (data) {
             activeShip.destroy();
-			activeShip = Crafty.e('Ship').at(38, 38);
-			updateScore(-300000);
+            activeShip = Crafty.e('Ship').at(38, 38);
+            updateScore(-300000);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -162,7 +193,6 @@ Crafty.c('Rock', {
                 info_box.text('Asteroid ' + this.asteroid_data.prov_des + ': $' + this.asteroid_data.price);
             } else {
                 info_box.text('Asteroid ' + this.asteroid_data.prov_des);
-                this.isprobed = true;
             }
             this.attach(info_box);
             info_box.css({ display: 'block' });
@@ -175,17 +205,17 @@ Crafty.c('Rock', {
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
                 this.move('e', x_speed);
-                if (this._x >= (Game.map_grid.width*Game.map_grid.tile.width)) {
+                if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width)) {
                     this.destroy();
                     Crafty.trigger('CreateAsteroid', this);
                 }
             }
         });
 
-        this.bind("Click", function(e) {
+        this.bind("Click", function (e) {
             e.preventDefault();
             e.stopPropagation();
-            window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.prov_des,'_blank')
+            window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.prov_des, '_blank')
         })
 
     },
@@ -197,7 +227,7 @@ Crafty.c('ISS', {
     init: function () {
         this.requires('Actor, spr_iss, Mouse');
 
-        var x_speed = Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
+        var x_speed = 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
 
         var info_box = Crafty.e("2D, DOM, Text")
             .text('The ISS')
@@ -216,23 +246,20 @@ Crafty.c('ISS', {
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
             info_box.y = this._y - 45;
-
-            if (this.isprobed) {
-                info_box.text('The ISS');
-            }
             this.attach(info_box);
             info_box.css({ display: 'block' });
         });
         this.bind('MouseOut', function (data) {
             info_box.css({display: 'None'});
         });
-		// needs to be set for the ISS
+        // needs to be set for the ISS
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
                 this.move('e', x_speed);
-                if (this._x >= (Game.map_grid.width*Game.map_grid.tile.width)) {
-                    this.destroy();
-                    Crafty.trigger('CreateAsteroid', this);
+                if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width)) {
+                    this.x = -1;
+//                    this.destroy();
+//                    Crafty.trigger('CreateAsteroid', this);
                 }
             }
         });
@@ -240,7 +267,6 @@ Crafty.c('ISS', {
 
     }
 });
-
 
 
 // This is the player-controlled character
@@ -280,7 +306,7 @@ Crafty.c('Ship', {
             }
         });
         this.bind('Moved', function () {
-			updateScore(-100);
+            updateScore(-100);
         });
         this.bind('MouseOver', function (data) {
             console.log('Hey!' + data);
@@ -322,7 +348,7 @@ Crafty.c('Ship', {
     },
     hitDock: function (data) {
         dock = data[0].obj;
-		updateScore(this.cargo);
+        updateScore(this.cargo);
         this.cargo = 0;
     }
 });
@@ -364,8 +390,8 @@ Crafty.c('Probe', {
             }
         });
         this.bind('Moved', function () {
-			updateScore(-50);
-        })
+            updateScore(-50);
+        });
 
         this.bind('MouseOver', function (data) {
             console.log('Hey!' + data);
