@@ -75,9 +75,7 @@ Crafty.c('BuyProbe', {
         this.bind('Click', function (data) {
             activeShip.destroy();
             activeShip = Crafty.e('Probe').at(38, 38);
-
-            score.value -= 100000;
-            score.text('Capital: $' + score.value);
+			updateScore(-100000);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -116,8 +114,7 @@ Crafty.c('BuyShip', {
         this.bind('Click', function (data) {
             activeShip.destroy();
 			activeShip = Crafty.e('Ship').at(38, 38);
-            score.value -= 300000;
-            score.text('Capital: $' + score.value);
+			updateScore(-300000);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -240,14 +237,6 @@ Crafty.c('ISS', {
 
     }
 });
-function updateScore(val){
-    score.value += val;
-    score.text('Capital: $' + (score.value/1000000.).toFixed(3)+'m');
-    if(score.value<0){
-	    alert('You have run out of money and will remain trapped on earth!');
-	    location.reload();
-    }
-}
 
 // This is the player-controlled character
 Crafty.c('Ship', {
