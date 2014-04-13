@@ -54,7 +54,24 @@ Crafty.c('BaseProngs', {
 Crafty.c('BuyProbe', {
     init: function () {
         this.requires('Actor, spr_buy_probe, Mouse, HTML');
-        this.replace('<div class="buy_button">Buy Probe ($100000)</div>');
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .text('Buy Probe ($100000)')
+            .css({
+                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'border': '1px solid #CCCCCC',
+                'border-radius': '15px',
+                'box-shadow': '0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset',
+                'font-size': '12px',
+                'margin': '0 15px',
+                'padding': '5px 20px',
+                'text-shadow': '0 1px 2px #111111',
+                'width': '75px',
+                'alpha': 0.8,
+                'display': 'none'
+            });
+
+//        this.replace('<div class="buy_button">Buy Probe ($100000)</div>');
         this.bind('Click', function (data) {
             activeShip.destroy();
             activeShip = Crafty.e('Probe').at(38, 38);
@@ -63,14 +80,39 @@ Crafty.c('BuyProbe', {
             score.text('Capital: $' + score.value);
         });
         this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+
             console.log(this);
+        });
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
         });
     }
 });
 Crafty.c('BuyShip', {
     init: function () {
         this.requires('Actor, spr_buy_ship, Mouse, HTML');
-        this.replace('<div class="buy_button">Buy Ship ($300000)</div>');
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .text('Buy Ship ($300000)')
+            .css({
+                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'border': '1px solid #CCCCCC',
+                'border-radius': '15px',
+                'box-shadow': '0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset',
+                'font-size': '12px',
+                'margin': '0 15px',
+                'padding': '5px 20px',
+                'text-shadow': '0 1px 2px #111111',
+                'width': '75px',
+                'alpha': 0.8,
+                'display': 'none'
+            });
+
+//        this.replace('<div class="buy_button">Buy Ship ($300000)</div>');
         this.bind('Click', function (data) {
             activeShip.destroy();
 			activeShip = Crafty.e('Ship').at(38, 38);
@@ -78,7 +120,15 @@ Crafty.c('BuyShip', {
             score.text('Capital: $' + score.value);
         });
         this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+
             console.log(this);
+        });
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
         });
     }
 });

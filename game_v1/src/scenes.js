@@ -43,7 +43,6 @@ Crafty.scene('Game', function() {
 		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 200.0 ) + 2);
 		var ast = Crafty.e('Rock').at(x,y);
 		ast.asteroid_data = asteroid;
-//		ast.bind('Click',function(){console.log('clicked');alert('clicked!');});
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
 		Game.occupied[x][y] = true;
     }
