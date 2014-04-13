@@ -59,7 +59,7 @@ Crafty.scene('Game', function() {
 
     function addAsteroid(asteroid) {
         x=Math.floor( Math.random()*Game.map_grid.width );
-		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 10.0 ) + 2);
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 10.0 ) + 7);
 		var ast = Crafty.e('Rock').at(x,y);
 		ast.asteroid_data = asteroid;
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
@@ -68,12 +68,14 @@ Crafty.scene('Game', function() {
 
     function addSingleAsteroid(asteroid) {
         x=0;
-		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 10.0 ) + 2);
+		y=Game.map_grid.height - (Math.round( asteroid['earth_dist'] * 10.0 ) + 7);
 		var ast = Crafty.e('Rock').at(x,y);
 		ast.asteroid_data = asteroid;
 		console.log('Placing asteroid ' + i + ' , ' + x + ' , ' + y);
 		Game.occupied[x][y] = true;
     }
+
+    Crafty.e('ISS').at(0, 37);
 
     Crafty.bind('KeyDown', function(e) {
         if(e.key == Crafty.keys.SPACE) {
@@ -100,7 +102,7 @@ Crafty.scene('Game', function() {
     Crafty.trigger('DayLoop', this);
 
     Crafty.bind('CreateAsteroid', function() {
-        url = 'http://localhost:8100/get_asteroids?limit=' + 10 + '&day=' + Game.day;
+        url = 'http://localhost:8100/get_random_asteroids?limit=' + 10 + '&day=' + Game.day;
 
         $.ajax({
             url: url,
