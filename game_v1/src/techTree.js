@@ -151,6 +151,12 @@ function research(key){
 	if(key=='waterMining'){
 		Crafty.e('BuyShip').at(3,39);
 	}
+	if(key=='liquidHydrogenRefining'){
+		Crafty.e('BuyHRefinery').at(5,39);
+	}
+	if(key=='spaceGasStation'){
+		Crafty.e('BuyGasStation').at(7,39);
+	}
 	updateScore(-tech[key].cost);
 	tech[key].researched=true;
 	buildTechTree();

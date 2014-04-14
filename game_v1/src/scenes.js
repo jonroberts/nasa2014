@@ -4,6 +4,8 @@
 
 var activeShip=undefined;
 var score=undefined;
+var gasStation=undefined;
+
 function updateScore(val){
     score.value += val;
     score.text('Capital: $' + (score.value/1000000.).toFixed(3)+'m');
@@ -30,7 +32,7 @@ Crafty.scene('Game', function() {
 	score = Crafty.e("2D, DOM, Text")
 		.attr({x: Crafty.viewport.width - 180, y: Crafty.viewport.height - 35, w: 200, h:50})
 		.css({color: "#fff"});
-	score.value=11000000;
+	score.value=15000000;
 	updateScore(0);
 
     dateDisplay = Crafty.e("2D, DOM, Text")
@@ -185,8 +187,8 @@ Crafty.scene('Loading', function(){
 		Crafty.sprite(16, 'assets/16x16_forest_1.gif', {
 			spr_base:      [0, 0],
 			spr_baseProngs:[0, 1],
-			spr_2:         [1, 0],
-			spr_3:         [1, 1]
+			spr_h_refinery:         [1, 1],
+			spr_gas_station:         [1, 0]
 		});
 		Crafty.sprite(16, 'assets/16x16_forest_2.gif', {
 			spr_buy_probe:[1, 0],

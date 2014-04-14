@@ -267,6 +267,16 @@ Crafty.c('BaseProngs', {
         this.requires('Actor, spr_baseProngs');
     }
 });
+Crafty.c('HRefinery', {
+    init: function () {
+        this.requires('Actor, spr_h_refinery');
+    }
+});
+Crafty.c('GasStation', {
+    init: function () {
+        this.requires('Actor, spr_gas_station');
+    }
+});
 //Crafty.c('BuyProbe', {
 //    init: function () {
 //        this.requires('Actor, spr_buy_probe, Mouse');
@@ -305,6 +315,77 @@ Crafty.c('BuyProbe', {
             activeShip.destroy();
             activeShip = Crafty.e('Probe').at(38, 38);
             updateScore(-100000);
+        });
+        this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+        });
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
+        });
+    }
+});
+Crafty.c('BuyHRefinery', {
+    init: function () {
+        this.requires('Actor, spr_h_refinery, Mouse, HTML');
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .text('Buy Refinery ($1000000)')
+            .css({
+                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'border': '1px solid #CCCCCC',
+                'border-radius': '15px',
+                'box-shadow': '0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset',
+                'font-size': '12px',
+                'margin': '0 15px',
+                'padding': '5px 20px',
+                'text-shadow': '0 1px 2px #111111',
+                'width': '75px',
+                'alpha': 0.8,
+                'display': 'none'
+            });
+
+        this.bind('Click', function (data) {
+            Crafty.e('HRefinery').at(20, 36);
+            updateScore(-1000000);
+        });
+        this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+        });
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
+        });
+    }
+});
+Crafty.c('BuyGasStation', {
+    init: function () {
+        this.requires('Actor, spr_gas_station, Mouse, HTML');
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .text('Buy Space Gas Station ($1000000)')
+            .css({
+                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'border': '1px solid #CCCCCC',
+                'border-radius': '15px',
+                'box-shadow': '0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset',
+                'font-size': '12px',
+                'margin': '0 15px',
+                'padding': '5px 20px',
+                'text-shadow': '0 1px 2px #111111',
+                'width': '75px',
+                'alpha': 0.8,
+                'display': 'none'
+            });
+
+        this.bind('Click', function (data) {
+            gasStation=Crafty.e('GasStation').at(20, 37);
+            gasStation.fueled=false;
+            updateScore(-1000000);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -401,10 +482,6 @@ Crafty.c('Rock', {
 
             info_box.y = this._y - 25;
 
-
-
-
-
             unprobed = '<p>Unexplored!</p>';
             spec_type = 'Unknown';
             tval = 'Unknown';
@@ -418,13 +495,21 @@ Crafty.c('Rock', {
             if (this.isprobed) {
                 unprobed = '';
                 spec_type = this.asteroid_data.spec;
-                tval = '$' + this.asteroid_data.price.toLocaleString();
                 minerals_key = SPECTRAL_INDEX[this.asteroid_data.spec];
                 minerals = '';
                 for (key in minerals_key) {
                     minerals = minerals + ' ' + key;
                 }
+                if (this.asteroid_data.value < 1E-20)
+                {
+	                this.asteroid_data.value = 0.0;
+                }
+                if (this.asteroid_data.price < 1E-20)
+                {
+	                this.asteroid_data.price = 0.0;
+                }
                 price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
+                tval = '$' + this.asteroid_data.price.toLocaleString();
             }
             html = '<h3 style="border-bottom: 1px solid #111">Asteroid ' + this.asteroid_data.full_name + '</h3>';
             html = html + unprobed;
@@ -493,7 +578,12 @@ Crafty.c('Rock', {
 });
 Crafty.c('ISS', {
     init: function () {
-        this.requires('Actor, spr_iss, Mouse');
+        this.requires('Actor, Collision, spr_iss, Mouse')
+        	.onHit('GasStation',function(data){
+	        	if(gasStation.fueled){
+    	            updateScore(5000);
+	        	}
+        	});
 
         var x_speed = 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
 
@@ -545,6 +635,7 @@ Crafty.c('Ship', {
             .stopOnSolids()
             .onHit('Rock', this.hitAsteroid)
             .onHit('BaseProngs', this.hitDock)
+            .onHit('HRefinery', this.hitHRefinery)
             // These next lines define our four animations
             //  each call to .animate specifies:
             //  - the name of the animation
@@ -616,7 +707,14 @@ Crafty.c('Ship', {
     },
     hitDock: function (data) {
         dock = data[0].obj;
+        updateScore(this.cargo/2.);
+        this.cargo = 0;
+        //this.destroy();
+    },
+    hitHRefinery: function (data) {
+        dock = data[0].obj;
         updateScore(this.cargo);
+        gasStation.fueled=true;
         this.cargo = 0;
     }
 });
