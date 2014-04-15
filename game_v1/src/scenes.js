@@ -19,7 +19,7 @@ var dateDisplay=undefined;
 
 Crafty.scene('Game', function() {
 
-	console.log('running')
+	console.log('running');
 	// A 2D array to keep track of all occupied tiles
 	Game.occupied = new Array(Game.map_grid.width);
 	for (var i = 0; i < Game.map_grid.width; i++) {
@@ -89,21 +89,16 @@ Crafty.scene('Game', function() {
 
     Game.day = 0;
 
-    this.bind('DayLoop', function() {
-        Crafty.e("Delay").delay(function() {
-          Crafty.trigger('IncrementDay', this);
-        }, 100, -1);
-    });
-
-    this.bind('IncrementDay', function() {
-        if (!Game.paused){
-            Game.day += 1;
-            dateDisplay.value.setTime(dateDisplay.value.getTime() + 86400000);
-            dateDisplay.text((dateDisplay.value.getMonth()+1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
-        }
-        Crafty.trigger('DayLoop', this);
-    });
-    Crafty.trigger('DayLoop', this);
+    var timer = Crafty.e('Timer')
+        .interval(100)
+        .callback(function() {
+            if (!Game.paused){
+                Game.day += 1;
+                dateDisplay.value.setTime(dateDisplay.value.getTime() + 86400000);
+                dateDisplay.text((dateDisplay.value.getMonth()+1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
+            }
+        })
+        .start();
 
     Crafty.bind('CreateAsteroid', function() {
         url = 'http://localhost:8100/get_random_asteroids?limit=' + 10 + '&day=' + Game.day;

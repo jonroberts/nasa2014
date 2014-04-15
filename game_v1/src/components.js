@@ -188,10 +188,6 @@ var SPECTRAL_INDEX = {
     'Q': {
         'nickel-iron': 13.315,
     },
-    'R': {
-        'magnesium silicate': 1e-30,
-        'iron silicate': 0,
-    },
     'T': {
         'iron': 6,
     },
@@ -227,7 +223,7 @@ var SPECTRAL_INDEX = {
     },
     'comet': {
     },
-}
+};
 
 
 Crafty.c('Grid', {
@@ -257,40 +253,32 @@ Crafty.c('Actor', {
         this.requires('2D, Canvas, Grid');
     }
 });
+
 Crafty.c('Base', {
     init: function () {
         this.requires('Actor, Solid, spr_base');
     }
 });
+
 Crafty.c('BaseProngs', {
     init: function () {
         this.requires('Actor, spr_baseProngs');
     }
 });
+
 Crafty.c('HRefinery', {
     init: function () {
         this.requires('Actor, spr_h_refinery');
     }
 });
+
 Crafty.c('GasStation', {
     init: function () {
         this.requires('Actor, spr_gas_station');
     }
 });
-//Crafty.c('BuyProbe', {
-//    init: function () {
-//        this.requires('Actor, spr_buy_probe, Mouse');
-//        this.bind('Click', function (data) {
-//            activeShip.destroy();
-//            activeShip = Crafty.e('Probe').at(38, 38);
-//            score.value -= 100000;
-//            score.text('Capital: $' + score.value);
-//        });
-//        this.bind('MouseOver', function (data) {
-//            console.log(this);
-//        });
-//    }
-//});
+
+
 Crafty.c('BuyProbe', {
     init: function () {
         this.requires('Actor, spr_buy_probe, Mouse, HTML');
@@ -327,6 +315,7 @@ Crafty.c('BuyProbe', {
         });
     }
 });
+
 Crafty.c('BuyHRefinery', {
     init: function () {
         this.requires('Actor, spr_h_refinery, Mouse, HTML');
@@ -362,6 +351,7 @@ Crafty.c('BuyHRefinery', {
         });
     }
 });
+
 Crafty.c('BuyGasStation', {
     init: function () {
         this.requires('Actor, spr_gas_station, Mouse, HTML');
@@ -398,6 +388,7 @@ Crafty.c('BuyGasStation', {
         });
     }
 });
+
 Crafty.c('BuyShip', {
     init: function () {
         this.requires('Actor, spr_buy_ship, Mouse, HTML');
@@ -447,9 +438,6 @@ Crafty.c('Rock', {
         this.isprobed = false;
         this.requires('Actor, spr_rock,Mouse');
 
-//        var x_speed = Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
-
-
         var info_box = Crafty.e("2D, DOM, Text")
             .text('An Asteroid!')
             .css({
@@ -473,12 +461,6 @@ Crafty.c('Rock', {
             } else {
                 info_box.x = this._x + 20;
             }
-
-//            if (this._y <= (Game.map_grid.height * Game.map_grid.tile.height) - 400) {
-//                info_box.y = this._y + 450;
-//            } else {
-//                info_box.y = this._y - 45;
-//            }
 
             info_box.y = this._y - 25;
 
@@ -536,7 +518,6 @@ Crafty.c('Rock', {
         });
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
-//                this.move('e', x_speed);
                 this.move('e', this.x_speed);
 //                this.rotation += this.rot_per;
                 if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width)) {
@@ -556,19 +537,21 @@ Crafty.c('Rock', {
             this.x_speed = Math.abs(this.asteroid_data['earth_dv'] / 100);
         });
 
-        this.bind("SetRotPer", function () {
-            this.rot_per = Math.random() * 180;
-//            if (!this.asteroid_data['rot_per']) {
-//                this.rot_per = (this.asteroid_data['rot_per']*12)/360;
-//            } else {
-//                this.rot_per = 0;
-//            }
-        })
+//        this.bind("SetRotPer", function () {
+//            this.rot_per = Math.random() * 180;
+////            if (!this.asteroid_data['rot_per']) {
+////                this.rot_per = (this.asteroid_data['rot_per']*12)/360;
+////            } else {
+////                this.rot_per = 0;
+////            }
+//        })
 
     },
+
     hit: function () {
         this.destroy();
     },
+
     hitShip: function (data) {
         if (data[0] == activeShip) {
             activeShip.destroy();
@@ -576,6 +559,7 @@ Crafty.c('Rock', {
         }
     }
 });
+
 Crafty.c('ISS', {
     init: function () {
         this.requires('Actor, Collision, spr_iss, Mouse')
@@ -607,17 +591,17 @@ Crafty.c('ISS', {
             this.attach(info_box);
             info_box.css({ display: 'block' });
         });
+
         this.bind('MouseOut', function (data) {
             info_box.css({display: 'None'});
         });
+
         // needs to be set for the ISS
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
                 this.move('e', x_speed);
                 if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width)) {
                     this.x = -1;
-//                    this.destroy();
-//                    Crafty.trigger('CreateAsteroid', this);
                 }
             }
         });
@@ -630,7 +614,77 @@ Crafty.c('ISS', {
 // This is the player-controlled character
 Crafty.c('Ship', {
     init: function () {
-        this.requires('Actor, Fourway, Collision, spr_player, SpriteAnimation, Mouse')
+        this.requires('Actor, Controls, Collision, spr_player, SpriteAnimation, Mouse')
+        .attr({move: {left: false, right: false, up: false, down: false}, xspeed: 0, yspeed: 0, decay: 0.9, score: 0})
+            .origin("center")
+            .bind("keydown", function(e) {
+                //on keydown, set the move booleans
+                if(e.keyCode === Crafty.keys.RIGHT_ARROW) {
+                    this.move.right = true;
+                } else if(e.keyCode === Crafty.keys.LEFT_ARROW) {
+                    this.move.left = true;
+                } else if(e.keyCode === Crafty.keys.UP_ARROW) {
+                    this.move.up = true;
+                }
+            }).bind("keyup", function(e) {
+                //on key up, set the move booleans to false
+                if(e.keyCode === Crafty.keys.RIGHT_ARROW) {
+                    this.move.right = false;
+                } else if(e.keyCode === Crafty.keys.LEFT_ARROW) {
+                    this.move.left = false;
+                } else if(e.keyCode === Crafty.keys.UP_ARROW) {
+                    this.move.up = false;
+                }
+            }).bind("enterframe", function() {
+                if(this.move.right) this.rotation += 5;
+                if(this.move.left) this.rotation -= 5;
+
+                //acceleration and movement vector
+                var vx = Math.sin(this._rotation * Math.PI / 180) * 0.1,
+                    vy = Math.cos(this._rotation * Math.PI / 180) * 0.1;
+
+                //if the move up is true, increment the y/xspeeds
+                if(this.move.up) {
+                    this.yspeed -= vy;
+                    this.xspeed += vx;
+                } else {
+                    //if released, slow down the ship
+                    this.xspeed *= this.decay;
+                    this.yspeed *= this.decay;
+                }
+
+                //move the ship by the x and y speeds or movement vector
+                this.x += this.xspeed;
+                this.y += this.yspeed;
+
+                //if ship goes out of bounds, put him back
+                if(this._x > Crafty.viewport.width) {
+                    this.x = -64;
+                }
+                if(this._x < -64) {
+                    this.x =  Crafty.viewport.width;
+                }
+                if(this._y > Crafty.viewport.height) {
+                    this.y = -64;
+                }
+                if(this._y < -64) {
+                    this.y = Crafty.viewport.height;
+                }
+
+//                //if all asteroids are gone, start again with more
+//                if(asteroidCount <= 0) {
+//                    initRocks(lastCount, lastCount * 2);
+//                }
+            }).collision()
+            .onHit('Rock', this.hitAsteroid)
+            .onHit('BaseProngs', this.hitDock)
+            .onHit('HRefinery', this.hitHRefinery);
+
+
+
+
+        /*
+        this.requires('Actor, Controls, Collision, spr_player, SpriteAnimation, Mouse')
             .fourway(2)
             .stopOnSolids()
             .onHit('Rock', this.hitAsteroid)
@@ -664,6 +718,9 @@ Crafty.c('Ship', {
                 }
             }
         });
+
+
+         */
         this.bind('Moved', function () {
             updateScore(-100);
         });
@@ -693,11 +750,7 @@ Crafty.c('Ship', {
         }
     },
 
-    // Respond to this player visiting a village
-    visitVillage: function (data) {
-        villlage = data[0].obj;
-        villlage.visit();
-    },
+    // Respond to this ship hitting an asteroid
     hitAsteroid: function (data) {
         this.stopMovement();
         asteroid = data[0].obj;
@@ -784,11 +837,7 @@ Crafty.c('Probe', {
         }
     },
 
-    // Respond to this player visiting a village
-    /*visitVillage: function(data) {
-     villlage = data[0].obj;
-     villlage.visit();
-     },*/
+    // Respond to the probe hitting an asteroid
     hitAsteroid: function (data) {
         asteroid = data[0].obj;
         asteroid.isprobed = true;
@@ -809,4 +858,69 @@ Crafty.c('Village', {
         Crafty.audio.play('knock');
         Crafty.trigger('VillageVisited', this);
     }
+});
+
+
+/**
+ * Creates a timer component, which calls a function on an interval.
+ * The example below prints "!" once per second for five seconds, and
+ * then stops.
+ *
+ var timer = Crafty.e('Timer')
+ .interval(1000)
+ .callback(function() {
+			console.debug("!")
+			timer.count = typeof(timer.count) == 'undefined' ? 1 : timer.count + 1;
+			if (timer.count == 5) {
+				timer.stop();
+			}
+		})
+ .start();
+ */
+Crafty.c('Timer', {
+
+    init: function() {
+        this.intervalMs = 0;
+        this._state = "stopped";
+
+        this.bind('Pause', function() {
+            this._oldState = this._state;
+            this.stop();
+        });
+
+        this.bind('Unpause', function() {
+            if (this._oldState == "running") {
+                this.start();
+            }
+        });
+    },
+
+    // Sets how often to trigger (in milliseconds)
+    interval: function(milliseconds) {
+        this.intervalMs = milliseconds;
+        return this;
+    },
+
+    // Sets the function to call when time elapses
+    callback: function(callback) {
+        this.callback = callback;
+        return this;
+    },
+
+    // Starts running the timer
+    start: function() {
+        var self = this;
+        this._ref = setInterval(function() { self.callback() }, this.intervalMs);
+        this._state = "running";
+        return this;
+    },
+
+    // Stops and cleans up the timer
+    stop: function() {
+        clearInterval(this._ref);
+        delete this._ref;
+        this._state = "stopped";
+        return this;
+    }
+
 });
