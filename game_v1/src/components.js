@@ -373,8 +373,8 @@ Crafty.c('BuyGasStation', {
             });
 
         this.bind('Click', function (data) {
-            gasStation=Crafty.e('GasStation').at(20, 37);
-            gasStation.fueled=false;
+            gasStation = Crafty.e('GasStation').at(20, 37);
+            gasStation.fueled = false;
             updateScore(-1000000);
         });
         this.bind('MouseOver', function (data) {
@@ -482,13 +482,11 @@ Crafty.c('Rock', {
                 for (key in minerals_key) {
                     minerals = minerals + ' ' + key;
                 }
-                if (this.asteroid_data.value < 1E-20)
-                {
-	                this.asteroid_data.value = 0.0;
+                if (this.asteroid_data.value < 1E-20) {
+                    this.asteroid_data.value = 0.0;
                 }
-                if (this.asteroid_data.price < 1E-20)
-                {
-	                this.asteroid_data.price = 0.0;
+                if (this.asteroid_data.price < 1E-20) {
+                    this.asteroid_data.price = 0.0;
                 }
                 price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
                 tval = '$' + this.asteroid_data.price.toLocaleString();
@@ -563,11 +561,11 @@ Crafty.c('Rock', {
 Crafty.c('ISS', {
     init: function () {
         this.requires('Actor, Collision, spr_iss, Mouse')
-        	.onHit('GasStation',function(data){
-	        	if(gasStation.fueled){
-    	            updateScore(5000);
-	        	}
-        	});
+            .onHit('GasStation', function (data) {
+                if (gasStation.fueled) {
+                    updateScore(5000);
+                }
+            });
 
         var x_speed = 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
 
@@ -615,36 +613,42 @@ Crafty.c('ISS', {
 Crafty.c('Ship', {
     init: function () {
         this.requires('Actor, Controls, Collision, spr_player, SpriteAnimation, Mouse')
-        .attr({move: {left: false, right: false, up: false, down: false}, xspeed: 0, yspeed: 0, decay: 0.9, score: 0})
+            .attr({
+                move: {left: false, right: false, up: false, down: false},
+                xspeed: 0, yspeed: 0,
+                decay: 0.95, // deceleration when keys are released
+                speed_factor: 0.04, // the maximum velocity of the ship
+                cargo: 0
+            })
             .origin("center")
-            .bind("keydown", function(e) {
+            .bind("KeyDown", function (e) {
                 //on keydown, set the move booleans
-                if(e.keyCode === Crafty.keys.RIGHT_ARROW) {
+                if (e.key === Crafty.keys.RIGHT_ARROW) {
                     this.move.right = true;
-                } else if(e.keyCode === Crafty.keys.LEFT_ARROW) {
+                } else if (e.key === Crafty.keys.LEFT_ARROW) {
                     this.move.left = true;
-                } else if(e.keyCode === Crafty.keys.UP_ARROW) {
+                } else if (e.key === Crafty.keys.UP_ARROW) {
                     this.move.up = true;
                 }
-            }).bind("keyup", function(e) {
+            }).bind("KeyUp", function (e) {
                 //on key up, set the move booleans to false
-                if(e.keyCode === Crafty.keys.RIGHT_ARROW) {
+                if (e.key === Crafty.keys.RIGHT_ARROW) {
                     this.move.right = false;
-                } else if(e.keyCode === Crafty.keys.LEFT_ARROW) {
+                } else if (e.key === Crafty.keys.LEFT_ARROW) {
                     this.move.left = false;
-                } else if(e.keyCode === Crafty.keys.UP_ARROW) {
+                } else if (e.key === Crafty.keys.UP_ARROW) {
                     this.move.up = false;
                 }
-            }).bind("enterframe", function() {
-                if(this.move.right) this.rotation += 5;
-                if(this.move.left) this.rotation -= 5;
+            }).bind("EnterFrame", function () {
+                if (this.move.right) this.rotation += 5;
+                if (this.move.left) this.rotation -= 5;
 
                 //acceleration and movement vector
-                var vx = Math.sin(this._rotation * Math.PI / 180) * 0.1,
-                    vy = Math.cos(this._rotation * Math.PI / 180) * 0.1;
+                var vx = Math.sin(this._rotation * Math.PI / 180) * this.speed_factor,
+                    vy = Math.cos(this._rotation * Math.PI / 180) * this.speed_factor;
 
                 //if the move up is true, increment the y/xspeeds
-                if(this.move.up) {
+                if (this.move.up) {
                     this.yspeed -= vy;
                     this.xspeed += vx;
                 } else {
@@ -657,81 +661,34 @@ Crafty.c('Ship', {
                 this.x += this.xspeed;
                 this.y += this.yspeed;
 
-                //if ship goes out of bounds, put him back
-                if(this._x > Crafty.viewport.width) {
-                    this.x = -64;
+                //if ship goes out of bounds, it's gone
+                // TODO Should have a message appear
+                if (this._x > Crafty.viewport.width) {
+                    this.destroy()
                 }
-                if(this._x < -64) {
-                    this.x =  Crafty.viewport.width;
+                if (this._x < -64) {
+//                    this.x = Crafty.viewport.width;
+                    this.destroy()
                 }
-                if(this._y > Crafty.viewport.height) {
-                    this.y = -64;
+                if (this._y > Crafty.viewport.height) {
+//                    this.y = -64;
+                    this.destroy()
                 }
-                if(this._y < -64) {
-                    this.y = Crafty.viewport.height;
+                if (this._y < -64) {
+//                    this.y = Crafty.viewport.height;
+                    this.destroy()
                 }
-
-//                //if all asteroids are gone, start again with more
-//                if(asteroidCount <= 0) {
-//                    initRocks(lastCount, lastCount * 2);
-//                }
-            }).collision()
+            })
+            .bind('Moved', function () {
+                updateScore(-100);
+            })
+            .bind('Click', function (data) {
+                console.log(this);
+            })
+            .collision()
             .onHit('Rock', this.hitAsteroid)
             .onHit('BaseProngs', this.hitDock)
             .onHit('HRefinery', this.hitHRefinery);
-
-
-
-
-        /*
-        this.requires('Actor, Controls, Collision, spr_player, SpriteAnimation, Mouse')
-            .fourway(2)
-            .stopOnSolids()
-            .onHit('Rock', this.hitAsteroid)
-            .onHit('BaseProngs', this.hitDock)
-            .onHit('HRefinery', this.hitHRefinery)
-            // These next lines define our four animations
-            //  each call to .animate specifies:
-            //  - the name of the animation
-            //  - the x and y coordinates within the sprite
-            //     map at which the animation set begins
-            //  - the number of animation frames *in addition to* the first one
-            .animate('PlayerMovingUp', 0, 0, 2)
-            .animate('PlayerMovingRight', 0, 1, 2)
-            .animate('PlayerMovingDown', 0, 2, 2)
-            .animate('PlayerMovingLeft', 0, 3, 2);
-
-        // Watch for a change of direction and switch animations accordingly
-        var animation_speed = 4;
-        this.bind('NewDirection', function (data) {
-            if (!Game.paused) {
-                if (data.x > 0) {
-                    this.animate('PlayerMovingRight', animation_speed, -1);
-                } else if (data.x < 0) {
-                    this.animate('PlayerMovingLeft', animation_speed, -1);
-                } else if (data.y > 0) {
-                    this.animate('PlayerMovingDown', animation_speed, -1);
-                } else if (data.y < 0) {
-                    this.animate('PlayerMovingUp', animation_speed, -1);
-                } else {
-                    this.stop();
-                }
-            }
-        });
-
-
-         */
-        this.bind('Moved', function () {
-            updateScore(-100);
-        });
-        this.bind('MouseOver', function (data) {
-            console.log('Hey!' + data);
-        });
-        this.bind('Click', function (data) {
-            console.log(this);
-        });
-
-        this.cargo = 0;
     },
 
     // Registers a stop-movement function to be called when
@@ -760,14 +717,14 @@ Crafty.c('Ship', {
     },
     hitDock: function (data) {
         dock = data[0].obj;
-        updateScore(this.cargo/2.);
+        updateScore(this.cargo / 2.);
         this.cargo = 0;
         //this.destroy();
     },
     hitHRefinery: function (data) {
         dock = data[0].obj;
         updateScore(this.cargo);
-        gasStation.fueled=true;
+        gasStation.fueled = true;
         this.cargo = 0;
     }
 });
@@ -775,50 +732,162 @@ Crafty.c('Ship', {
 // This is the player-controlled character
 Crafty.c('Probe', {
     init: function () {
-        this.requires('Actor, Fourway, Collision, spr_probe, SpriteAnimation, Mouse')
-            .fourway(2)
-            .stopOnSolids()
-            .onHit('Rock', this.hitAsteroid)
-            // These next lines define our four animations
-            //  each call to .animate specifies:
-            //  - the name of the animation
-            //  - the x and y coordinates within the sprite
-            //     map at which the animation set begins
-            //  - the number of animation frames *in addition to* the first one
-            .animate('PlayerMovingUp', 0, 0, 2)
-            .animate('PlayerMovingRight', 0, 0, 2)
-            .animate('PlayerMovingDown', 0, 0, 2)
-            .animate('PlayerMovingLeft', 0, 0, 2);
-
-        // Watch for a change of direction and switch animations accordingly
-        var animation_speed = 4;
-        this.bind('NewDirection', function (data) {
-            if (!Game.paused) {
-                console.log('Game is paused');
-                if (data.x > 0) {
-                    this.animate('PlayerMovingRight', animation_speed, -1);
-                } else if (data.x < 0) {
-                    this.animate('PlayerMovingLeft', animation_speed, -1);
-                } else if (data.y > 0) {
-                    this.animate('PlayerMovingDown', animation_speed, -1);
-                } else if (data.y < 0) {
-                    this.animate('PlayerMovingUp', animation_speed, -1);
-                } else {
-                    this.stop();
+        this.requires('Actor, Controls, Collision, spr_probe, SpriteAnimation, Mouse')
+            .attr({
+                move: {left: false, right: false, up: false, down: false},
+                xspeed: 0, yspeed: 0, speed: 0,
+                decay: 0.9, // deceleration rate
+                speed_factor: 0.00001, // the acceleration rate
+                max_speed: .0001
+            })
+            .origin("center")
+            .bind("KeyDown", function (e) {
+                console.log('keydown');
+                //on keydown, set the move booleans
+                if (e.key === Crafty.keys.RIGHT_ARROW) {
+                    this.move.right = true;
+                } else if (e.key === Crafty.keys.LEFT_ARROW) {
+                    this.move.left = true;
+                } else if (e.key === Crafty.keys.UP_ARROW) {
+                    this.move.up = true;
+                } else if (e.key === Crafty.keys.DOWN_ARROW) {
+                    this.move.down = true;
                 }
-            }
-        });
-        this.bind('Moved', function () {
-            updateScore(-50);
-        });
+            }).bind("KeyUp", function (e) {
+                //on key up, set the move booleans to false
+                if (e.key === Crafty.keys.RIGHT_ARROW) {
+                    this.move.right = false;
+                } else if (e.key === Crafty.keys.LEFT_ARROW) {
+                    this.move.left = false;
+                } else if (e.key === Crafty.keys.UP_ARROW) {
+                    this.move.up = false;
+                } else if (e.key === Crafty.keys.DOWN_ARROW) {
+                    this.move.down = false;
+                }
+            }).bind("EnterFrame", function () {
+                var y_dir = 0;
+                var x_dir = 0;
 
-        this.bind('MouseOver', function (data) {
-            console.log('Hey!' + data);
-        });
-        this.bind('Click', function (data) {
-            console.log(this);
-        })
+                if (this.move.right) x_dir = 1;
+                else if (this.move.left) x_dir = -1;
+//                else x_dir = 0;
+
+                // the probe rotates by a different rate moving up/down just for variety. Lots of room for improvement
+                if (this.move.up) y_dir = 1;
+                else if (this.move.down) y_dir = -1;
+//                else y_dir = 0;
+
+                this.speed = Math.sqrt(Math.pow(this.xspeed, 2) + Math.pow(this.yspeed, 2));
+                if (this.speed < 1E-10) this.speed = 0;
+
+                if (!(y_dir != 0 || x_dir != 0) && this.speed == 0) {
+                    console.log('returning');
+                    return;
+                }
+
+//                console.log(this.speed);
+//                var vx = 0, vy = 0;
+//                if (this.speed < this.max_speed) {
+//                    vx = x_dir * this.speed_factor;
+//                    vy = y_dir * this.speed_factor;
+//                } else {
+//                    console.log('MAX SPEED: ' + this.max_speed);
+//                    vx = 0;
+//                    vy = 0;
+//                    this.speed = this.max_speed;
+//                }
+
+                var vx = x_dir * this.speed_factor;
+                var vy = y_dir * this.speed_factor;
+
+                // increment the y/xspeeds according to the move up/down buttons
+                if (this.move.up || this.move.down || this.move.right || this.move.left) {
+                    this.yspeed -= vy;
+                    this.xspeed += vx;
+                } else {
+                    //if released, slow down the ship
+                    this.xspeed *= this.decay;
+                    this.yspeed *= this.decay;
+                }
+
+                //move the ship by the x and y speeds or movement vector
+                this.x += this.xspeed;
+                this.y += this.yspeed;
+
+                //if ship goes out of bounds, it's gone
+                // TODO Should have a message appear
+                if (this._x > Crafty.viewport.width) {
+                    this.destroy()
+                }
+                if (this._x < -64) {
+//                    this.x = Crafty.viewport.width;
+                    this.destroy()
+                }
+                if (this._y > Crafty.viewport.height) {
+//                    this.y = -64;
+                    this.destroy()
+                }
+                if (this._y < -64) {
+//                    this.y = Crafty.viewport.height;
+                    this.destroy()
+                }
+            })
+            .bind('Moved', function () {
+                updateScore(-50);
+            })
+            .bind('Click', function (data) {
+                console.log(this);
+            })
+            .collision()
+            .onHit('Rock', this.hitAsteroid);
     },
+
+
+//    init: function () {
+//        this.requires('Actor, Fourway, Collision, spr_probe, SpriteAnimation, Mouse')
+//            .fourway(2)
+//            .stopOnSolids()
+//            .onHit('Rock', this.hitAsteroid)
+//            // These next lines define our four animations
+//            //  each call to .animate specifies:
+//            //  - the name of the animation
+//            //  - the x and y coordinates within the sprite
+//            //     map at which the animation set begins
+//            //  - the number of animation frames *in addition to* the first one
+//            .animate('PlayerMovingUp', 0, 0, 2)
+//            .animate('PlayerMovingRight', 0, 0, 2)
+//            .animate('PlayerMovingDown', 0, 0, 2)
+//            .animate('PlayerMovingLeft', 0, 0, 2);
+//
+//        // Watch for a change of direction and switch animations accordingly
+//        var animation_speed = 4;
+//        this.bind('NewDirection', function (data) {
+//            if (!Game.paused) {
+//                console.log('Game is paused');
+//                if (data.x > 0) {
+//                    this.animate('PlayerMovingRight', animation_speed, -1);
+//                } else if (data.x < 0) {
+//                    this.animate('PlayerMovingLeft', animation_speed, -1);
+//                } else if (data.y > 0) {
+//                    this.animate('PlayerMovingDown', animation_speed, -1);
+//                } else if (data.y < 0) {
+//                    this.animate('PlayerMovingUp', animation_speed, -1);
+//                } else {
+//                    this.stop();
+//                }
+//            }
+//        });
+//        this.bind('Moved', function () {
+//            updateScore(-50);
+//        });
+//
+//        this.bind('MouseOver', function (data) {
+//            console.log('Hey!' + data);
+//        });
+//        this.bind('Click', function (data) {
+//            console.log(this);
+//        })
+//    },
 
     // Registers a stop-movement function to be called when
     //  this entity hits an entity with the "Solid" component
@@ -879,16 +948,16 @@ Crafty.c('Village', {
  */
 Crafty.c('Timer', {
 
-    init: function() {
+    init: function () {
         this.intervalMs = 0;
         this._state = "stopped";
 
-        this.bind('Pause', function() {
+        this.bind('Pause', function () {
             this._oldState = this._state;
             this.stop();
         });
 
-        this.bind('Unpause', function() {
+        this.bind('Unpause', function () {
             if (this._oldState == "running") {
                 this.start();
             }
@@ -896,27 +965,29 @@ Crafty.c('Timer', {
     },
 
     // Sets how often to trigger (in milliseconds)
-    interval: function(milliseconds) {
+    interval: function (milliseconds) {
         this.intervalMs = milliseconds;
         return this;
     },
 
     // Sets the function to call when time elapses
-    callback: function(callback) {
+    callback: function (callback) {
         this.callback = callback;
         return this;
     },
 
     // Starts running the timer
-    start: function() {
+    start: function () {
         var self = this;
-        this._ref = setInterval(function() { self.callback() }, this.intervalMs);
+        this._ref = setInterval(function () {
+            self.callback()
+        }, this.intervalMs);
         this._state = "running";
         return this;
     },
 
     // Stops and cleans up the timer
-    stop: function() {
+    stop: function () {
         clearInterval(this._ref);
         delete this._ref;
         this._state = "stopped";
