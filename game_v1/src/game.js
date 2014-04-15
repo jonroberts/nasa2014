@@ -14,7 +14,7 @@ Game = {
     paused: false,
 
     asteroids: undefined,
-
+    framerate_ms: 100,
     day: 0,
 
 	// The total width of the game screen. Since our grid takes up the entire screen

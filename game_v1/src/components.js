@@ -436,7 +436,8 @@ var testGlobal = undefined;
 Crafty.c('Rock', {
     init: function () {
         this.isprobed = false;
-        this.requires('Actor, spr_rock,Mouse');
+        this.requires('Actor, spr_rock, Mouse')
+            .origin('center');
 
         var info_box = Crafty.e("2D, DOM, Text")
             .text('An Asteroid!')
@@ -516,7 +517,9 @@ Crafty.c('Rock', {
         });
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
-                this.move('e', this.x_speed);
+//                this.move('e', this.x_speed);
+                this.x += this.x_speed;
+                this.rotation += (Game.framerate_ms/(10*this.asteroid_data['rot_per']));
 //                this.rotation += this.rot_per;
                 if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width)) {
                     this.destroy();
@@ -537,7 +540,7 @@ Crafty.c('Rock', {
 
 //        this.bind("SetRotPer", function () {
 //            this.rot_per = Math.random() * 180;
-////            if (!this.asteroid_data['rot_per']) {
+////            if (this.asteroid_data['rot_per']) {
 ////                this.rot_per = (this.asteroid_data['rot_per']*12)/360;
 ////            } else {
 ////                this.rot_per = 0;

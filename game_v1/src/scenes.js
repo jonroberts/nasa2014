@@ -90,7 +90,7 @@ Crafty.scene('Game', function() {
     Game.day = 0;
 
     var timer = Crafty.e('Timer')
-        .interval(100)
+        .interval(Game.framerate_ms)
         .callback(function() {
             if (!Game.paused){
                 Game.day += 1;
