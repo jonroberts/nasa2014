@@ -12,7 +12,7 @@ Game = {
 	},
 
     paused: false,
-
+    starting_money: 15000000,
     asteroids: undefined,
     framerate_ms: 100,
     day: 0,
@@ -29,13 +29,22 @@ Game = {
 		return this.map_grid.height * this.map_grid.tile.height;
 	},
 
+//    relative_width: function() {
+//        return this.width() + (Crafty.viewport.width/2);
+//    },
+
 	// Initialize and start our game
 	start: function() {
 		// Start crafty and set a background color so that we can see it's working
-		Crafty.init(Game.width(), Game.height());
-		Crafty.background('rgba(0, 0, 0, 0)');
 
-		// Simply start the "Loading" scene to get things going
+        if (window.innerWidth < this.width()) {
+            Crafty.init(Crafty.DOM.window.width, Crafty.DOM.window.height);
+        } else {
+            Crafty.init(this.width(),this.height());
+        }
+//        Crafty.canvas.init();
+
+        // Simply start the "Loading" scene to get things going
 		Crafty.scene('Loading');
 	}
 };

@@ -11,7 +11,7 @@ function StartAsteroids(limit,day) {
 }
 
 function success_start(data, textStatus, jqXHR) {
-	console.log('APICALL: ' + textStatus);
+//	console.log('APICALL: ' + textStatus);
 	Game.asteroids=data.results;
 	Game.start();
 }
