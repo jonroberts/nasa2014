@@ -33,19 +33,28 @@ Crafty.scene('Game', function () {
     score = Crafty.e("2D, DOM, Text")
         .attr({x: Game.width() - 175, y: Game.height() - 25, w: 200, h: 50, value: Game.starting_money})
         .css({color: "#fff", 'z-index': 100})
-        .text('Capital: $' + (Game.starting_money / 1000000.).toFixed(3) + 'm');
+        .text('Capital: $' + (Game.starting_money / 1000000.).toFixed(3) + 'm')
+        .textFont({ size: '14px' });
 
     dateDisplay = Crafty.e("2D, DOM, Text")
-        .attr({x: Game.width() - 175, y: 10, w: 200, h: 50})
-        .css({color: "#fff"});
+        .attr({x: Game.width() - 170, y: 10, w: 200, h: 50})
+        .css({color: "#fff"})
+        .textFont({ size: '14px' });
     dateDisplay.value = new Date();
     dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
 
-    researchButton = Crafty.e("2D, DOM, Text, researchButton")
+    researchButton = Crafty.e("2D, DOM, Text, researchButton, Mouse")
         .attr({x: 10, y: 10, w: 20, h: 15})
         .css({'padding-top': '5px'})
         .textFont({ size: '30px'})
-        .text('*');
+        .text('*')
+        .bind('Click', function() {
+            buildTechTree();
+            var offset = $('#' + researchButton.getDomId()).offset();
+            $('#techTree')
+                .css({'top': offset.top + 20, 'left': offset.left + 20})
+                .toggle();
+        });
 
     this.player = Crafty.e('Probe').at(38, 38);
 

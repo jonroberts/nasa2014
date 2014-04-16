@@ -216,7 +216,7 @@ Crafty.c('Rock', {
 //            .gravityConst(2);
 
         var info_box = Crafty.e("2D, DOM, Text")
-            .attr({w: 250, alpha: 0.8})
+            .attr({w: 200, alpha: 0.8})
             .text('An Asteroid!')
             .css({
                 'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
@@ -233,13 +233,20 @@ Crafty.c('Rock', {
 //            console.log(this._x + ',' + (Game.map_grid.width * Game.map_grid.tile.width));
 //            console.log(this._y + ',' + (Game.map_grid.height * Game.map_grid.tile.height));
 
-            if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width) - 275) {
-                info_box.x = this._x - 275;
+            if (this._x >= Game.width() - 250) {
+                info_box.x = this._x - 225;
             } else {
-                info_box.x = this._x + 20;
+                info_box.x = this._x + 25;
             }
 
-            info_box.y = this._y - 25;
+            if (this._y >= Game.height() / 2 ) {
+                info_box.origin('bottom center');
+                info_box.y = this._y + 50;
+            } else {
+                info_box.origin('top center');
+                info_box.y = this._y - 50;
+            }
+
 
             unprobed = '<p>Unexplored!</p>';
             spec_type = 'Unknown';
@@ -294,13 +301,13 @@ Crafty.c('Rock', {
                 this.rotation += this.rotation_rate;
 
                 info_box.rotation = 0;
-                if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width) - 275) {
-                    info_box.x = this._x - 275;
+                if (this._x >= (Game.width()) - 250) {
+                    info_box.x = this._x - 225;
                 } else {
-                    info_box.x = this._x + 20;
+                    info_box.x = this._x + 25;
                 }
 
-                info_box.y = this._y - 25;
+                info_box.y = this._y + 5;
 
                 if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width)) {
                     this.destroy();
@@ -340,16 +347,16 @@ Crafty.c('ISS', {
         var x_speed = 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
 
         var info_box = Crafty.e("2D, DOM, Text")
-            .attr({w: 175, alpha: 0.8})
+            .attr({w: 75, alpha: 0.8})
             .text('The ISS')
             .css({
+                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
-                'background-color': '#999',
                 'border-radius': '5px',
-                padding: '7px 10px',
-                border: '1px solid AAA',
-                'box-shadow': '0 -1px 1px #666',
+                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
+                padding: '10px',
+                border: '1px solid #AAA',
                 display: 'none'
             });
 
@@ -376,6 +383,13 @@ Crafty.c('ISS', {
         });
     }
 });
+
+//Crafty.c('TechTree', {
+//    init: function() {
+//        this.requires('2D, Mouse, HTML, DOM')
+//            .css({display: 'none'});
+//    }
+//});
 
 
 // This is the player-controlled character
@@ -409,44 +423,47 @@ Crafty.c('Ship', {
                     this.move.up = false;
                 }
             }).bind("EnterFrame", function () {
-                if (this.move.right) this.rotation += 5;
-                if (this.move.left) this.rotation -= 5;
+                if (!Game.paused) {
+                    if (this.move.right) this.rotation += 5;
+                    if (this.move.left) this.rotation -= 5;
 
-                //acceleration and movement vector
-                var vx = Math.sin(this._rotation * Math.PI / 180) * this.speed_factor,
-                    vy = Math.cos(this._rotation * Math.PI / 180) * this.speed_factor;
+                    //acceleration and movement vector
+                    var vx = Math.sin(this._rotation * Math.PI / 180) * this.speed_factor,
+                        vy = Math.cos(this._rotation * Math.PI / 180) * this.speed_factor;
 
-                //if the move up is true, increment the y/xspeeds
-                if (this.move.up) {
-                    this.yspeed -= vy;
-                    this.xspeed += vx;
-                } else {
-                    //if released, slow down the ship
-                    this.xspeed *= this.decay;
-                    this.yspeed *= this.decay;
-                }
+                    //if the move up is true, increment the y/xspeeds
+                    if (this.move.up) {
+                        this.yspeed -= vy;
+                        this.xspeed += vx;
+                    } else {
+                        //if released, slow down the ship
+                        this.xspeed *= this.decay;
+                        this.yspeed *= this.decay;
+                    }
 
-                //move the ship by the x and y speeds or movement vector
-                this.x += this.xspeed;
-                this.y += this.yspeed;
+                    //move the ship by the x and y speeds or movement vector
+                    this.x += this.xspeed;
+                    this.y += this.yspeed;
 
-                //if ship goes out of bounds, it's gone
-                // TODO Should have a message appear
-                if (this._x > Crafty.viewport.width) {
-                    this.destroy()
-                }
-                if (this._x < -64) {
+                    //if ship goes out of bounds, it's gone
+                    // TODO Should have a message appear
+                    if (this._x > Crafty.viewport.width) {
+                        this.destroy()
+                    }
+                    if (this._x < -64) {
 //                    this.x = Crafty.viewport.width;
-                    this.destroy()
-                }
-                if (this._y > Crafty.viewport.height) {
+                        this.destroy()
+                    }
+                    if (this._y > Crafty.viewport.height) {
 //                    this.y = -64;
-                    this.destroy()
-                }
-                if (this._y < -64) {
+                        this.destroy()
+                    }
+                    if (this._y < -64) {
 //                    this.y = Crafty.viewport.height;
-                    this.destroy()
+                        this.destroy()
+                    }
                 }
+
             })
             .bind('Moved', function () {
                 updateScore(-100);
@@ -500,19 +517,20 @@ Crafty.c('Ship', {
 
 // This is the player-controlled character
 Crafty.c('Probe', {
-    init: function () {
-        this.requires('Actor, Controls, Collision, spr_probe, SpriteAnimation, Mouse')
-            .attr({
-                move: {left: false, right: false, up: false, down: false},
-                xspeed: 0, yspeed: 0, speed: 0,
-                decay: 0.9, // deceleration rate
-                speed_factor: 0.00001, // the acceleration rate
-                max_speed: .0001
-            })
-            .origin("center")
-            .bind("KeyDown", function (e) {
-                console.log('keydown');
-                //on keydown, set the move booleans
+//    init: function () {
+//        this.requires('Actor, Controls, Collision, spr_probe, SpriteAnimation, Mouse')
+//            .attr({
+//                move: {left: false, right: false, up: false, down: false},
+//                xspeed: 0, yspeed: 0, speed: 0,
+//                decay: 0.9, // deceleration rate
+//                speed_factor: 0.1, // the acceleration rate
+//                max_speed: 1.2
+//            })
+//            .origin("center")
+////            .reel('ProbeMoving', 100, 0, 0, 2)
+//            .bind("KeyDown", function (e) {
+//                console.log('keydown');
+//                //on keydown, set the move booleans
 //                if (e.key === Crafty.keys.RIGHT_ARROW) {
 //                    this.move.right = true;
 //                } else if (e.key === Crafty.keys.LEFT_ARROW) {
@@ -522,14 +540,8 @@ Crafty.c('Probe', {
 //                } else if (e.key === Crafty.keys.DOWN_ARROW) {
 //                    this.move.down = true;
 //                }
-
-                if (e.key === Crafty.keys.UP_ARROW) {
-                    this.move.up = true;
-                } else if (e.key === Crafty.keys.DOWN_ARROW) {
-                    this.move.down = true;
-                }
-            }).bind("KeyUp", function (e) {
-                //on key up, set the move booleans to false
+//            }).bind("KeyUp", function (e) {
+//                //on key up, set the move booleans to false
 //                if (e.key === Crafty.keys.RIGHT_ARROW) {
 //                    this.move.right = false;
 //                } else if (e.key === Crafty.keys.LEFT_ARROW) {
@@ -539,107 +551,98 @@ Crafty.c('Probe', {
 //                } else if (e.key === Crafty.keys.DOWN_ARROW) {
 //                    this.move.down = false;
 //                }
-
-                if (e.key === Crafty.keys.UP_ARROW) {
-                    this.move.up = false;
-                } else if (e.key === Crafty.keys.DOWN_ARROW) {
-                    this.move.down = false;
-                }
-            }).bind("EnterFrame", function () {
-                var y_dir = 0;
-                var x_dir = 0;
-
+//            }).bind("EnterFrame", function () {
+//                var y_dir = 0;
+//                var x_dir = 0;
+//
 //                if (this.move.right) x_dir = 1;
 //                else if (this.move.left) x_dir = -1;
-//                else x_dir = 0;
-
-                // the probe rotates by a different rate moving up/down just for variety. Lots of room for improvement
-                if (this.move.up) y_dir = 1;
-                else if (this.move.down) y_dir = -1;
-//                else y_dir = 0;
-
-//                this.speed = Math.sqrt(Math.pow(this.xspeed, 2) + Math.pow(this.yspeed, 2));
-//                if (this.speed < 1E-10) this.speed = 0;
-
-//                if (!(y_dir != 0 || x_dir != 0) && this.speed == 0) {
-//                    return;
-//                }
-
-//                console.log(this.speed);
-//                var vx = 0, vy = 0;
-//                if (this.speed < this.max_speed) {
-//                    vx = x_dir * this.speed_factor;
-//                    vy = y_dir * this.speed_factor;
-//                } else {
-//                    console.log('MAX SPEED: ' + this.max_speed);
-//                    vx = 0;
-//                    vy = 0;
-//                    this.speed = this.max_speed;
-//                }
-
-                var vx = x_dir * this.speed_factor;
-                var vy = y_dir * this.speed_factor;
-
-                // increment the y/xspeeds according to the move up/down buttons
-//                if (this.move.up || this.move.down || this.move.right || this.move.left) {
-                    this.yspeed -= vy;
-                    this.xspeed += vx;
+//
+//                if (this.move.up) y_dir = 1;
+//                else if (this.move.down) y_dir = -1;
+//
+////                this.speed = Math.sqrt(Math.pow(this.xspeed, 2) + Math.pow(this.yspeed, 2));
+////                if (this.speed < 1E-10) this.speed = 0;
+//
+//                var vx = x_dir * this.speed_factor;
+//                var vy = y_dir * this.speed_factor;
+//
+//                if (this.move.left || this.move.right) {
+//                    if (Math.abs(this.xspeed + vx) <= this.max_speed) {
+//                        this.xspeed += vx;
+//                    } else {
+//                        this.xspeed = 0;
+//                    }
 //                } else {
 //                    //if released, slow down the ship
 //                    this.xspeed *= this.decay;
+//                }
+//
+//                if (this.move.up || this.move.down) {
+//                    if (Math.abs(this.yspeed + vy) <= this.max_speed) {
+//                        this.yspeed -= vy;
+//                    } else {
+//                        this.yspeed = 0;
+//                    }
+//                } else {
+//                    //if released, slow down the ship
 //                    this.yspeed *= this.decay;
 //                }
+//
+////                if (this.xspeed || this.yspeed) {
+////                    this.animate('ProbeMoving')
+////                }
+//
+//                //move the ship by the x and y speeds or movement vector
+//                this.x += this.xspeed;
+//                this.y += this.yspeed;
+//
+//                //if ship goes out of bounds, it's gone
+//                // TODO Should have a message appear
+//                if (this._x > Crafty.viewport.width) {
+//                    this.destroy()
+//                }
+//                if (this._x < -64) {
+////                    this.x = Crafty.viewport.width;
+//                    this.destroy()
+//                }
+//                if (this._y > Crafty.viewport.height) {
+////                    this.y = -64;
+//                    this.destroy()
+//                }
+//                if (this._y < -64) {
+////                    this.y = Crafty.viewport.height;
+//                    this.destroy()
+//                }
+//            })
+//            .bind('Moved', function () {
+//                updateScore(-50);
+//            })
+//            .bind('Click', function (data) {
+//                console.log(this);
+//            })
+//            .collision()
+//            .onHit('Rock', this.hitAsteroid);
+//    },
 
-                //move the ship by the x and y speeds or movement vector
-                this.x += this.xspeed;
-                this.y += this.yspeed;
 
-                //if ship goes out of bounds, it's gone
-                // TODO Should have a message appear
-                if (this._x > Crafty.viewport.width) {
-                    this.destroy()
-                }
-                if (this._x < -64) {
-//                    this.x = Crafty.viewport.width;
-                    this.destroy()
-                }
-                if (this._y > Crafty.viewport.height) {
-//                    this.y = -64;
-                    this.destroy()
-                }
-                if (this._y < -64) {
-//                    this.y = Crafty.viewport.height;
-                    this.destroy()
-                }
-            })
-            .bind('Moved', function () {
-                updateScore(-50);
-            })
-            .bind('Click', function (data) {
-                console.log(this);
-            })
-            .collision()
-            .onHit('Rock', this.hitAsteroid);
-    },
-
-
-//    init: function () {
-//        this.requires('Actor, Fourway, Collision, spr_probe, SpriteAnimation, Mouse')
-//            .fourway(2)
-//            .stopOnSolids()
-//            .onHit('Rock', this.hitAsteroid)
-//            // These next lines define our four animations
-//            //  each call to .animate specifies:
-//            //  - the name of the animation
-//            //  - the x and y coordinates within the sprite
-//            //     map at which the animation set begins
-//            //  - the number of animation frames *in addition to* the first one
+    init: function () {
+        this.requires('Actor, Fourway, Collision, spr_probe, SpriteAnimation, Mouse')
+            .fourway(2)
+            .stopOnSolids()
+            .onHit('Rock', this.hitAsteroid)
+            // These next lines define our four animations
+            //  each call to .animate specifies:
+            //  - the name of the animation
+            //  - the x and y coordinates within the sprite
+            //     map at which the animation set begins
+            //  - the number of animation frames *in addition to* the first one
 //            .animate('PlayerMovingUp', 0, 0, 2)
 //            .animate('PlayerMovingRight', 0, 0, 2)
 //            .animate('PlayerMovingDown', 0, 0, 2)
 //            .animate('PlayerMovingLeft', 0, 0, 2);
-//
-//        // Watch for a change of direction and switch animations accordingly
+
+        // Watch for a change of direction and switch animations accordingly
 //        var animation_speed = 4;
 //        this.bind('NewDirection', function (data) {
 //            if (!Game.paused) {
@@ -657,17 +660,17 @@ Crafty.c('Probe', {
 //                }
 //            }
 //        });
-//        this.bind('Moved', function () {
-//            updateScore(-50);
-//        });
-//
-//        this.bind('MouseOver', function (data) {
-//            console.log('Hey!' + data);
-//        });
-//        this.bind('Click', function (data) {
-//            console.log(this);
-//        })
-//    },
+        this.bind('Moved', function () {
+            updateScore(-50);
+        });
+
+        this.bind('MouseOver', function (data) {
+            console.log('Hey!' + data);
+        });
+        this.bind('Click', function (data) {
+            console.log(this);
+        })
+    },
 
     // Registers a stop-movement function to be called when
     //  this entity hits an entity with the "Solid" component
