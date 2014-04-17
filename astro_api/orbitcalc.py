@@ -1,3 +1,14 @@
+"""
+    api for retreiving asteroid data from the db
+    loads up the basic data. then, when queried, calculates distance to earth
+    for a selected number of them, and returns.
+    
+    GetClosestAsteroids calculates the distance to every asteroid, sorts, and
+    returns the closest
+    GetRandomAsteroids simply grabs a given number of them and then calculates
+    the distance.
+"""
+
 import numpy as np
 import json
 import math
@@ -12,14 +23,16 @@ import scoring
 asteroids = []
 jed_apr142014=2456760.5
 jed_cur = jed_apr142014
+
+#Parameters of Earths orbit, from Asterank
 earth = { 'L': 100.46457166, 'P': 365.256, 'a': 1.00000261, 'e': 0.01671123, 'epoch': 2451545, 'full_name': "Earth", 'i': 0.00001531, 'ma': -2.4731102699999923, 'om': 0, 'w': 102.93768193, 'w_bar': 102.93768193, 'n': 0.0 }
 
 
 ##
 
 #Load asteroid data
-rootdir='./'#'/home/jeff/Work/NASA2014/nasa2014/astro_api/'
-files=['asteroids_neo.json.gz']
+rootdir='./astro_db/'#'/home/jeff/Work/NASA2014/nasa2014/astro_api/'
+files=['asteroids.json.gz']
 fs = []
 for name in files:
     fs.append( gzip.open(rootdir + name) )
@@ -27,7 +40,8 @@ for name in files:
 for f in fs:
     asteroids = asteroids + json.load(f)
 
-asteroids = filter(lambda x: x['spec']!="?" and x['spec']!='comet',asteroids)
+
+#asteroids = filter(lambda x: x['spec']!="?" and x['spec']!='comet',asteroids)
 
 
 ##
@@ -49,6 +63,7 @@ def KeplerToHeliocentric(jed,i,om,w,ma,n,epoch,e,a,P):
     epoch: jed of orbital data (Should be ~2.4 million)
     e: eccentricity
     a: Semi-major axis
+    p: Period
     """
 
     pi = math.pi
