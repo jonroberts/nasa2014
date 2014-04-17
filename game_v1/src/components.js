@@ -309,7 +309,7 @@ Crafty.c('Rock', {
 
                 info_box.y = this._y + 5;
 
-                if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width)) {
+                if (this._x >= Game.width()) {
                     this.destroy();
                     Crafty.trigger('CreateAsteroid', this);
                 }
@@ -338,13 +338,12 @@ Crafty.c('Rock', {
 Crafty.c('ISS', {
     init: function () {
         this.requires('Actor, Collision, spr_iss, Mouse')
+            .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)})
             .onHit('GasStation', function (data) {
                 if (gasStation.fueled) {
                     updateScore(5000);
                 }
             });
-
-        var x_speed = 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10);
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
@@ -375,8 +374,8 @@ Crafty.c('ISS', {
         // needs to be set for the ISS
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
-                this.move('e', x_speed);
-                if (this._x >= (Game.map_grid.width * Game.map_grid.tile.width)) {
+                this.move('e', this.x_speed);
+                if (this._x >= Game.width()) {
                     this.x = -1;
                 }
             }
@@ -401,9 +400,11 @@ Crafty.c('Ship', {
                 xspeed: 0, yspeed: 0, speed: 0,
                 decay: 0.95, // deceleration when keys are released
                 speed_factor: 0.04, // acceleration of the ship
-                cargo: 0
+                cargo: 0,
+                fuel: 1000,
+                thrusters: null
             })
-            .origin("center")
+            .origin("bottom middle")
             .bind("KeyDown", function (e) {
                 //on keydown, set the move booleans
                 if (e.key === Crafty.keys.RIGHT_ARROW) {
@@ -435,7 +436,69 @@ Crafty.c('Ship', {
                     if (this.move.up) {
                         this.yspeed -= vy;
                         this.xspeed += vx;
+
+                        if (!this.thrusters) {
+                            this.thrusters = [
+                                Crafty.e("2D,Canvas,Particles")
+                                    .attr({y: this._y + 15, x: this._x + 5})
+                                    .particles({
+                                        maxParticles: 15,
+                                        size: 2,
+                                        sizeRandom: 2,
+                                        speed: 1,
+                                        speedRandom: 1.2,
+                                        lifeSpan: 7,
+                                        lifeSpanRandom: 7,
+                                        angle: 0,
+                                        angleRandom: 5,
+                                        startColour: [255, 131, 0, 1],
+                                        startColourRandom: [48, 50, 45, 0],
+                                        endColour: [245, 35, 0, 0],
+                                        endColourRandom: [60, 60, 60, 0],
+                                        sharpness: 5,
+                                        sharpnessRandom: 2,
+                                        spread: 0,
+                                        duration: -1,
+                                        fastMode: true,
+                                        gravity: { x: 0, y: 0.1 },
+                                        jitter: 0
+                                    }),
+
+                                Crafty.e("2D,Canvas,Particles")
+                                    .attr({y: this._y + 15, x: this._x + 15})
+                                    .particles({
+                                        maxParticles: 15,
+                                        size: 2,
+                                        sizeRandom: 2,
+                                        speed: 1,
+                                        speedRandom: 1.2,
+                                        lifeSpan: 7,
+                                        lifeSpanRandom: 7,
+                                        angle: 0,
+                                        angleRandom: 5,
+                                        startColour: [255, 131, 0, 1],
+                                        startColourRandom: [48, 50, 45, 0],
+                                        endColour: [245, 35, 0, 0],
+                                        endColourRandom: [60, 60, 60, 0],
+                                        sharpness: 5,
+                                        sharpnessRandom: 2,
+                                        spread: 0,
+                                        duration: -1,
+                                        fastMode: true,
+                                        gravity: { x: 0, y: 0.1 },
+                                        jitter: 0
+                                    })
+                            ];
+                            this.attach(this.thrusters[0]);
+                            this.attach(this.thrusters[1]);
+                        }
                     } else {
+                        if (this.thrusters) {
+                            this.thrusters[0].destroy();
+                            this.thrusters[1].destroy();
+                            this.thrusters = null;
+                        }
+
                         //if released, slow down the ship
                         this.xspeed *= this.decay;
                         this.yspeed *= this.decay;
@@ -445,21 +508,8 @@ Crafty.c('Ship', {
                     this.x += this.xspeed;
                     this.y += this.yspeed;
 
-                    //if ship goes out of bounds, it's gone
-                    // TODO Should have a message appear
-                    if (this._x > Crafty.viewport.width) {
-                        this.destroy()
-                    }
-                    if (this._x < -64) {
-//                    this.x = Crafty.viewport.width;
-                        this.destroy()
-                    }
-                    if (this._y > Crafty.viewport.height) {
-//                    this.y = -64;
-                        this.destroy()
-                    }
-                    if (this._y < -64) {
-//                    this.y = Crafty.viewport.height;
+                    if (this._x > Crafty.viewport.width || this._y > Crafty.viewport.height ||
+                        this._x < -64 || this._y < -64) {
                         this.destroy()
                     }
                 }
@@ -467,14 +517,37 @@ Crafty.c('Ship', {
             })
             .bind('Moved', function () {
                 updateScore(-100);
+                this.fuel -= 10;
             })
             .bind('Click', function (data) {
                 console.log(this);
             })
             .collision()
-            .onHit('Rock', this.hitAsteroid)
-            .onHit('BaseProngs', this.hitDock)
-            .onHit('HRefinery', this.hitHRefinery);
+            .onHit('Rock', function (data) {
+                // Respond to this ship hitting an asteroid
+                this.stopMovement();
+                var asteroid = data[0].obj;
+
+                // resources extracted according to researched efficiency
+                this.cargo += +(asteroid.price * Game.research.mining_efficiency.water);
+                asteroid.hit();
+            })
+            .onHit('BaseProngs', function (data) {
+                updateScore(this.cargo / 2.);
+                this.cargo = 0;
+            })
+            .onHit('HRefinery', function (data) {
+                updateScore(this.cargo);
+                gasStation.fueled = true;
+                this.cargo = 0;
+            })
+            .onHit('GasStation', function (data) {
+                if (gasStation.fueled) {
+                    // refuel, but don't change the gas station's status
+                    updateScore(this.fuel - 1000);
+                    this.fuel = 1000;
+                }
+            });
     },
 
     // Registers a stop-movement function to be called when
@@ -491,27 +564,6 @@ Crafty.c('Ship', {
             this.x -= this._movement.x;
             this.y -= this._movement.y;
         }
-    },
-
-    // Respond to this ship hitting an asteroid
-    hitAsteroid: function (data) {
-        this.stopMovement();
-        asteroid = data[0].obj;
-        ast_price = asteroid.price;
-        this.cargo += +1000000;
-        asteroid.hit();
-    },
-    hitDock: function (data) {
-        dock = data[0].obj;
-        updateScore(this.cargo / 2.);
-        this.cargo = 0;
-        //this.destroy();
-    },
-    hitHRefinery: function (data) {
-        dock = data[0].obj;
-        updateScore(this.cargo);
-        gasStation.fueled = true;
-        this.cargo = 0;
     }
 });
 
@@ -522,20 +574,24 @@ Crafty.c('Probe', {
             .attr({
                 move: {left: false, right: false, up: false, down: false},
                 xspeed: 0, yspeed: 0, speed: 0,
-                decay: 0.9, // deceleration rate
-                speed_factor: 0.9, // the acceleration rate
+                decay: 0.92, // deceleration rate
+                speed_factor: 1.5, // the acceleration rate
                 max_speed: 1.2
             })
             .origin("center")
             .bind("KeyDown", function (e) {
                 //on keydown, set the move booleans
                 if (e.key === Crafty.keys.RIGHT_ARROW) {
+                    if (this.move.left) this.move.left = false;
                     this.move.right = true;
                 } else if (e.key === Crafty.keys.LEFT_ARROW) {
+                    if (this.move.right) this.move.left = false;
                     this.move.left = true;
                 } else if (e.key === Crafty.keys.UP_ARROW) {
+                    if (this.move.down) this.move.left = false;
                     this.move.up = true;
                 } else if (e.key === Crafty.keys.DOWN_ARROW) {
+                    if (this.move.up) this.move.left = false;
                     this.move.down = true;
                 }
             }).bind("KeyUp", function (e) {
@@ -550,47 +606,57 @@ Crafty.c('Probe', {
                     this.move.down = false;
                 }
             }).bind("EnterFrame", function () {
-                var y_dir = 0;
-                var x_dir = 0;
+                if (!Game.paused) {
+                    var y_dir = 0;
+                    var x_dir = 0;
 
-                if (this.move.right) x_dir = 1;
-                else if (this.move.left) x_dir = -1;
+                    if (this.move.right) x_dir = 1;
+                    else if (this.move.left) x_dir = -1;
 
-                if (this.move.up) y_dir = 1;
-                else if (this.move.down) y_dir = -1;
+                    if (this.move.up) y_dir = 1;
+                    else if (this.move.down) y_dir = -1;
 
-                var vx = Math.sin(x_dir * Math.PI / 180) * this.speed_factor,
-                    vy = Math.sin(-y_dir * Math.PI / 180) * this.speed_factor;
+                    var vx = Math.sin(x_dir * Math.PI / 180) * this.speed_factor * (Game.width() / Game.height()),
+                        vy = Math.sin(-y_dir * Math.PI / 180) * this.speed_factor;
 
-                if (this.move.left || this.move.right) {
-                    this.xspeed += vx;
-                } else {
-                    this.xspeed *= this.decay;
+                    if (this.move.left || this.move.right) {
+                        this.xspeed += vx;
+                    } else {
+                        this.xspeed *= this.decay;
+                    }
+
+                    if (this.move.up || this.move.down) {
+                        this.yspeed += vy;
+                    } else {
+                        this.yspeed *= this.decay;
+                    }
+
+                    if (Math.abs(this.xspeed) <= 1E-10) this.xspeed = 0;
+                    if (Math.abs(this.yspeed) <= 1E-10) this.yspeed = 0;
+
+                    //move the ship by the x and y speeds or movement vector
+                    this.x += this.xspeed;
+                    this.y += this.yspeed;
+
+                    if (this._x > Crafty.viewport.width || this._y > Crafty.viewport.height ||
+                        this._x < -64 || this._y < -64) {
+                        this.destroy()
+                    }
                 }
-
-                if (this.move.up || this.move.down) {
-                    this.yspeed += vy;
-                } else {
-                    this.yspeed *= this.decay;
-                }
-
-                if (Math.abs(this.xspeed) <= 1E-10) this.xspeed = 0;
-                if (Math.abs(this.xspeed) <= 1E-10) this.yspeed = 0;
-
-                //move the ship by the x and y speeds or movement vector
-                this.x += this.xspeed;
-                this.y += this.yspeed;
-
-                if (this._x > Crafty.viewport.width || this._y > Crafty.viewport.height ||
-                    this._x < -64 || this._y < -64) {
-                    this.destroy()
-                }
-            }).bind('Moved', function () {
+            })
+            .bind('Moved', function () {
                 updateScore(-50);
-            }).bind('Click', function (data) {
+            })
+            .bind('Click', function (data) {
                 console.log(this);
-            }).collision()
-            .onHit('Rock', this.hitAsteroid);
+            })
+            .collision()
+            .onHit('Rock', function (data) {
+                var asteroid = data[0].obj;
+                asteroid.isprobed = true;
+                asteroid.sprite(0, 1);
+                this.destroy();
+            });
     },
 
     // Registers a stop-movement function to be called when
@@ -608,14 +674,6 @@ Crafty.c('Probe', {
             this.x -= this._movement.x;
             this.y -= this._movement.y;
         }
-    },
-
-    // Respond to the probe hitting an asteroid
-    hitAsteroid: function (data) {
-        asteroid = data[0].obj;
-        asteroid.isprobed = true;
-        asteroid.sprite(0, 1);
-        this.destroy();
     }
 });
 
