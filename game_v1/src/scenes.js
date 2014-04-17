@@ -78,6 +78,13 @@ Crafty.scene('Game', function () {
             rotation_rate: (Game.framerate_ms / (10 * asteroid['rot_per'])),
             x_speed: Math.abs(asteroid['earth_dv'] / 100)
         });
+//        console.log('triggering scaling');
+//        ast.scale();
+//        ast.trigger("scale");
+//        ast.diameter_scale = Math.max(Math.log(asteroid.diameter), 1);
+//        ast.w *= ast.diameter_scale;
+//        ast.h *= ast.diameter_scale;
+//        ast.origin('center');
         Game.occupied[x][y] = true;
     }
 
@@ -89,6 +96,13 @@ Crafty.scene('Game', function () {
             rotation_rate: (Game.framerate_ms / (10 * asteroid['rot_per'])),
             x_speed: Math.abs(asteroid['earth_dv'] / 100)
         });
+//        console.log('triggering scaling');
+//        ast.scale();
+//        ast.trigger("scale");
+//        ast.diameter_scale = Math.max(Math.log(asteroid.diameter), 1);
+//        ast.w *= ast.diameter_scale;
+//        ast.h *= ast.diameter_scale;
+//        ast.origin('center');
         Game.occupied[x][y] = true;
     }
 
@@ -109,9 +123,9 @@ Crafty.scene('Game', function () {
                     .bind("EnterFrame", function () {
                         this.frameCount += 1;
 
-                        if (this.frameCount % 75 == 0) {
+                        if (this.frameCount % 100 == 0) {
                             this.visible = true;
-                        } else if (this.frameCount % 75 == 50){
+                        } else if (this.frameCount % 100 == 70){
                             this.visible = false;
                         }
                     })

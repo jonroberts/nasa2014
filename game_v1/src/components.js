@@ -208,7 +208,7 @@ var testGlobal = undefined;
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
     init: function () {
-        this.requires('Actor, spr_rock, Mouse')
+        this.requires('Actor, spr_rock, Mouse, Canvas')
             .origin('center')
             .attr({ isprobed: false });
 
@@ -321,6 +321,16 @@ Crafty.c('Rock', {
             e.stopPropagation();
             window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.prov_des, '_blank')
         });
+
+
+    },
+
+    scale: function() {
+//        console.log('scaling');
+        this.diameter_scale = Math.max(Math.log(this.asteroid_data.diameter), 1);
+        this.w *= this.diameter_scale;
+        this.h *=this.diameter_scale;
+        this.origin('center');
     },
 
     hit: function () {
