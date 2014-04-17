@@ -48,7 +48,7 @@ Crafty.scene('Game', function () {
         .css({'padding-top': '5px'})
         .textFont({ size: '30px'})
         .text('*')
-        .bind('Click', function() {
+        .bind('Click', function () {
             buildTechTree();
             var offset = $('#' + researchButton.getDomId()).offset();
             $('#techTree')
@@ -94,9 +94,31 @@ Crafty.scene('Game', function () {
 
     Crafty.e('ISS').at(0, 37);
 
+
+    var pauseIndicator = null;
     Crafty.bind('KeyDown', function (e) {
         if (e.key == Crafty.keys.SPACE) {
             Game.paused = !Game.paused;
+
+            if (Game.paused) {
+                pauseIndicator = Crafty.e("2D, DOM, Text")
+                    .attr({x: Game.width() - 170, y: 30, w: 200, h: 50, frameCount: 0})
+                    .css({color: "#fff", 'z-index': 100})
+                    .textFont({ size: '16px' })
+                    .text("Paused")
+                    .bind("EnterFrame", function () {
+                        this.frameCount += 1;
+
+                        if (this.frameCount % 35 == 0) {
+                            this.visible = false;
+                        } else if (this.frameCount % 35 == 10){
+                            this.visible = true;
+                        }
+                    })
+                ;
+            } else {
+                pauseIndicator.destroy();
+            }
         }
     });
 
