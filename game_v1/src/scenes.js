@@ -76,15 +76,10 @@ Crafty.scene('Game', function () {
         var ast = Crafty.e('Rock').at(x, y).attr({
             asteroid_data: asteroid,
             rotation_rate: (Game.framerate_ms / (10 * asteroid['rot_per'])),
+            w: Game.map_grid.tile.width * Math.max(Math.log(1.6*asteroid['diameter']), 1),
+            h: Game.map_grid.tile.height * Math.max(Math.log(1.6*asteroid['diameter']), 1),
             x_speed: Math.abs(asteroid['earth_dv'] / 100)
-        });
-//        console.log('triggering scaling');
-//        ast.scale();
-//        ast.trigger("scale");
-//        ast.diameter_scale = Math.max(Math.log(asteroid.diameter), 1);
-//        ast.w *= ast.diameter_scale;
-//        ast.h *= ast.diameter_scale;
-//        ast.origin('center');
+        }).origin('center');
         Game.occupied[x][y] = true;
     }
 
@@ -94,15 +89,10 @@ Crafty.scene('Game', function () {
         var ast = Crafty.e('Rock').at(x, y).attr({
             asteroid_data: asteroid,
             rotation_rate: (Game.framerate_ms / (10 * asteroid['rot_per'])),
+            w: Game.map_grid.tile.width * Math.max(Math.log(1.6*asteroid['diameter']), 1),
+            h: Game.map_grid.tile.height * Math.max(Math.log(1.6*asteroid['diameter']), 1),
             x_speed: Math.abs(asteroid['earth_dv'] / 100)
-        });
-//        console.log('triggering scaling');
-//        ast.scale();
-//        ast.trigger("scale");
-//        ast.diameter_scale = Math.max(Math.log(asteroid.diameter), 1);
-//        ast.w *= ast.diameter_scale;
-//        ast.h *= ast.diameter_scale;
-//        ast.origin('center');
+        }).origin('center');
         Game.occupied[x][y] = true;
     }
 

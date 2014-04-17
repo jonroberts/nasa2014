@@ -212,6 +212,8 @@ Crafty.c('Rock', {
             .origin('center')
             .attr({ isprobed: false });
 
+
+
 //        this.gravity("platform")
 //            .gravityConst(2);
 
@@ -325,13 +327,13 @@ Crafty.c('Rock', {
 
     },
 
-    scale: function() {
-//        console.log('scaling');
-        this.diameter_scale = Math.max(Math.log(this.asteroid_data.diameter), 1);
-        this.w *= this.diameter_scale;
-        this.h *=this.diameter_scale;
-        this.origin('center');
-    },
+//    scale: function() {
+////        console.log('scaling');
+//        this.diameter_scale = Math.max(Math.log(this.asteroid_data.diameter), 1);
+//        this.w *= this.diameter_scale;
+//        this.h *=this.diameter_scale;
+//        this.origin('center');
+//    },
 
     hit: function () {
         this.destroy();
