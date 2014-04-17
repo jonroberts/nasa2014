@@ -109,10 +109,10 @@ Crafty.scene('Game', function () {
                     .bind("EnterFrame", function () {
                         this.frameCount += 1;
 
-                        if (this.frameCount % 35 == 0) {
-                            this.visible = false;
-                        } else if (this.frameCount % 35 == 10){
+                        if (this.frameCount % 75 == 0) {
                             this.visible = true;
+                        } else if (this.frameCount % 75 == 50){
+                            this.visible = false;
                         }
                     })
                 ;
