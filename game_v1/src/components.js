@@ -82,7 +82,7 @@ Crafty.c('BuyProbe', {
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
             info_box.y = this._y - 45;
-            $('#'+info_box.getDomId()).css('height', 'inherit');
+            $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);
             info_box.css({ display: 'block' });
         });
@@ -118,7 +118,7 @@ Crafty.c('BuyHRefinery', {
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
             info_box.y = this._y - 45;
-            $('#'+info_box.getDomId()).css('height', 'inherit');
+            $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);
             info_box.css({ display: 'block' });
         });
@@ -155,7 +155,7 @@ Crafty.c('BuyGasStation', {
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
             info_box.y = this._y - 45;
-            $('#'+info_box.getDomId()).css('height', 'inherit');
+            $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);
             info_box.css({ display: 'block' });
         });
@@ -192,7 +192,7 @@ Crafty.c('BuyShip', {
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
             info_box.y = this._y - 45;
-            $('#'+info_box.getDomId()).css('height', 'inherit');
+            $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);
             testGlobal = info_box;
             info_box.css({ display: 'block' });
@@ -239,7 +239,7 @@ Crafty.c('Rock', {
                 info_box.x = this._x + 25;
             }
 
-            if (this._y >= Game.height() / 2 ) {
+            if (this._y >= Game.height() / 2) {
                 info_box.origin('bottom center');
                 info_box.y = this._y + 50;
             } else {
@@ -287,7 +287,7 @@ Crafty.c('Rock', {
 
             info_box.text(html);
 
-            $('#'+info_box.getDomId()).css('height', 'inherit');
+            $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);
             info_box.css({ display: 'block' });
             testGlobal = info_box;
@@ -363,7 +363,7 @@ Crafty.c('ISS', {
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
             info_box.y = this._y - 45;
-            $('#'+info_box.getDomId()).css('height', 'inherit');
+            $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);
             info_box.css({ display: 'block' });
         });
@@ -398,9 +398,9 @@ Crafty.c('Ship', {
         this.requires('Actor, Controls, Collision, spr_player, SpriteAnimation, Mouse')
             .attr({
                 move: {left: false, right: false, up: false, down: false},
-                xspeed: 0, yspeed: 0,
+                xspeed: 0, yspeed: 0, speed: 0,
                 decay: 0.95, // deceleration when keys are released
-                speed_factor: 0.04, // the maximum velocity of the ship
+                speed_factor: 0.04, // acceleration of the ship
                 cargo: 0
             })
             .origin("center")
@@ -517,159 +517,80 @@ Crafty.c('Ship', {
 
 // This is the player-controlled character
 Crafty.c('Probe', {
-//    init: function () {
-//        this.requires('Actor, Controls, Collision, spr_probe, SpriteAnimation, Mouse')
-//            .attr({
-//                move: {left: false, right: false, up: false, down: false},
-//                xspeed: 0, yspeed: 0, speed: 0,
-//                decay: 0.9, // deceleration rate
-//                speed_factor: 0.1, // the acceleration rate
-//                max_speed: 1.2
-//            })
-//            .origin("center")
-////            .reel('ProbeMoving', 100, 0, 0, 2)
-//            .bind("KeyDown", function (e) {
-//                console.log('keydown');
-//                //on keydown, set the move booleans
-//                if (e.key === Crafty.keys.RIGHT_ARROW) {
-//                    this.move.right = true;
-//                } else if (e.key === Crafty.keys.LEFT_ARROW) {
-//                    this.move.left = true;
-//                } else if (e.key === Crafty.keys.UP_ARROW) {
-//                    this.move.up = true;
-//                } else if (e.key === Crafty.keys.DOWN_ARROW) {
-//                    this.move.down = true;
-//                }
-//            }).bind("KeyUp", function (e) {
-//                //on key up, set the move booleans to false
-//                if (e.key === Crafty.keys.RIGHT_ARROW) {
-//                    this.move.right = false;
-//                } else if (e.key === Crafty.keys.LEFT_ARROW) {
-//                    this.move.left = false;
-//                } else if (e.key === Crafty.keys.UP_ARROW) {
-//                    this.move.up = false;
-//                } else if (e.key === Crafty.keys.DOWN_ARROW) {
-//                    this.move.down = false;
-//                }
-//            }).bind("EnterFrame", function () {
-//                var y_dir = 0;
-//                var x_dir = 0;
-//
-//                if (this.move.right) x_dir = 1;
-//                else if (this.move.left) x_dir = -1;
-//
-//                if (this.move.up) y_dir = 1;
-//                else if (this.move.down) y_dir = -1;
-//
-////                this.speed = Math.sqrt(Math.pow(this.xspeed, 2) + Math.pow(this.yspeed, 2));
-////                if (this.speed < 1E-10) this.speed = 0;
-//
-//                var vx = x_dir * this.speed_factor;
-//                var vy = y_dir * this.speed_factor;
-//
-//                if (this.move.left || this.move.right) {
-//                    if (Math.abs(this.xspeed + vx) <= this.max_speed) {
-//                        this.xspeed += vx;
-//                    } else {
-//                        this.xspeed = 0;
-//                    }
-//                } else {
-//                    //if released, slow down the ship
-//                    this.xspeed *= this.decay;
-//                }
-//
-//                if (this.move.up || this.move.down) {
-//                    if (Math.abs(this.yspeed + vy) <= this.max_speed) {
-//                        this.yspeed -= vy;
-//                    } else {
-//                        this.yspeed = 0;
-//                    }
-//                } else {
-//                    //if released, slow down the ship
-//                    this.yspeed *= this.decay;
-//                }
-//
-////                if (this.xspeed || this.yspeed) {
-////                    this.animate('ProbeMoving')
-////                }
-//
-//                //move the ship by the x and y speeds or movement vector
-//                this.x += this.xspeed;
-//                this.y += this.yspeed;
-//
-//                //if ship goes out of bounds, it's gone
-//                // TODO Should have a message appear
-//                if (this._x > Crafty.viewport.width) {
-//                    this.destroy()
-//                }
-//                if (this._x < -64) {
-////                    this.x = Crafty.viewport.width;
-//                    this.destroy()
-//                }
-//                if (this._y > Crafty.viewport.height) {
-////                    this.y = -64;
-//                    this.destroy()
-//                }
-//                if (this._y < -64) {
-////                    this.y = Crafty.viewport.height;
-//                    this.destroy()
-//                }
-//            })
-//            .bind('Moved', function () {
-//                updateScore(-50);
-//            })
-//            .bind('Click', function (data) {
-//                console.log(this);
-//            })
-//            .collision()
-//            .onHit('Rock', this.hitAsteroid);
-//    },
-
-
     init: function () {
-        this.requires('Actor, Fourway, Collision, spr_probe, SpriteAnimation, Mouse')
-            .fourway(2)
-            .stopOnSolids()
-            .onHit('Rock', this.hitAsteroid)
-            // These next lines define our four animations
-            //  each call to .animate specifies:
-            //  - the name of the animation
-            //  - the x and y coordinates within the sprite
-            //     map at which the animation set begins
-            //  - the number of animation frames *in addition to* the first one
-//            .animate('PlayerMovingUp', 0, 0, 2)
-//            .animate('PlayerMovingRight', 0, 0, 2)
-//            .animate('PlayerMovingDown', 0, 0, 2)
-//            .animate('PlayerMovingLeft', 0, 0, 2);
+        this.requires('Actor, Controls, Collision, spr_probe, SpriteAnimation, Mouse')
+            .attr({
+                move: {left: false, right: false, up: false, down: false},
+                xspeed: 0, yspeed: 0, speed: 0,
+                decay: 0.9, // deceleration rate
+                speed_factor: 0.9, // the acceleration rate
+                max_speed: 1.2
+            })
+            .origin("center")
+            .bind("KeyDown", function (e) {
+                //on keydown, set the move booleans
+                if (e.key === Crafty.keys.RIGHT_ARROW) {
+                    this.move.right = true;
+                } else if (e.key === Crafty.keys.LEFT_ARROW) {
+                    this.move.left = true;
+                } else if (e.key === Crafty.keys.UP_ARROW) {
+                    this.move.up = true;
+                } else if (e.key === Crafty.keys.DOWN_ARROW) {
+                    this.move.down = true;
+                }
+            }).bind("KeyUp", function (e) {
+                //on key up, set the move booleans to false
+                if (e.key === Crafty.keys.RIGHT_ARROW) {
+                    this.move.right = false;
+                } else if (e.key === Crafty.keys.LEFT_ARROW) {
+                    this.move.left = false;
+                } else if (e.key === Crafty.keys.UP_ARROW) {
+                    this.move.up = false;
+                } else if (e.key === Crafty.keys.DOWN_ARROW) {
+                    this.move.down = false;
+                }
+            }).bind("EnterFrame", function () {
+                var y_dir = 0;
+                var x_dir = 0;
 
-        // Watch for a change of direction and switch animations accordingly
-//        var animation_speed = 4;
-//        this.bind('NewDirection', function (data) {
-//            if (!Game.paused) {
-//                console.log('Game is paused');
-//                if (data.x > 0) {
-//                    this.animate('PlayerMovingRight', animation_speed, -1);
-//                } else if (data.x < 0) {
-//                    this.animate('PlayerMovingLeft', animation_speed, -1);
-//                } else if (data.y > 0) {
-//                    this.animate('PlayerMovingDown', animation_speed, -1);
-//                } else if (data.y < 0) {
-//                    this.animate('PlayerMovingUp', animation_speed, -1);
-//                } else {
-//                    this.stop();
-//                }
-//            }
-//        });
-        this.bind('Moved', function () {
-            updateScore(-50);
-        });
+                if (this.move.right) x_dir = 1;
+                else if (this.move.left) x_dir = -1;
 
-        this.bind('MouseOver', function (data) {
-            console.log('Hey!' + data);
-        });
-        this.bind('Click', function (data) {
-            console.log(this);
-        })
+                if (this.move.up) y_dir = 1;
+                else if (this.move.down) y_dir = -1;
+
+                var vx = Math.sin(x_dir * Math.PI / 180) * this.speed_factor,
+                    vy = Math.sin(-y_dir * Math.PI / 180) * this.speed_factor;
+
+                if (this.move.left || this.move.right) {
+                    this.xspeed += vx;
+                } else {
+                    this.xspeed *= this.decay;
+                }
+
+                if (this.move.up || this.move.down) {
+                    this.yspeed += vy;
+                } else {
+                    this.yspeed *= this.decay;
+                }
+
+                if (Math.abs(this.xspeed) <= 1E-10) this.xspeed = 0;
+                if (Math.abs(this.xspeed) <= 1E-10) this.yspeed = 0;
+
+                //move the ship by the x and y speeds or movement vector
+                this.x += this.xspeed;
+                this.y += this.yspeed;
+
+                if (this._x > Crafty.viewport.width || this._y > Crafty.viewport.height ||
+                    this._x < -64 || this._y < -64) {
+                    this.destroy()
+                }
+            }).bind('Moved', function () {
+                updateScore(-50);
+            }).bind('Click', function (data) {
+                console.log(this);
+            }).collision()
+            .onHit('Rock', this.hitAsteroid);
     },
 
     // Registers a stop-movement function to be called when
@@ -697,21 +618,6 @@ Crafty.c('Probe', {
         this.destroy();
     }
 });
-
-// A village is a tile on the grid that the PC must visit in order to win the game
-Crafty.c('Village', {
-    init: function () {
-        this.requires('Actor, spr_village');
-    },
-
-    // Process a visitation with this village
-    visit: function () {
-        this.destroy();
-        Crafty.audio.play('knock');
-        Crafty.trigger('VillageVisited', this);
-    }
-});
-
 
 /**
  * Creates a timer component, which calls a function on an interval.
