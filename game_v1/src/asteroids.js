@@ -58,7 +58,7 @@ function asteroidScale(d) {
     return 1.0 + (d - 1.0)/10.0;
 }
 
-function asteroidInfoHtml(asteroid_data) {
+function asteroidInfoHtml(asteroid_data, isprobed) {
     unprobed = '<p>Unexplored!</p>';
     spec_type = 'Send probe to find out!';
     tval = 'Send probe to find out!';
@@ -85,9 +85,9 @@ function asteroidInfoHtml(asteroid_data) {
     neo = asteroid_data.neo == 'Y' ? '<p>Near Earth Object</p>' : '';
 
 
-    if (this.isprobed) {
+    if (isprobed) {
         unprobed = '';
-        spec_type = this.asteroid_data.spec;
+        spec_type = asteroid_data.spec;
         minerals_key = SPECTRAL_INDEX[this.asteroid_data.spec];
         minerals = '';
         for (key in minerals_key) {

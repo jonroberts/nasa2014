@@ -68,15 +68,15 @@ def KeplerToHeliocentric(jed,i,om,w,ma,n,epoch,e,a,P):
 
     pi = math.pi
     
-    i_rad = (i) * pi/180.0#
-    o_rad = (om) * pi/180.0# // longitude of ascending node
-    p_rad = (w) * pi/180.0# // LONGITUDE of perihelion
+    i_rad = (i) * pi/180.0
+    o_rad = (om) * pi/180.0
+    p_rad = (w) * pi/180.0
     ma_rad = ma * pi/180.0
     n_rad=0.0
     if P > 0.:
         n_rad = 2.0 * pi / P
     else:
-        n_rad = n * pi/180.0# // mean motion
+        n_rad = n * pi/180.0
     
 
     d = jed - epoch
@@ -97,10 +97,10 @@ def KeplerToHeliocentric(jed,i,om,w,ma,n,epoch,e,a,P):
 
     v = 2.0 * math.atan(math.sqrt((1.0+e)/(1.0-e)) * math.tan(E/2.0))
 
-    #// radius vector, in AU
+    
     r = a * (1.0 - e*e) / (1.0 + e * math.cos(v))
 
-    #// heliocentric coords
+    
     X = r * (math.cos(o_rad) * math.cos(v + p_rad - o_rad) - math.sin(o_rad) * math.sin(v + p_rad - o_rad) * math.cos(i_rad))
     Y = r * (math.sin(o_rad) * math.cos(v + p_rad - o_rad) + math.cos(o_rad) * math.sin(v + p_rad - o_rad) * math.cos(i_rad))
     Z = r * (math.sin(v + p_rad - o_rad) * math.sin(i_rad))

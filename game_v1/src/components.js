@@ -83,7 +83,7 @@ Crafty.c('Rock', {
             });
 
         this.bind('MouseOver', function (data) {
-            info_box.text(asteroidInfoHtml(this.asteroid_data));
+            info_box.text(asteroidInfoHtml(this.asteroid_data, this.isprobed));
 
             if (this._x >= Game.width() - 250) {
                 info_box.x = this._x - 225;
