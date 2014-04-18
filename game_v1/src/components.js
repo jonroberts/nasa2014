@@ -84,7 +84,7 @@ Crafty.c('Rock', {
 //        info_box.visible = false;
 
         this.bind('MouseOver', function (data) {
-            info_box.text(asteroidInfoHtml(this.asteroid_data));
+            info_box.text(asteroidInfoHtml(this.asteroid_data, this.isprobed));
 
             var jqInfoBox = $('#' + info_box.getDomId());
             info_box.dom_height = jqInfoBox.height();
