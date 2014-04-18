@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="src/techTree.js"></script>
+    <script src="lib/crafty-min.js"></script>
+    <script src="src/game.js"></script>
+    <script src="src/asteroids.js"></script>
+    <script src="src/spectral_data.js"></script>
+    <script src="src/components.js"></script>
+    <script src="src/menu_items.js"></script>
+    <script src="src/scenes.js"></script>
+    <title>Space Rocks!</title>
+    <script>
+        $(function() { StartAsteroids(20, 0); });
+    </script>
+    <style type="text/css" media="screen">
+        body {
+            background: #000 url('assets/Background2.jpg') no-repeat center center;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #DDD;
+            font-family: sans-serif;
+        }
+
+        .controls {
+            color: #BBB;
+        }
+
+        #cr-stage {
+            margin: 20px auto 0;
+        }
+
+        .bottom {
+            font-size: 12px;
+            color: #888;
+            margin-top: 50px;
+        }
+
+        .bottom a {
+            color: #AAA;
+        }
+
+        .popup {
+            display: none;
+            margin: 10px 10px;
+            background-color: white;
+        }
+
+        #info_box {
+            display: none; /* ensures it’s invisible until it’s called */
+            position: absolute; /* makes the div go into a position that’s absolute to the browser viewing area */
+            left: 35%; /* positions the div halfway horizontally */
+            top: 25%; /* positions the div halfway vertically */
+            padding: 25px;
+            border: 2px solid #454545;
+            border-radius: 10px;
+            background-color: #000000;
+            color: white;
+            width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30%;
+            z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+        }
+
+        .researchButton {
+            background: rgba(70, 132, 181, 0.8);
+            border-radius: 50px;
+            padding-top: 0px;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #3f3f3f;
+            /*position: absolute;*/
+            /*top: 5px;*/
+            /*left: 5px;*/
+            z-index: 100;
+            /*cursor: hand;*/
+            cursor: pointer;
+            color: white;
+            font-size: xx-large;
+        }
+
+        #techTree {
+            padding-top: 0px;
+            position: absolute;
+            /*top: 5px;*/
+            /*left: 30px;*/
+            z-index: 90;
+            /*cursor: hand;*/
+            cursor: pointer;
+            color: white;
+            font-size: xx-large;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: moz-none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #techTree div {
+            background: rgba(70, 132, 181, 0.8);
+            border: 1px solid black;
+            width: 150px;
+            padding: 5px;
+            font-size: medium;
+            display: block;
+            text-align: left;
+            font-weight: lighter;
+        }
+
+        #techTree div.researched {
+            background: rgba(0, 100, 0, 0.8);
+            cursor: default;
+        }
+
+        #techTree div.invalid {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .infoBox {
+            height: auto
+        }
+
+        .buy_button {
+            background: -moz-linear-gradient(center top, #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+            border: 2px solid #CCCCCC;
+            border-radius: 25px;
+            box-shadow: 0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+            font-size: 12px;
+            margin: 0 15px;
+            padding: 5px 20px;
+            text-shadow: 0 1px 2px #111111;
+            width: 75px;
+        }
+    </style>
+</head>
+<body>
+<!--<div id='researchButton' onclick='showHideTechTree()'>*</div>-->
+<div id='techTree' style='display:none'></div>
+<!--  <h2>Asteroiding</h2>
+
+  <p>Deflect and mine asteroids as they come past earth</p>
+
+  <p class="controls">Controls: Use W, A, S, and D or arrow keys to move around.</p>-->
+<!--<div id="info_box" class="popup">-->
+<!--<h3 id='info_title'></h3>-->
+
+<!--<div id='info_desc'></div>-->
+<!--</div>-->
+<!--<div id="cr-stage"></div>-->
+
+<!--<p class="bottom">Protect earth from the asteroids!</p>-->
+</body>
+</html>
