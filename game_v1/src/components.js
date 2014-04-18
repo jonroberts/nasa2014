@@ -81,7 +81,6 @@ Crafty.c('Rock', {
                 border: '1px solid #AAA',
                 display: 'block'
             });
-//        info_box.visible = false;
 
         this.bind('MouseOver', function (data) {
             info_box.text(asteroidInfoHtml(this.asteroid_data, this.isprobed));
@@ -435,6 +434,7 @@ Crafty.c('Probe', {
                 speed_factor: 1.5, // the acceleration rate
                 max_speed: 1.2
             })
+            .reel('play_spr_probe', Game.framerate_ms * 4, 0, 0, 4)
             .origin("center")
             .bind("KeyDown", function (e) {
                 //on keydown, set the move booleans
@@ -451,7 +451,13 @@ Crafty.c('Probe', {
                     if (this.move.up) this.move.left = false;
                     this.move.down = true;
                 }
+
+                if (!this.isPlaying('play_spr_probe')) {
+                    this.animate('play_spr_probe', -1)
+                }
             }).bind("KeyUp", function (e) {
+//                this.pauseAnimation();
+
                 //on key up, set the move booleans to false
                 if (e.key === Crafty.keys.RIGHT_ARROW) {
                     this.move.right = false;
@@ -464,6 +470,7 @@ Crafty.c('Probe', {
                 }
             }).bind("EnterFrame", function () {
                 if (!Game.paused) {
+
                     var y_dir = 0;
                     var x_dir = 0;
 
@@ -475,6 +482,17 @@ Crafty.c('Probe', {
 
                     var vx = Math.sin(x_dir * Math.PI / 180) * this.speed_factor * (Game.width() / Game.height()),
                         vy = Math.sin(-y_dir * Math.PI / 180) * this.speed_factor;
+
+                    if (!this.isPlaying('play_spr_probe')) {
+                        if (this.move.right || this.move.left || this.move.down || this.move.up || Math.abs(vx) > 0 || Math.abs(vy) > 0) {
+                            this.resumeAnimation();
+                        }
+                    } else {
+                        if (!(this.move.right || this.move.left || this.move.down || this.move.up || Math.abs(vx) > 0 || Math.abs(vy) > 0)) {
+                            this.pauseAnimation();
+                            this.reelPosition(0);
+                        }
+                    }
 
                     if (this.move.left || this.move.right) {
                         this.xspeed += vx;
@@ -499,6 +517,8 @@ Crafty.c('Probe', {
                         this._x < -64 || this._y < -64) {
                         this.destroy()
                     }
+                } else {
+                    this.pauseAnimation();
                 }
             })
             .bind('Moved', function () {
