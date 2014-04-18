@@ -69,7 +69,7 @@ Crafty.c('Rock', {
 //            .gravityConst(2);
 
         var info_box = Crafty.e("2D, DOM, Text")
-            .attr({w: 200, alpha: 0.8})
+            .attr({w: 200, alpha: 0.8, visible: false})
             .text('An Asteroid!')
             .css({
                 'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
@@ -79,11 +79,15 @@ Crafty.c('Rock', {
                 'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
                 padding: '7px 10px',
                 border: '1px solid #AAA',
-                display: 'none'
+                display: 'block'
             });
+//        info_box.visible = false;
 
         this.bind('MouseOver', function (data) {
             info_box.text(asteroidInfoHtml(this.asteroid_data));
+
+            var jqInfoBox = $('#' + info_box.getDomId());
+            info_box.dom_height = jqInfoBox.height();
 
             if (this._x >= Game.width() - 250) {
                 info_box.x = this._x - 225;
@@ -91,22 +95,20 @@ Crafty.c('Rock', {
                 info_box.x = this._x + 25;
             }
 
-             if (this._y >= Game.height() / 2) {
-                info_box.origin('bottom center');
-                info_box.y = this._y - 50;
-             } else {
-                info_box.origin('top center');
-                info_box.y = this._y + 50;
-             }
+            if (this._y >= Game.height() / 2) {
+                info_box.y = this._y - info_box.dom_height;
+            } else {
+                info_box.y = this._y + 5;
+            }
 
-
-            $('#' + info_box.getDomId()).css('height', 'inherit');
+            jqInfoBox.css('height', 'inherit');
             this.attach(info_box);
-            info_box.css({ display: 'block' });
+            info_box.visible = true;
+
             testGlobal = info_box;
         });
         this.bind('MouseOut', function (data) {
-            info_box.css({display: 'None'});
+            info_box.visible = false;
         });
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
@@ -120,7 +122,16 @@ Crafty.c('Rock', {
                     info_box.x = this._x + 25;
                 }
 
-                info_box.y = this._y + 5;
+                if (this._y >= Game.height() / 2) {
+                    if (info_box.dom_height) {
+                        info_box.y = this._y - info_box.dom_height;
+                    } else {
+                        info_box.y = this._y - $('#' + info_box.getDomId()).height()
+                    }
+
+                } else {
+                    info_box.y = this._y + 5;
+                }
 
                 if (this._x >= Game.width()) {
                     this.destroy();
@@ -260,8 +271,8 @@ Crafty.c('Ship', {
                         if (!this.thrusters) {
                             var thruster1 = Crafty.e('Thruster');
                             thruster1.rotate({
-                                cos: 1-Math.cos(this.rotation * Math.PI / 180),
-                                sin: 1-Math.sin(this.rotation * Math.PI / 180),
+                                cos: 1 - Math.cos(this.rotation * Math.PI / 180),
+                                sin: 1 - Math.sin(this.rotation * Math.PI / 180),
                                 o: {
                                     x: this._origin.x,
                                     y: this._origin.y
