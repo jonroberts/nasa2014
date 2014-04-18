@@ -28,7 +28,8 @@ function addSingleAsteroid(asteroid) {
 
 function _addAsteroid(asteroid, x, y) {
     if (Game.scaleAsteroids) {
-        ast_scale = Math.max(Math.log(1.6*asteroid['diameter']), 1);
+        ast_scale = Math.max(Math.sqrt(Math.log(Game.scaleAsteroidFactor*asteroid['diameter'])), 1);
+        console.log(asteroid['diameter'] + ' -> ' + ast_scale);
     } else {
         ast_scale = 1
     }

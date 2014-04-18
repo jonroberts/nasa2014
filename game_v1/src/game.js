@@ -16,7 +16,8 @@ Game = {
     showThrusters: true,
 
     // whether to scale asteroids according to diameter data
-    scaleAsteroids: false,
+    scaleAsteroids: true,
+    scaleAsteroidFactor: 0.2,
 
     paused: false,
     starting_money: 15000000,
@@ -26,6 +27,7 @@ Game = {
 
     // url of the asteroid server
     server_url: 'http://localhost:8100/get_random_asteroids',
+//    server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
 
     // effects of research
     research: {
