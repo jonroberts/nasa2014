@@ -213,7 +213,6 @@ Crafty.c('Rock', {
             .attr({ isprobed: false });
 
 
-
 //        this.gravity("platform")
 //            .gravityConst(2);
 
@@ -232,21 +231,26 @@ Crafty.c('Rock', {
             });
 
         this.bind('MouseOver', function (data) {
-//            console.log(this._x + ',' + (Game.map_grid.width * Game.map_grid.tile.width));
-//            console.log(this._y + ',' + (Game.map_grid.height * Game.map_grid.tile.height));
-
             if (this._x >= Game.width() - 250) {
                 info_box.x = this._x - 225;
             } else {
                 info_box.x = this._x + 25;
             }
 
+//            if (this._y >= Game.height() / 2) {
+//                info_box.origin('bottom center');
+//                info_box.y = this._y - 50;
+//            } else {
+//                info_box.origin('top center');
+//                info_box.y = this._y + 50;
+//            }
+
             if (this._y >= Game.height() / 2) {
                 info_box.origin('bottom center');
-                info_box.y = this._y + 50;
+                info_box.y = this._y - 50;
             } else {
                 info_box.origin('top center');
-                info_box.y = this._y - 50;
+                info_box.y = this._y + 50;
             }
 
 
@@ -327,14 +331,6 @@ Crafty.c('Rock', {
 
     },
 
-//    scale: function() {
-////        console.log('scaling');
-//        this.diameter_scale = Math.max(Math.log(this.asteroid_data.diameter), 1);
-//        this.w *= this.diameter_scale;
-//        this.h *=this.diameter_scale;
-//        this.origin('center');
-//    },
-
     hit: function () {
         this.destroy();
     },
@@ -406,7 +402,12 @@ Crafty.c('ISS', {
 // This is the player-controlled character
 Crafty.c('Ship', {
     init: function () {
-        this.requires('Actor, Controls, Collision, spr_player, SpriteAnimation, Mouse')
+        var classes = 'Actor, Canvas, Controls, Collision, spr_player, SpriteAnimation, Mouse';
+        if (Game.debug) {
+            classes += ', DebugCanvas, VisibleMBR';
+        }
+
+        this.requires(classes)
             .attr({
                 move: {left: false, right: false, up: false, down: false},
                 xspeed: 0, yspeed: 0, speed: 0,
@@ -416,7 +417,7 @@ Crafty.c('Ship', {
                 fuel: 1000,
                 thrusters: null
             })
-            .origin("bottom middle")
+            .origin("center")
             .bind("KeyDown", function (e) {
                 //on keydown, set the move booleans
                 if (e.key === Crafty.keys.RIGHT_ARROW) {
@@ -450,59 +451,40 @@ Crafty.c('Ship', {
                         this.xspeed += vx;
 
                         if (!this.thrusters) {
-                            this.thrusters = [
-                                Crafty.e("2D,Canvas,Particles")
-                                    .attr({y: this._y + 15, x: this._x + 5})
-                                    .particles({
-                                        maxParticles: 15,
-                                        size: 2,
-                                        sizeRandom: 2,
-                                        speed: 1,
-                                        speedRandom: 1.2,
-                                        lifeSpan: 7,
-                                        lifeSpanRandom: 7,
-                                        angle: 0,
-                                        angleRandom: 5,
-                                        startColour: [255, 131, 0, 1],
-                                        startColourRandom: [48, 50, 45, 0],
-                                        endColour: [245, 35, 0, 0],
-                                        endColourRandom: [60, 60, 60, 0],
-                                        sharpness: 5,
-                                        sharpnessRandom: 2,
-                                        spread: 0,
-                                        duration: -1,
-                                        fastMode: true,
-                                        gravity: { x: 0, y: 0.1 },
-                                        jitter: 0
-                                    }),
+                            var thruster1 = Crafty.e('Thruster');
+                            thruster1.rotate({
+                                cos: 1-Math.cos(this.rotation * Math.PI / 180),
+                                sin: 1-Math.sin(this.rotation * Math.PI / 180),
+                                o: {
+                                    x: this._origin.x,
+                                    y: this._origin.y
+                                }
+                            });
+                            thruster1._globalZ = this._globalZ - 1;
+                            thruster1.shift(this._x, this._y);
+                            thruster1.start(this.rotation);
 
-                                Crafty.e("2D,Canvas,Particles")
-                                    .attr({y: this._y + 15, x: this._x + 15})
-                                    .particles({
-                                        maxParticles: 15,
-                                        size: 2,
-                                        sizeRandom: 2,
-                                        speed: 1,
-                                        speedRandom: 1.2,
-                                        lifeSpan: 7,
-                                        lifeSpanRandom: 7,
-                                        angle: 0,
-                                        angleRandom: 5,
-                                        startColour: [255, 131, 0, 1],
-                                        startColourRandom: [48, 50, 45, 0],
-                                        endColour: [245, 35, 0, 0],
-                                        endColourRandom: [60, 60, 60, 0],
-                                        sharpness: 5,
-                                        sharpnessRandom: 2,
-                                        spread: 0,
-                                        duration: -1,
-                                        fastMode: true,
-                                        gravity: { x: 0, y: 0.1 },
-                                        jitter: 0
-                                    })
-                            ];
-                            this.attach(this.thrusters[0]);
-                            this.attach(this.thrusters[1]);
+                            var thruster2 = Crafty.e('Thruster');
+                            thruster2.rotate({
+                                cos: -Math.cos(this.rotation * Math.PI / 180),
+                                sin: -Math.sin(this.rotation * Math.PI / 180),
+                                o: {
+                                    x: this._origin.x,
+                                    y: this._origin.y
+                                }
+                            });
+                            thruster2._globalZ = this._globalZ - 1;
+                            thruster2.shift(this._x, this._y);
+                            thruster2.start(this.rotation);
+
+                            this.thrusters = [thruster1, thruster2];
+                            this.attach(this.thrusters[0], this.thrusters[1]);
+
+//                            this.bind("Rotate", function(data) {
+//                                if (this.thrusters) {
+//                                    this.thrusters.updateRotation(data);
+//                                }
+//                            });
                         }
                     } else {
                         if (this.thrusters) {
@@ -560,6 +542,10 @@ Crafty.c('Ship', {
                     this.fuel = 1000;
                 }
             });
+
+        if (Game.debug) {
+            this.debugAlpha(0.2);
+        }
     },
 
     // Registers a stop-movement function to be called when
@@ -578,6 +564,47 @@ Crafty.c('Ship', {
         }
     }
 });
+
+Crafty.c('Thruster', {
+    init: function () {
+        this.requires("2D,Canvas,Particles")
+            .attr({
+                alpha: 0.8,
+                particleDefaults: {
+                    maxParticles: 15,
+                    size: 2,
+                    sizeRandom: 1,
+                    speed: 1,
+                    speedRandom: 1.2,
+                    lifeSpan: 5,
+                    lifeSpanRandom: 2,
+                    angle: 0,
+                    angleRandom: 2,
+                    startColour: [255, 131, 0, 1],
+                    startColourRandom: [48, 50, 45, 0],
+                    endColour: [245, 35, 0, 0],
+                    endColourRandom: [60, 60, 60, 0],
+                    sharpness: 5,
+                    sharpnessRandom: 2,
+                    spread: 0,
+                    duration: -1,
+                    fastMode: true,
+                    gravity: { x: 0, y: 0.1 },
+                    jitter: 0
+                }});
+    },
+
+    start: function (rotation) {
+        particleParams = this.particleDefaults;
+        particleParams.angle = 180 - rotation;
+        this.particles(particleParams);
+    },
+
+    updateRotation: function (data) {
+        this._Particles.angle -= data['deg'];
+    }
+});
+
 
 // This is the player-controlled character
 Crafty.c('Probe', {

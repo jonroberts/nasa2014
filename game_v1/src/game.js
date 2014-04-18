@@ -1,6 +1,5 @@
 Game = {
 
-
 	// This defines our grid's size and the size of each of its tiles
 	map_grid: {
 		width:  76,
@@ -11,12 +10,24 @@ Game = {
 		}
 	},
 
+    debug: false,
+
+    // show thrusters from ship engines
+    showThrusters: true,
+
+    // whether to scale asteroids according to diameter data
+    scaleAsteroids: false,
+
     paused: false,
     starting_money: 15000000,
     asteroids: undefined,
     framerate_ms: 100,
     day: 0,
 
+    // url of the asteroid server
+    server_url: 'http://localhost:8100/get_random_asteroids',
+
+    // effects of research
     research: {
         mining_efficiency: {
             water: .01

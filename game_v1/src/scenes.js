@@ -12,9 +12,9 @@ function updateScore(val) {
     if (score.value < 0) {
         alert('You have run out of money and will remain trapped on earth!');
         location.reload();
-//        Crafty.scene('Game');
     }
 }
+
 
 var dateDisplay = undefined;
 
@@ -57,7 +57,6 @@ Crafty.scene('Game', function () {
         });
 
     this.player = Crafty.e('Probe').at(38, 38);
-
     this.buyProbe = Crafty.e('BuyProbe').at(1, 39);
     this.base = Crafty.e('BaseProngs').at(38, 38);
     this.base = Crafty.e('Base').at(38, 39);
@@ -70,34 +69,7 @@ Crafty.scene('Game', function () {
         addAsteroid(Game.asteroids[i]);
     }
 
-    function addAsteroid(asteroid) {
-        var x = Math.floor(Math.random() * Game.map_grid.width);
-        var y = Game.map_grid.height - (Math.round(asteroid['earth_dist'] * 10.0) + 7);
-        var ast = Crafty.e('Rock').at(x, y).attr({
-            asteroid_data: asteroid,
-            rotation_rate: (Game.framerate_ms / (10 * asteroid['rot_per'])),
-            w: Game.map_grid.tile.width * Math.max(Math.log(1.6*asteroid['diameter']), 1),
-            h: Game.map_grid.tile.height * Math.max(Math.log(1.6*asteroid['diameter']), 1),
-            x_speed: Math.abs(asteroid['earth_dv'] / 100)
-        }).origin('center');
-        Game.occupied[x][y] = true;
-    }
-
-    function addSingleAsteroid(asteroid) {
-        var x = 0;
-        var y = Game.map_grid.height - (Math.round(asteroid['earth_dist'] * 10.0) + 7);
-        var ast = Crafty.e('Rock').at(x, y).attr({
-            asteroid_data: asteroid,
-            rotation_rate: (Game.framerate_ms / (10 * asteroid['rot_per'])),
-            w: Game.map_grid.tile.width * Math.max(Math.log(1.6*asteroid['diameter']), 1),
-            h: Game.map_grid.tile.height * Math.max(Math.log(1.6*asteroid['diameter']), 1),
-            x_speed: Math.abs(asteroid['earth_dv'] / 100)
-        }).origin('center');
-        Game.occupied[x][y] = true;
-    }
-
     Crafty.e('ISS').at(0, 37);
-
 
     var pauseIndicator = null;
     Crafty.bind('KeyDown', function (e) {
@@ -118,8 +90,7 @@ Crafty.scene('Game', function () {
                         } else if (this.frameCount % 100 == 70){
                             this.visible = false;
                         }
-                    })
-                ;
+                    });
             } else {
                 pauseIndicator.destroy();
             }
@@ -140,17 +111,7 @@ Crafty.scene('Game', function () {
         .start();
 
     Crafty.bind('CreateAsteroid', function () {
-        url = 'http://localhost:8100/get_random_asteroids?limit=' + 10 + '&day=' + Game.day;
-
-        $.ajax({
-            url: url,
-            success: function (data, status, jqXHR) {
-                Game.asteroids = data.results;
-                var asteroid = Game.asteroids[Math.floor(Math.random() * Game.asteroids.length)];
-                addSingleAsteroid(asteroid);
-            },
-            dataType: 'json'
-        });
+        CreateAsteroid(10);
     })
 
 });
