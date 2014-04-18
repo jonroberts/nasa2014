@@ -84,11 +84,10 @@ function asteroidInfoHtml(asteroid_data, isprobed) {
     pha = asteroid_data.pha == 'Y' ? '<p class="hazard">Potentially Hazardous Object!</p>' : '';
     neo = asteroid_data.neo == 'Y' ? '<p>Near Earth Object</p>' : '';
 
-
     if (isprobed) {
         unprobed = '';
         spec_type = asteroid_data.spec;
-        minerals_key = SPECTRAL_INDEX[this.asteroid_data.spec];
+        minerals_key = SPECTRAL_INDEX[asteroid_data.spec];
         minerals = '';
         for (key in minerals_key) {
             minerals = minerals + ' ' + key;
