@@ -83,67 +83,22 @@ Crafty.c('Rock', {
             });
 
         this.bind('MouseOver', function (data) {
+            info_box.text(asteroidInfoHtml(this.asteroid_data));
+
             if (this._x >= Game.width() - 250) {
                 info_box.x = this._x - 225;
             } else {
                 info_box.x = this._x + 25;
             }
 
-//            if (this._y >= Game.height() / 2) {
-//                info_box.origin('bottom center');
-//                info_box.y = this._y - 50;
-//            } else {
-//                info_box.origin('top center');
-//                info_box.y = this._y + 50;
-//            }
-
-            if (this._y >= Game.height() / 2) {
+             if (this._y >= Game.height() / 2) {
                 info_box.origin('bottom center');
                 info_box.y = this._y - 50;
-            } else {
+             } else {
                 info_box.origin('top center');
                 info_box.y = this._y + 50;
-            }
+             }
 
-
-            unprobed = '<p>Unexplored!</p>';
-            spec_type = 'Unknown';
-            tval = 'Unknown';
-            dist = this.asteroid_data.earth_dist.toFixed(2) + ' AU';
-            deltav = this.asteroid_data.earth_dv.toFixed(2) + ' km/s';
-            minerals = 'Unknown';
-            price_per_kg = 'Unknown';
-            pha = this.asteroid_data.pha == 'Y' ? '<p class="hazard">Potentially Hazardous Object!</p>' : '';
-            neo = this.asteroid_data.neo == 'Y' ? '<p>Near Earth Object</p>' : '';
-
-            if (this.isprobed) {
-                unprobed = '';
-                spec_type = this.asteroid_data.spec;
-                minerals_key = SPECTRAL_INDEX[this.asteroid_data.spec];
-                minerals = '';
-                for (key in minerals_key) {
-                    minerals = minerals + ' ' + key;
-                }
-                if (this.asteroid_data.value < 1E-20) {
-                    this.asteroid_data.value = 0.0;
-                }
-                if (this.asteroid_data.price < 1E-20) {
-                    this.asteroid_data.price = 0.0;
-                }
-                price_per_kg = '$' + this.asteroid_data.value.toLocaleString();
-                tval = '$' + this.asteroid_data.price.toLocaleString();
-            }
-            html = '<h3 style="border-bottom: 1px solid #111">Asteroid ' + this.asteroid_data.full_name + '</h3>';
-            html = html + unprobed;
-            html = html + '<p>Spectral Type: ' + spec_type + '</p>';
-            html = html + '<p>Minerals: ' + minerals + '</p>';
-            html = html + '<p>Price per kg: ' + price_per_kg + '</p>';
-            html = html + '<p>Total Value: ' + tval + '</p>';
-            html = html + '<p>Distance: ' + dist + '</p>';
-            html = html + '<p>Delta-V: ' + deltav + '</p>';
-            html = html + neo + pha;
-
-            info_box.text(html);
 
             $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);
