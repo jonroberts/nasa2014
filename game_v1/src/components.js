@@ -54,6 +54,179 @@ Crafty.c('GasStation', {
     }
 });
 
+Crafty.c('LSST', {
+    init: function () {
+        this.requires('Actor, spr_h_refinery,Mouse');
+
+	Game.all_asteroids_probed = true;
+
+	var info_box = Crafty.e("2D, DOM, Text")
+            .attr({w: 75, alpha: 0.8})
+            .text('The Large Synoptic Sky Telescope')
+            .css({
+                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                color: '#111',
+                textShadow: '0 -1px 1px #666',
+                'border-radius': '5px',
+                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
+                padding: '10px',
+                border: '1px solid #AAA',
+                display: 'none'
+            });
+
+        this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+            $('#' + info_box.getDomId()).css('height', 'inherit');
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+        });
+
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
+        });
+
+    }
+});
+
+
+
+Crafty.c('ArkydTelescope', {
+    init: function () {
+        this.requires('Actor, Collision, spr_iss, Mouse')
+            .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)});
+	
+
+	CreateAsteroid(Game.num_asteroids);
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .attr({w: 75, alpha: 0.8})
+            .text('The ArkydTelescope')
+            .css({
+                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                color: '#111',
+                textShadow: '0 -1px 1px #666',
+                'border-radius': '5px',
+                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
+                padding: '10px',
+                border: '1px solid #AAA',
+                display: 'none'
+            });
+
+        this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+            $('#' + info_box.getDomId()).css('height', 'inherit');
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+        });
+
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
+        });
+
+        this.bind("EnterFrame", function (frame) {
+            if (!Game.paused) {
+                this.move('e', this.x_speed);
+                if (this._x >= Game.width()) {
+                    this.x = -1;
+                }
+            }
+        });
+    }
+});
+
+Crafty.c('MetalRefining', {
+    init: function () {
+        this.requires('Actor, Collision, spr_h_refinery, Mouse')
+            .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)});
+	
+
+	Game.asteroid_base_value['Metals'] = Game.asteroid_base_value['Metals'] * Game.metal_refinery_bonus;
+	Game.asteroid_base_value['Platinum'] = Game.asteroid_base_value['Platinum'] * Game.metal_refinery_bonus;
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .attr({w: 75, alpha: 0.8})
+            .text('Orbiting Metal Refinery')
+            .css({
+                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                color: '#111',
+                textShadow: '0 -1px 1px #666',
+                'border-radius': '5px',
+                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
+                padding: '10px',
+                border: '1px solid #AAA',
+                display: 'none'
+            });
+
+        this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+            $('#' + info_box.getDomId()).css('height', 'inherit');
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+        });
+
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
+        });
+
+        this.bind("EnterFrame", function (frame) {
+            if (!Game.paused) {
+                this.move('e', this.x_speed);
+                if (this._x >= Game.width()) {
+                    this.x = -1;
+                }
+            }
+        });
+    }
+});
+
+Crafty.c('HydrogenRefining', {
+    init: function () {
+        this.requires('Actor, Collision, spr_iss, Mouse')
+            .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)});
+	
+
+	Game.asteroid_base_value['Hydrogen'] = Game.asteroid_base_value['Hydrogen'] * Game.hydrogen_refinery_bonus;
+	Game.asteroid_base_value['Water'] = Game.asteroid_base_value['Water'] * Game.hydrogen_refinery_bonus;
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .attr({w: 75, alpha: 0.8})
+            .text('Orbiting Hydrogen Refinery')
+            .css({
+                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                color: '#111',
+                textShadow: '0 -1px 1px #666',
+                'border-radius': '5px',
+                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
+                padding: '10px',
+                border: '1px solid #AAA',
+                display: 'none'
+            });
+
+        this.bind('MouseOver', function (data) {
+            info_box.x = this._x + 15;
+            info_box.y = this._y - 45;
+            $('#' + info_box.getDomId()).css('height', 'inherit');
+            this.attach(info_box);
+            info_box.css({ display: 'block' });
+        });
+
+        this.bind('MouseOut', function (data) {
+            info_box.css({display: 'None'});
+        });
+
+        this.bind("EnterFrame", function (frame) {
+            if (!Game.paused) {
+                this.move('e', this.x_speed);
+                if (this._x >= Game.width()) {
+                    this.x = -1;
+                }
+            }
+        });
+    }
+});
 
 //var testGlobal = undefined;
 
@@ -83,7 +256,7 @@ Crafty.c('Rock', {
             });
 
         this.bind('MouseOver', function (data) {
-            info_box.text(asteroidInfoHtml(this.asteroid_data, this.isprobed));
+            info_box.text(asteroidInfoHtml(this.asteroid_data, (this.isprobed || Game.all_asteroids_probed)));
 
             var jqInfoBox = $('#' + info_box.getDomId());
             info_box.dom_height = jqInfoBox.height();
@@ -341,12 +514,14 @@ Crafty.c('Ship', {
             .collision()
             .onHit('Rock', function (data) {
                 // Respond to this ship hitting an asteroid
+                // resources extracted according to researched efficiency
                 this.stopMovement();
                 var asteroid = data[0].obj;
-
-                // resources extracted according to researched efficiency
-                this.cargo_value += Game.asteroid_base_value[asteroid.asteroid_data.astclass];
-                asteroid.hit();
+		if (this.cargo_num < Game.max_ship_cargo) {
+	                this.cargo_value += Game.asteroid_base_value[asteroid.asteroid_data.astclass];
+			this.cargo_num = this.cargo_num + 1;
+	                asteroid.hit();
+		}
             })
             .onHit('BaseProngs', function (data) {
                 updateScore(this.cargo_value);
@@ -679,6 +854,7 @@ Crafty.c('MissionRocket', {
         this.attach(this.thrusters[0], this.thrusters[1]);
     }
 });
+
 
 /**
  * Creates a timer component, which calls a function on an interval.

@@ -72,6 +72,11 @@ Crafty.scene('Game', function () {
     Crafty.e('ISS').at(0, 37);
 
     var pauseIndicator = null;
+
+    Crafty.bind('AdvancedMiner', function() {
+	Game.max_ship_cargo = 3;
+    });
+
     Crafty.bind('KeyDown', function (e) {
         if (e.key == Crafty.keys.SPACE) {
             Game.paused = !Game.paused;
@@ -106,13 +111,13 @@ Crafty.scene('Game', function () {
                 Game.day += 1;
                 dateDisplay.value.setTime(dateDisplay.value.getTime() + 86400000);
                 dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
-                Crafty.trigger('CheckMissionDate');
+		Crafty.trigger('CheckMissionDate');
             }
         })
         .start();
 
     Crafty.bind('CreateAsteroid', function () {
-        CreateAsteroid(10);
+        CreateAsteroid(1);
     })
 
 });

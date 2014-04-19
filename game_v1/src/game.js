@@ -35,15 +35,18 @@ Game = {
 //    server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
 
 
-
-
+    max_ship_cargo: 1,
+    all_asteroids_probed: false,
     starting_money: 15000000,
-    asteroid_base_value: { 'None': 0, 'Hydrogen': 1000000, 'Metals': 1000000, 'Platinum': 10000000, 'Water': 1000000 },
+    asteroid_base_value: { 'None': 0, 'Hydrogen': 2000000, 'Metals': 2000000, 'Platinum': 20000000, 'Water': 2000000 },
     fuel_cost_per_pixel: 1000,
     probe_fuel_cost_per_pixel: 0,
 
-    ship_cost: 300000,
-    probe_cost: 100000,
+    metal_refinery_bonus: 2.0,
+    hydrogen_refinery_bonus: 2.0,
+
+    ship_cost: 200000,
+    probe_cost: 200000,
 
     hrefinery_bonus: 2.0,
     // effects of research

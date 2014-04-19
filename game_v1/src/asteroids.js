@@ -5,10 +5,16 @@ function StartAsteroids(day) {
     });
 }
 
-function CreateAsteroid(limit) {
-    $.getJSON(Game.server_url, {'limit': 1, 'day': Game.day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'noval_accept_prob': Game.noval_accept_prob}, function(data) {
+function CreateAsteroid(limit, single=true) {
+    $.getJSON(Game.server_url, {'limit': limit, 'day': Game.day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'noval_accept_prob': Game.noval_accept_prob}, function(data) {
         Game.asteroids = data.results;
-        addSingleAsteroid(Game.asteroids[0])//;Math.floor(Math.random() * Game.asteroids.length)]);
+	for (i=0; i<data.results.length; i++) {
+		if (single) {
+		        addSingleAsteroid(Game.asteroids[i])//;Math.floor(Math.random() * Game.asteroids.length)]);
+		} else {
+			addAsteroid(Game.asteroids[i]);
+		}
+	}
     });
 }
 
@@ -29,7 +35,7 @@ function addSingleAsteroid(asteroid) {
 }
 
 function _addAsteroid(asteroid, x, y) {
-console.log(asteroid.earth_dist + ' -> ' + y + '  ,  ' + Game.map_grid.height + '  , ' + x + '  ,  ' + Game.map_grid.width);
+//console.log(asteroid.earth_dist + ' -> ' + y + '  ,  ' + Game.map_grid.height + '  , ' + x + '  ,  ' + Game.map_grid.width);
 
     if (y < 0) {
         return;

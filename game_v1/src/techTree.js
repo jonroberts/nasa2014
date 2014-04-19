@@ -6,12 +6,68 @@ var tech = {
 		'researched':true,
 		'reqs':[]
 	},
+	'basicMiner':{
+		'name':'Asteroid Miner',
+		'description':'An asteroid mining craft. Capable of mining and storing the cargo for one asteroid.',
+		'cost':10000000,
+		'researched':false,
+		'reqs':[]
+	},
+	'advancedMiner':{
+		'name':'Advanced Asteroid Miner',
+		'description':'Upgrades the cargo hold of the miner so it can mine 3 asteroids in one trip. Requires the Asteroid Miner.',
+		'cost':10000000,
+		'researched':false,
+		'reqs':['basicMiner']
+	},
 	'arkydTelescope':{
 		'name':'Arkyd Public Space Telescope',
 		'description':'Create the world\'s first crowdfunded asteroid hunting telescope. By placing this in space, the satellite can hunt asteroids 24/7, and so it sees almost twice the number of asteroids.',
-		'cost':1500000,
+		'cost':8000000,
 		'researched':false,
 		'reqs':[]
+	},
+	'largeSynopticSurveyTelescope':{
+		'name': 'Large Synoptic Survey Telescope',
+		'description':'Build the LSST on the El Penon peak of Cerro Pachon. This telescope can take a picture of the entire night sky in only a few nights of observation. It automatically identifies the spectral type and value of all asteroids, so you no longer need to send probes!',
+		'cost': 8000000,
+		'researched': false,
+		'reqs': []
+	},
+	'metalRefining':{
+		'name':'Orbiting Metal Refinery',
+		'description':'Allows for the refining of raw metals in space. Doubles the value of metal rich asteroids!',
+		'cost':10000000,
+		'researched':false,
+		'reqs':['basicMiner']
+	},
+	'liquidHydrogenRefining':{
+		'name':'Liquid Hydrogen Refining',
+		'description':'Process hydrogen from asteroids to create rocket fuel in space. Doubles the value of water and hydrogen rich asteroids',
+		'cost':10000000,
+		'researched':false,
+		'reqs':['basicMiner']
+	},
+	'spaceFactory':{
+		'name':'Space Factory',
+		'description':'Help NASA construct large orbiting stations! Building things on earth is easy, but it\'s expensive to get them to space. Why not build factories in space instead? Note, you\'ll need to get the raw materials to your factory! Requires an Orbiting Metal Refinery.',
+		'cost':15000000,
+		'researched':false,
+		'reqs':['metalRefining']
+	},
+	'spaceGasStation':{
+		'name':'Orbiting Gas Station',
+		'description':'Help NASA explore deeper into the solar system! Once you have rocket fuel in space, new missions from earth only need to get to the gas station, refuel before venturing further into the cosmos. Required to build a space based hydrogen fuel station. Requires Liquid Hydrogen Refining.',
+		'cost':15000000,
+		'researched':false,
+		'reqs':['liquidHydrogenRefining']
+	},
+	'orbitingAsteroidDefense':{
+		'name':'Orbiting Asteroid Defense Platform',
+		'description':'Capable of defending Earth from the incoming asteroid! Requires and Orbiting Gas Station and a Space Factory.',
+		'cost':30000000,
+		'researched': false,
+		'reqs':['spaceGasStation','spaceFactory']
 	},
 	'waterMining':{
 		'name':'Water Miner',
@@ -40,27 +96,6 @@ var tech = {
 		'cost':100000000,
 		'researched':false,
 		'reqs':['ironMining']
-	},
-	'spaceFactory':{
-		'name':'Space Factory',
-		'description':'Building things on earth is easy, but it\'s expensive to get them to space. Why not build factories in space instead? Note, you\'ll need to get the raw materials to your factory!',
-		'cost':100000000,
-		'researched':false,
-		'reqs':['ironProcessing']
-	},
-	'liquidHydrogenRefining':{
-		'name':'Liquid Hydrogen Refining',
-		'description':'Turn water into liquid hydrogen and oxygen, and you have rocket fuel in space.',
-		'cost':1000000,
-		'researched':false,
-		'reqs':['waterMining']
-	},
-	'spaceGasStation':{
-		'name':'Orbiting Gas Station',
-		'description':'Once you have rocket fuel in space, new missions from earth only need to get to the gas station, refuel before venturing further into the cosmos. Required to build a space based hydrogen fuel station.',
-		'cost':1000000,
-		'researched':false,
-		'reqs':['liquidHydrogenRefining']
 	},
 };
 
@@ -148,14 +183,30 @@ function research(key){
 		alert('Too little money to perform research!');
 		return false;
 	}
+	if(key=='basicMiner'){
+		Crafty.e('BuyShip').at(3,39);
+	}
+	if(key=='advancedMiner'){
+		Crafty.trigger('AdvancedMiner');
+	}
 	if(key=='waterMining'){
 		Crafty.e('BuyShip').at(3,39);
 	}
 	if(key=='liquidHydrogenRefining'){
-		Crafty.e('BuyHRefinery').at(5,39);
+//		Crafty.e('BuyHRefinery').at(5,39);
+		Crafty.e('HydrogenRefining').at(0,36);
 	}
 	if(key=='spaceGasStation'){
 		Crafty.e('BuyGasStation').at(7,39);
+	}
+	if(key=='largeSynopticSurveyTelescope'){
+		Crafty.e('LSST').at(42,39);
+	}
+	if(key=='arkydTelescope'){
+		Crafty.e('ArkydTelescope').at(0,37);
+	}
+	if(key=='metalRefining'){
+		Crafty.e('MetalRefining').at(0,36);
 	}
 	updateScore(-tech[key].cost);
 	tech[key].researched=true;
