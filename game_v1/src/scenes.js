@@ -5,6 +5,7 @@
 var activeShip = undefined;
 var score = undefined;
 var gasStation = undefined;
+var iss = undefined;
 
 function updateScore(val) {
     score.value += val;
@@ -92,7 +93,7 @@ Crafty.scene('Game', function () {
         addAsteroid(Game.asteroids[i]);
     }
 
-    Crafty.e('ISS').at(0, 37);
+    iss = Crafty.e('ISS').at(0, 37);
 
     var pauseIndicator = null;
 
