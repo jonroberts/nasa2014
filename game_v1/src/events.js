@@ -19,18 +19,11 @@ Crafty.bind('CheckMissionDate', function () {
 });
 
 function missionInfoHtml(mission_data, mission_date) {
-    var desc_str = '';
-    if (mission_data['quick_desc']) {
-        desc_str = mission_data['quick_desc'];
-    } else if (mission_data['long_desc']) {
-        desc_str = mission_data['long_desc'];
-    }
-
     return "<div class='info-box'><div class='ib-top'>" +
-        "<div class='ib-top-img'><img src='" + mission_data['image_link'] + "'></div>" +
+        "<div class='ib-top-img'><img src='" + mission_data['image'] + "'></div>" +
         "<div class='ib-top-right'><div class='ib-top-name'>" + mission_data['name'] + '</div>' +
         "<div class='ib-top-launch'>Launch date: " + mission_date + "</div></div>" +
         "<div class='ib-details'><div class='ib-agency'>Agency: " + mission_data['agency'] + "</div>" +
-        "<div class='ib-desc'>" + desc_str + "</div>" +
+        "<div class='ib-desc'>" + mission_data['description'] + "</div>" +
         "</div></div></div>";
 }
