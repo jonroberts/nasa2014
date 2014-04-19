@@ -27,7 +27,7 @@ Game = {
     min_asteroid_distance: 0.5,
     max_asteroid_distance: 3.0,
     noval_accept_prob: 0.7,
-    num_asteroids: 50,
+    num_asteroids: 25,
     
     // url of the asteroid server
     server_url: 'http://localhost:8100/get_random_asteroids',

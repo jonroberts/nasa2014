@@ -35,11 +35,11 @@ function addSingleAsteroid(asteroid) {
 }
 
 function _addAsteroid(asteroid, x, y) {
-//console.log(asteroid.earth_dist + ' -> ' + y + '  ,  ' + Game.map_grid.height + '  , ' + x + '  ,  ' + Game.map_grid.width);
 
     if (y < 0) {
         return;
     }
+
 
     if (Game.scaleAsteroids) {
         //ast_scale = Math.max(Math.sqrt(Math.log(Game.scaleAsteroidFactor*asteroid['diameter'])), 1);
@@ -61,6 +61,7 @@ function _addAsteroid(asteroid, x, y) {
         h: Game.map_grid.tile.height * ast_scale,
         x_speed: Math.abs(asteroid['earth_dv'] / 100)
     }).origin('center');
+
 
     Game.occupied[x][y] = true;
 }
