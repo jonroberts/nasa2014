@@ -100,6 +100,19 @@ Crafty.scene('Game', function () {
         Game.max_ship_cargo = 3;
     });
 
+    Crafty.bind('EnableMetalsMining', function () {
+        Game.mining_ability['Metals'] = true;
+        Game.mining_ability['Platinum'] = true;
+    });
+
+    Crafty.bind('EnableHydrogenMining', function () {
+        Game.mining_ability['Hydrogen'] = true;
+    });
+
+    Crafty.bind('EnableWaterMining', function () {
+        Game.mining_ability['Water'] = true;
+    });
+
     Crafty.bind('KeyDown', function (e) {
         if (e.key == Crafty.keys.SPACE) {
             Game.paused = !Game.paused;

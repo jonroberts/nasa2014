@@ -6,12 +6,33 @@ var tech = {
 		'researched':true,
 		'reqs':[]
 	},
-	'basicMiner':{
-		'name':'Asteroid Miner',
-		'description':'An asteroid mining craft. Capable of mining and storing the cargo for one asteroid.',
-		'cost':10000000,
+	'waterMining':{
+		'name':'Water Miner',
+		'description':'An asteroid mining craft. Capable of mining a single water asteroid in one trip.',
+		'cost':3000000,
 		'researched':false,
 		'reqs':[]
+	},
+	'metalsMining':{
+		'name':'Metals Mining',
+		'description':'Adds the capability of mining metals to the mining craft.',
+		'cost':6000000,
+		'researched':false,
+		'reqs':['waterMining']
+	},
+	'hydrogenMining':{
+		'name':'Hydrogen Mining',
+		'description':'Adds the capability of mining hydrogen to the mining craft.',
+		'cost':6000000,
+		'researched':false,
+		'reqs':['waterMining']
+	},
+	'advancedMiner':{
+		'name':'Advanced Asteroid Miner',
+		'description':'Upgrades the cargo hold of the miner so it can mine 3 asteroids in one trip. Requires the all three mining types.',
+		'cost':10000000,
+		'researched':false,
+		'reqs':['waterMining','metalsMining','hydrogenMining']
 	},
 	'largeSynopticSurveyTelescope':{
 		'name': 'Large Synoptic Survey Telescope',
@@ -27,26 +48,19 @@ var tech = {
 		'researched':false,
 		'reqs':[]
 	},
-	'advancedMiner':{
-		'name':'Advanced Asteroid Miner',
-		'description':'Upgrades the cargo hold of the miner so it can mine 3 asteroids in one trip. Requires the Asteroid Miner.',
-		'cost':10000000,
-		'researched':false,
-		'reqs':['basicMiner']
-	},
 	'metalRefining':{
 		'name':'Orbiting Metal Refinery',
 		'description':'Allows for the refining of raw metals in space. Can act as a return point for mined asteroids. Doubles the value of metal rich asteroids!',
 		'cost':10000000,
 		'researched':false,
-		'reqs':['basicMiner']
+		'reqs':['metalsMining']
 	},
 	'liquidHydrogenRefining':{
 		'name':'Liquid Hydrogen Refining',
 		'description':'Process hydrogen from asteroids to create rocket fuel in space. Can act as a return point for mined asteroids. Doubles the value of water and hydrogen rich asteroids',
 		'cost':10000000,
 		'researched':false,
-		'reqs':['basicMiner']
+		'reqs':['hydrogenMining']
 	},
 	'spaceFactory':{
 		'name':'Space Factory',
@@ -71,6 +85,13 @@ var tech = {
 	}
 
 /*,
+	'advancedMiner':{
+		'name':'Advanced Asteroid Miner',
+		'description':'Upgrades the cargo hold of the miner so it can mine 3 asteroids in one trip. Requires the Asteroid Miner.',
+		'cost':10000000,
+		'researched':false,
+		'reqs':['basicMiner']
+	},
 	'waterMining':{
 		'name':'Water Miner',
 		'description':'Asteroids have many different compositions. Water asteroids are the easiest to mine.',
@@ -195,6 +216,13 @@ function research(key){
 	}
 	if(key=='waterMining'){
 		Crafty.e('BuyShip').at(3,39);
+		Crafty.trigger('EnableWaterMining');
+	}
+	if(key=='metalsMining'){
+		Crafty.trigger('EnableMetalsMining');
+	}
+	if(key=='hydrogenMining'){
+		Crafty.trigger('EnableHydrogenMining');
 	}
 	if(key=='liquidHydrogenRefining'){
 //		Crafty.e('BuyHRefinery').at(5,39);
