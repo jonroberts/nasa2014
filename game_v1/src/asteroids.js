@@ -1,26 +1,26 @@
 function StartAsteroids(limit, day) {
-    $.getJSON(Game.server_url, {'limit': limit, 'day': day}, function(data) {
+    $.getJSON(Game.server_url, {'limit': limit, 'day': day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'noval_accept_prob': Game.noval_accept_prob }, function(data) {
         Game.asteroids=data.results;
         Game.start();
     });
 }
 
 function CreateAsteroid(limit) {
-    $.getJSON(Game.server_url, {'limit': limit, 'day': Game.day}, function(data) {
+    $.getJSON(Game.server_url, {'limit': limit, 'day': Game.day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'noval_accept_prob': Game.noval_accept_prob}, function(data) {
         Game.asteroids = data.results;
         addSingleAsteroid(Game.asteroids[Math.floor(Math.random() * Game.asteroids.length)]);
     });
 }
 
 function addAsteroid(asteroid) {
-    var x = Math.floor(Math.random() * Game.map_grid.width);
-    var y = Game.map_grid.height - (Math.round(asteroid['earth_dist'] * 7.0) + 7);
+    var x = Math.floor(Math.random() * Game.map_grid.width*0.8);
+    var y = Game.map_grid.height - (Math.round(  (asteroid['earth_dist'] - 0.5)*13.6 + 7.0  ) );
     _addAsteroid(asteroid, x, y);
 }
 
 function addSingleAsteroid(asteroid) {
     var x = 0;
-    var y = Game.map_grid.height - (Math.round(asteroid['earth_dist'] * 7.0) + 7);
+    var y = Game.map_grid.height - (Math.round(  (asteroid['earth_dist'] - 0.5)*13.6 + 7.0  ) );
     _addAsteroid(asteroid, x, y);
 }
 
@@ -28,6 +28,7 @@ function _addAsteroid(asteroid, x, y) {
     if (y < 0) {
         return;
     }
+//console.log(asteroid.earth_dist + ' -> ' + y + '  ,  ' + Game.map_grid.height + '  , ' + x + '  ,  ' + Game.map_grid.width);
 
     if (Game.scaleAsteroids) {
         //ast_scale = Math.max(Math.sqrt(Math.log(Game.scaleAsteroidFactor*asteroid['diameter'])), 1);
@@ -36,7 +37,7 @@ function _addAsteroid(asteroid, x, y) {
         ast_scale = 1
     }
 
-    console.log(asteroid['diameter'] + ' -> ' + ast_scale);
+    //console.log(asteroid['diameter'] + ' -> ' + ast_scale + ' --- ' + Game.map_grid.height);
 
     Crafty.e('Rock').at(x, y).attr({
         asteroid_data: asteroid,
@@ -54,7 +55,7 @@ function asteroidScale(d) {
         return 1.0;
     }
     d = Math.max(d,1.0);
-    d = Math.min(d,30.0);
+    d = Math.min(d,10.0);
     return 1.0 + (d - 1.0)/10.0;
 }
 
@@ -84,6 +85,7 @@ function asteroidInfoHtml(asteroid_data, isprobed) {
     pha = asteroid_data.pha == 'Y' ? '<p class="hazard">Potentially Hazardous Object!</p>' : '';
     neo = asteroid_data.neo == 'Y' ? '<p>Near Earth Object</p>' : '';
 
+isprobed=true;
     if (isprobed) {
         unprobed = '';
         spec_type = asteroid_data.spec;

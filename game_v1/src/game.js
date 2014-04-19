@@ -25,10 +25,15 @@ Game = {
     framerate_ms: 100,
     day: 0,
 
+    min_asteroid_distance: 0.5,
+    max_asteroid_distance: 3.0,
+    noval_accept_prob: 0.0,
+
+
     // url of the asteroid server
-//    server_url: 'http://localhost:8100/get_random_asteroids',
+    server_url: 'http://localhost:8100/get_random_asteroids',
 //    server_url: 'http://localhost/get_random_asteroids',
-    server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
+    //server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
 
     // effects of research
     research: {

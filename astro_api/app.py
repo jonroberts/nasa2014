@@ -3,7 +3,6 @@ from datetime import timedelta
 from flask import Flask, make_response, request, current_app, jsonify
 from functools import update_wrapper
 
-
 def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_to_all=True, automatic_options=True):  
     if methods is not None:
         methods = ', '.join(sorted(x.upper() for x in methods))
@@ -52,6 +51,7 @@ app = Flask(__name__)
 def GetAsteroids():
     limit = int(request.args.get('limit'))
     day = float(request.args.get('day'))
+    
     return jsonify(results=oc.GetClosestAsteroids(limit,day))
 
 
@@ -60,5 +60,9 @@ def GetAsteroids():
 def GetRandomAsteroids():
     limit = int(request.args.get('limit'))
     day = float(request.args.get('day'))
-    return jsonify(results=oc.GetRandomAsteroids(limit,day))
+    min_dist = float(request.args.get('min_dist'))
+    max_dist = float(request.args.get('max_dist'))
+    noval_accept_prob = float(request.args.get('noval_accept_prob'))
+    
+    return jsonify(results=oc.GetRandomAsteroids(limit,day,min_dist=min_dist,max_dist=max_dist,noval_keep_frac=noval_accept_prob))
 app.run(host="0.0.0.0",port=8100)
