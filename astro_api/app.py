@@ -65,4 +65,23 @@ def GetRandomAsteroids():
     noval_accept_prob = float(request.args.get('noval_accept_prob'))
     
     return jsonify(results=oc.GetRandomAsteroids(limit,day,min_dist=min_dist,max_dist=max_dist,noval_keep_frac=noval_accept_prob))
+
+
+
+@app.route('/get_asteroids_by_type')
+@crossdomain(origin='*')
+def GetAsteroidsByType():
+    limit = int(request.args.get('limit'))
+    day = float(request.args.get('day'))
+    min_dist = float(request.args.get('min_dist'))
+    max_dist = float(request.args.get('max_dist'))
+    n_p = float(request.args.get('none'))
+    w_p = float(request.args.get('water'))
+    m_p = float(request.args.get('metals'))
+    h_p = float(request.args.get('hydrogen'))
+    p_p = float(request.args.get('platinum'))
+    
+    return jsonify(results=oc.GetAsteroidsByType(limit, day, min_dist=min_dist, max_dist=max_dist, none_frac=n_p, water_frac=w_p, metals_frac=m_p, platinum_frac=p_p, hydrogen_frac=h_p))
+    
+    
 app.run(host="0.0.0.0",port=8100)

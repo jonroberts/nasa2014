@@ -17,6 +17,7 @@ import random
 from random import randrange
 import estimate
 import scoring
+import asteroidtypes
 
 
 ##
@@ -40,6 +41,16 @@ for name in files:
 
 for f in fs:
     asteroids = asteroids + json.load(f)
+
+asteroids_by_type = {}
+types = ['None','Metals','Hydrogen','Water','Platinum']
+for t in types:
+    asteroids_by_type[t]=[]
+    
+for ast in asteroids:
+    ast['astclass'] = asteroidtypes.GetType(ast['spec'])
+    asteroids_by_type[ ast['astclass'] ].append(ast)
+
 
 
 #asteroids = filter(lambda x: x['spec']!="?" and x['spec']!='comet',asteroids)
@@ -146,6 +157,10 @@ def GetClosestAsteroids(limit,day):
 
 def GetRandomList(limit,leng,exclude=[]):
     ret = []
+    
+    if len(exclude) >= leng:
+        return []
+    
     while len(ret) < limit:
         cur = randrange(leng)
         if not cur in ret and not cur in exclude:
@@ -195,7 +210,60 @@ def GetRandomAsteroids(limit, day, max_dist = 3, min_dist = 0.5, noval_keep_frac
       
       
     return ast
+    
+    
+def GetRandomType(n,w,m,h,p):
+    r = random.random()
+    if r<p:
+        return 'Platinum'
+    elif r<p+w:
+        return 'Water'
+    elif r<p+w+m:
+        return 'Metals'
+    elif r<p+w+m+h:
+        return 'Hydrogen'
+    else:
+        return 'None'
         
+        
+def GetAsteroidsByType(limit, day, max_dist = 3, min_dist = 0.5, none_frac=0.3, water_frac=0.4, metals_frac=0.14, hydrogen_frac=0.15, platinum_frac=0.01):
+    day = day + jed_apr142014
+    jed_cur = day
+
+    earth_pos_vec = EarthPositionVector(day)
+    earth_pos_vec_2 = EarthPositionVector(day + 1)
+    
+    ast = []
+    ids = {}
+    for t in types:
+        ids[t]=[]
+    
+    while len(ast) < limit:
+        cur_type = GetRandomType(none_frac,water_frac,metals_frac,hydrogen_frac,platinum_frac)
+        
+        sel = GetRandomList(1,len(asteroids_by_type[cur_type]),ids[cur_type])
+        for i in sel:
+            ids[cur_type].append(i)
+            ids[cur_type] = list(set(ids[cur_type]))
+            
+            a = asteroids_by_type[cur_type][i]
+            a['earth_dist'] = DistanceToEarth(a,earth_pos_vec,day)
+            if a['earth_dist'] < max_dist and a['earth_dist'] > min_dist:
+                a['value'] = estimate.valuePerKg(a['spec'])
+                ast.append(a)
+
+    for i,a in enumerate(ast):
+        #ast[i]['earth_dist'] = DistanceToEarth(a,earth_pos_vec,day)
+        ast[i]['earth_dist_2'] = DistanceToEarth(a,earth_pos_vec,day+1)
+        ast[i]['earth_dv'] = (ast[i]['earth_dist_2'] - ast[i]['earth_dist']) * 149597871.0 / 86400.0
+        ast[i]['price'] = estimate.valuePerKg(ast[i]['spec']) * scoring.DEFAULT_MASS
+        #ast[i]['value'] = estimate.valuePerKg(ast[i]['spec'])
+        ast[i]['pos_vec']=0
+        ast[i]['pos_vec_2']=0
+        ast[i]['pos_vec_earth']=0
+        ast[i]['pos_vec_earth_2']=0
+        
+    return ast
 ##
 
 
