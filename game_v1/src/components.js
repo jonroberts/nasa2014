@@ -503,8 +503,8 @@ Crafty.c('Ship', {
                         if (!this.thrusters) {
                             var thruster1 = Crafty.e('Thruster');
                             thruster1.rotate({
-                                cos: 1 - Math.cos(this.rotation * Math.PI / 180),
-                                sin: 1 - Math.sin(this.rotation * Math.PI / 180),
+                                cos: Math.sin(this.rotation * Math.PI / 180),
+                                sin: Math.cos(-this.rotation * Math.PI / 180),
                                 o: {
                                     x: this._origin.x,
                                     y: this._origin.y
@@ -516,8 +516,8 @@ Crafty.c('Ship', {
 
                             var thruster2 = Crafty.e('Thruster');
                             thruster2.rotate({
-                                cos: -Math.cos(this.rotation * Math.PI / 180),
-                                sin: -Math.sin(this.rotation * Math.PI / 180),
+                                cos: -Math.cos(-this.rotation * Math.PI / 180),
+                                sin: -Math.sin(-this.rotation * Math.PI / 180),
                                 o: {
                                     x: this._origin.x,
                                     y: this._origin.y
@@ -657,7 +657,7 @@ Crafty.c('Thruster', {
 
     start: function (rotation) {
         particleParams = this.particleDefaults;
-        particleParams.angle = 180 - rotation;
+        particleParams.angle = -1*(180 - rotation);
         this.particles(particleParams);
     },
 
