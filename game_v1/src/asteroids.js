@@ -1,5 +1,5 @@
 function StartAsteroids(day) {
-    $.getJSON(Game.server_url, {'limit': Game.num_asteroids, 'day': day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'noval_accept_prob': Game.noval_accept_prob }, function(data) {
+    $.getJSON(Game.server_url, {'limit': Game.num_asteroids, 'day': day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'none': Game.none_prob, 'water': Game.water_prob, 'metals': Game.metals_prob, 'hydrogen': Game.hydrogen_prob, 'platinum': Game.platinum_prob }, function(data) {
         Game.asteroids=data.results;
         Game.start();
     });

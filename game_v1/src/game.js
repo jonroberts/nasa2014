@@ -26,11 +26,19 @@ Game = {
 
     min_asteroid_distance: 0.5,
     max_asteroid_distance: 3.0,
-    noval_accept_prob: 0.7,
+    none_prob: 0.19,
+    water_prob: 0.3,
+    hydrogen_prob: 0.25,
+    metals_prob: 0.25,
+    platinum_prob: 0.01,
+
+    mining_ability: { 'None': true, 'Water': false, 'Metals': false, 'Hydrogen': false, 'Platinum': false },
+
+
     num_asteroids: 25,
 
     // url of the asteroid server
-    server_url: 'http://localhost:8100/get_random_asteroids',
+    server_url: 'http://localhost:8100/get_asteroids_by_type',
 //    server_url: 'http://localhost/get_random_asteroids',
 //    server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
 
