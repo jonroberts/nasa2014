@@ -32,7 +32,7 @@ Game = {
     metals_prob: 0.25,
     platinum_prob: 0.01,
 
-    mining_ability: { 'None': true, 'Water': true }
+    mining_ability: { 'None': true, 'Water': false, 'Metals': false, 'Hydrogen': false, 'Platinum': false },
 
 
     num_asteroids: 25,
