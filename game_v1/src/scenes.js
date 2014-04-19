@@ -65,8 +65,22 @@ Crafty.scene('Game', function () {
             }
         });
 
+    this.purchaseMenu = Crafty.e("2D, DOM, Text")
+        .attr({w: 45, h: 22, x: 0, y: Game.height() - 42, alpha: 0.5})
+        .text('<div></div>')
+        .css({
+            'background': '-moz-linear-gradient(center top , rgba(220, 220, 238, 0.3) 0%, rgba(170, 187, 238, 0.3) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+            'border': '1px solid #CCCCCC',
+            'border-radius': '10px',
+            'box-shadow': '0 1px 3px #FFFFFF, 0 1px 0 #666666 inset, 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.8) inset',
+            'margin': '0 15px',
+            'padding': '5px 20px',
+            'text-shadow': '0 1px 2px #111111'
+        })
+        .textFont({ size: '12px' });
+
     this.player = Crafty.e('Probe').at(38, 38);
-    this.buyProbe = Crafty.e('BuyProbe').at(1, 39);
+    this.buyProbe = Crafty.e('BuyProbe').at(2, 39);
     this.base = Crafty.e('BaseProngs').at(38, 38);
     this.base = Crafty.e('Base').at(38, 39);
     Game.occupied[this.player.at().x][this.player.at().y] = true;

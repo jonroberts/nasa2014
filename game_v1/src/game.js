@@ -38,9 +38,10 @@ Game = {
     num_asteroids: 25,
 
     // url of the asteroid server
-    server_url: 'http://localhost:8100/get_asteroids_by_type',
+//    server_url: 'http://localhost:8100/get_asteroids_by_type',
 //    server_url: 'http://localhost/get_random_asteroids',
-//    server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
+    server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
+//    server_url: 'http://server.spacerocksgame.org/get_asteroids_by_type',
 
 
     max_ship_cargo: 1,

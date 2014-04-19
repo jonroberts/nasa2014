@@ -18,9 +18,6 @@ Crafty.c('BuyProbe', {
             .textFont({ size: '12px' });
 
         this.bind('Click', function (data) {
-//            activeShip.destroy();
-//            activeShip = Crafty.e('Probe').at(38, 38);
-//            updateScore(-1 * Game.probe_cost);
             this.createProbe();
         });
         this.bind('MouseOver', function (data) {
@@ -68,9 +65,6 @@ Crafty.c('BuyShip', {
             .textFont({ size: '12px' });
 
         this.bind('Click', function (data) {
-//            activeShip.destroy();
-//            activeShip = Crafty.e('Ship').at(38, 36);
-//            updateScore(-1 * Game.ship_cost);
             this.createShip();
         });
         this.bind('MouseOver', function (data) {

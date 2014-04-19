@@ -71,7 +71,6 @@ future_events = {
         "link": "http://www.jaxa.jp/projects/sat/bepi/index_e.html"
     },
     "2014-07-01": {
-//        "long_desc": null,
         "name": "Hayabusa2",
         "description": "Hayabusa2 is the successor of Hayabusa, its mission is to further test deep space technology and new innovations.",
         "agency": "JAXA",
@@ -79,7 +78,6 @@ future_events = {
         "link": "http://www.jaxa.jp/projects/sat/hayabusa2/index_e.html"
     },
     "2016-01-07": {
-        //"long_desc": "The first mission of the ExoMars programme, scheduled to arrive at Mars in 2016, consists of a Trace Gas Orbiter plus an Entry, Descent and Landing Demonstrator Module (EDM). The main objectives of this mission are to search for evidence of methane and other trace atmospheric gases that could be signatures of active biological or geological processes and to test key technologies in preparation for ESA's contribution to subsequent missions to Mars.\r\n\r\nExoMars 2016 Mission - Trace Gas Orbiter and Entry, Descent and Landing Demonstrator Module. Credit: ESA-AOES Medialab\r\nThe Orbiter and EDM will be launched together in January 2016 on a Proton rocket and will fly to Mars in a mated configuration. By taking advantage of the positioning of Earth and Mars the cruise phase can be limited to about 9 months. Three days before reaching the atmosphere of Mars, the EDM will be ejected from the Orbiter towards the Red Planet. The EDM capsule will then coast towards its destination, entering the Martian atmosphere and landing on the surface of the planet. From its coasting to Mars till its landing, the EDM will communicate with the Orbiter. Once on the surface, the communications of the EDM will be supported from a NASA Relay Orbiter. The ExoMars Orbiter will be inserted into an elliptical orbit around Mars and then sweep through the atmosphere to finally settle into a circular, ~ 400-km altitude orbit ready to conduct its scientific mission.",
         "name": "ExoMars 2016",
         "description": "The first mission of the ExoMars programme, scheduled to arrive at Mars in 2016, consists of a Trace Gas Orbiter plus an Entry, Descent and Landing Demonstrator Module (EDM). The main objectives of this mission are to search for evidence of methane and other trace atmospheric gases that could be signatures of active biological or geological processes and to test key technologies in preparation for ESA's contribution to subsequent missions to Mars.",
         "agency": "ESA, RSA",
@@ -87,7 +85,6 @@ future_events = {
         "link": "http://exploration.esa.int/mars/46048-programme-overview/"
     },
     "2017-01-01": {
-//        "long_desc": null,
         "name": "Cheops",
         "description": "A satellite from the ESA that will study the planets of other stars.",
         "agency": "ESA",
@@ -97,7 +94,6 @@ future_events = {
     "2022-01-01": {
         "description": "JUICE - JUpiter ICy moons Explorer - is Europe's first mission to the Jupiter system in the form of an observational satellite.",
         "name": "JUICE",
-        //"quick_desc": "Europe's first mission to the Jupiter system in the form of an observational satellite.",
         "agency": "ESA",
         "image": "http://sci.esa.int/science-e-media/img/3e/50494_juice_200sq_o_v2_newsitemimage.jpg",
         "link": "http://sci.esa.int/juice/"
@@ -112,7 +108,6 @@ future_events = {
     "2015-01-01": {
         "description": "The ASTRO-H is the sixth X-ray observation satellite that will explore the extreme universe that is abundant with high energy phenomena around black holes and supernova explosions, and observe a cluster of galaxies filled with high-temperature plasma.\r\n\r\nThe purpose of ASTRO-H is to explore the structure and evolution of Universe with the following observational capabilities:\r\nOne of the first imaging and spectroscopic observations with the hard X-ray telescope.\r\nThe first spectroscopic observations with an extremely high energy resolution of the micro-calorimeter.\r\nThe most sensitive wideband observation over an energy range from 0.3 to 600 keV.",
         "name": "Astro-H",
-        //"quick_desc": "The ASTRO-H is the sixth X-ray observation satellite that will explore the extreme universe that is abundant with high energy phenomena around black holes and supernova explosions, and observe a cluster of galaxies filled with high-temperature plasma.",
         "agency": "JAXA",
         "image": "http://astro-h.isas.jaxa.jp/wp-content/uploads/2013/02/pct01_b.jpg",
         "link": "http://astro-h.isas.jaxa.jp/en/"
@@ -125,11 +120,9 @@ future_events = {
         "link": "http://aoss-research.engin.umich.edu/missions/cygnss/"
     },
     "2014-05-28": {
-//        "description": "Reid Wiseman, Maxim Suraev, Alexander Gerst launch on Soyuz 39 from Baikonur Cosmodrome in Kazakhstan. ",
         "description": "Launching on Soyuz 39 from Baikonur Cosmodrome in Kazakhstan, Expedition 40 will take Reid Wiseman, Maxim Suraev, and Alexander Gerst to the International Space Station.",
         "agency": "NASA",
         "name": "Expedition 40/41",
-//        "name": "Expedition 40/41 Launch to International Space Station",
         "image": "http://www.nasa.gov/sites/default/files/styles/100x75/public/jsc2014e026729.jpg?itok=4cBJVTWI",
         "link": "http://www.nasa.gov/mission_pages/station/expeditions/expedition40/index.html",
         "destination": "ISS"

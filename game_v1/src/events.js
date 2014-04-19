@@ -10,8 +10,8 @@ Crafty.bind('CheckMissionDate', function () {
     var dateStr = y + '-' + m + '-' + d;
 
     if (future_events[dateStr]) {
-        console.log('Mission!');
-        console.log(future_events[dateStr]);
+//        console.log('Mission!');
+//        console.log(future_events[dateStr]);
         Crafty.e('MissionRocket')
             .attr({mission_data: future_events[dateStr], mission_date: dateStr})
             .at(Math.floor(Math.random() * Game.map_grid.width), 38);

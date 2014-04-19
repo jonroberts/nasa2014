@@ -187,7 +187,8 @@ function research(key){
 		return false;
 	}
 	if(key=='basicMiner'){
-		Crafty.e('BuyShip').at(3,39);
+//		Crafty.e('BuyShip').at(3,39);
+        Crafty.e('BuyShip').at(4,39);
 	}
 	if(key=='advancedMiner'){
 		Crafty.trigger('AdvancedMiner');
