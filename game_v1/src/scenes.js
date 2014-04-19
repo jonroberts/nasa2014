@@ -73,8 +73,8 @@ Crafty.scene('Game', function () {
 
     var pauseIndicator = null;
 
-    Crafty.bind('AdvancedMiner', function() {
-	Game.max_ship_cargo = 3;
+    Crafty.bind('AdvancedMiner', function () {
+        Game.max_ship_cargo = 3;
     });
 
     Crafty.bind('KeyDown', function (e) {
@@ -92,26 +92,32 @@ Crafty.scene('Game', function () {
 
                         if (this.frameCount % 100 == 0) {
                             this.visible = true;
-                        } else if (this.frameCount % 100 == 70){
+                        } else if (this.frameCount % 100 == 70) {
                             this.visible = false;
                         }
                     });
             } else {
                 pauseIndicator.destroy();
             }
+        } else if (e.key == Crafty.keys.R) {
+            buildTechTree();
+            var offset = $('#' + researchButton.getDomId()).offset();
+            $('#techTree')
+                .css({'top': offset.top + 20, 'left': offset.left + 20})
+                .toggle();
         }
     });
 
     Game.day = 0;
 
     var timer = Crafty.e('Timer')
-        .interval(Game.framerate_ms*4.5)
+        .interval(Game.framerate_ms * 4.5)
         .callback(function () {
             if (!Game.paused) {
                 Game.day += 1;
                 dateDisplay.value.setTime(dateDisplay.value.getTime() + 86400000);
                 dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
-		Crafty.trigger('CheckMissionDate');
+                Crafty.trigger('CheckMissionDate');
             }
         })
         .start();
