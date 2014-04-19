@@ -4,7 +4,7 @@ Crafty.c('BuyProbe', {
 
         var info_box = Crafty.e("2D, DOM, Text, infoBox")
             .attr({w: 75, alpha: 0.8})
-            .text('Buy Probe ($100000)')
+            .text('Buy Probe ($' + Game.probe_cost.toLocaleString() + ')')
             .css({
                 'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 'border': '1px solid #CCCCCC',
@@ -20,7 +20,7 @@ Crafty.c('BuyProbe', {
         this.bind('Click', function (data) {
             activeShip.destroy();
             activeShip = Crafty.e('Probe').at(38, 38);
-            updateScore(-100000);
+            updateScore(-1 * Game.probe_cost);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -41,7 +41,7 @@ Crafty.c('BuyShip', {
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
-            .text('Buy Ship ($300000)')
+            .text('Buy Ship ($' + Game.ship_cost.toLocaleString() + ')')
             .css({
                 'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 'border': '1px solid #CCCCCC',
@@ -56,8 +56,8 @@ Crafty.c('BuyShip', {
 
         this.bind('Click', function (data) {
             activeShip.destroy();
-            activeShip = Crafty.e('Ship').at(38, 38);
-            updateScore(-300000);
+            activeShip = Crafty.e('Ship').at(38, 36);
+            updateScore(-1 * Game.ship_cost);
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;

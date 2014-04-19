@@ -8,7 +8,7 @@ var gasStation = undefined;
 
 function updateScore(val) {
     score.value += val;
-    score.text('Capital: $' + (score.value / 1000000.).toFixed(3) + 'm');
+    score.text('Capital: $' + (score.value / 1000000.).toFixed(3) + ' Million');
     if (score.value < 0) {
         alert('You have run out of money and will remain trapped on earth!');
         location.reload();
@@ -31,9 +31,9 @@ Crafty.scene('Game', function () {
     }
 
     score = Crafty.e("2D, DOM, Text")
-        .attr({x: Game.width() - 175, y: Game.height() - 25, w: 200, h: 50, value: Game.starting_money})
+        .attr({x: Game.width() - 225, y: Game.height() - 25, w: 200, h: 50, value: Game.starting_money})
         .css({color: "#fff", 'z-index': 100})
-        .text('Capital: $' + (Game.starting_money / 1000000.).toFixed(3) + 'm')
+        .text('Capital: $' + (Game.starting_money / 1000000.).toFixed(3) + ' Million')
         .textFont({ size: '14px' });
 
     dateDisplay = Crafty.e("2D, DOM, Text")
