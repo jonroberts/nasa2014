@@ -575,7 +575,7 @@ Crafty.c('Ship', {
                 // resources extracted according to researched efficiency
                 this.stopMovement();
                 var asteroid = data[0].obj;
-                if (this.cargo_num < Game.max_ship_cargo) {
+                if (this.cargo_num < Game.max_ship_cargo && Game.mining_ability[ asteroid.asteroid_data.astclass ]) {
                     this.cargo_value += Game.asteroid_base_value[asteroid.asteroid_data.astclass];
                     this.cargo_num = this.cargo_num + 1;
                     asteroid.hit();
