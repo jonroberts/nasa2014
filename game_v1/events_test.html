@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="lib/crafty-min.js"></script>
+    <script src="src/events_data.js"></script>
+    <title>Space Rocks!</title>
+    <script>
+    </script>
+    <style type="text/css" media="screen">
+        body {
+            background: #000 url('assets/Background2.jpg') no-repeat center center;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #DDD;
+            font-family: sans-serif;
+        }
+
+        div.info-box {
+            background: -moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+            color: #111;
+            text-shadow: 0 -1px 1px #666;
+            border-radius: 5px;
+            box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset;
+            padding: 7px 10px;
+            border: 1px solid #AAA;
+            display: block;
+            float: left;
+            width: 300px;
+        }
+
+        .ib-top {
+            padding: 10px;
+            margin: 5px auto;
+        }
+
+        .ib-top-img {
+            /*width: 30%;*/
+            float: left;
+            margin-right: 5px;
+        }
+
+        .ib-top-img img {
+            width: 64px;
+            height: 64px;
+        }
+
+        .ib-top-right {
+            float: right;
+            margin-left: 5px;
+            padding: 10px 0;
+        }
+
+        .ib-top-name, .ib-top-launch {
+            display: block;
+        }
+
+
+    </style>
+
+    <script>
+        function infobox_from_event(i) {
+            event = future_events[i];
+            $('.ib-top-img').empty().append($('<img src="' + event['image_link'] + '">'));
+            $('.ib-top-name').empty().append($('<a href="' + event['link'] + '" target="_blank">' + event['name'] + '</a>'));
+            $('.ib-top-launch').empty().append('Launch date: ' + event['start_date']);
+        }
+    </script>
+</head>
+<body>
+<div class="info-box">
+    <div class="ib-top">
+        <div class='ib-top-img'></div>
+        <div class='ib-top-right'>
+            <div class="ib-top-name"></div>
+            <div class="ib-top-launch"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

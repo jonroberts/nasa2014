@@ -55,7 +55,7 @@ Crafty.c('GasStation', {
 });
 
 
-var testGlobal = undefined;
+//var testGlobal = undefined;
 
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
@@ -104,7 +104,7 @@ Crafty.c('Rock', {
             this.attach(info_box);
             info_box.visible = true;
 
-            testGlobal = info_box;
+//            testGlobal = info_box;
         });
         this.bind('MouseOut', function (data) {
             info_box.visible = false;
