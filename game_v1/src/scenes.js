@@ -153,7 +153,7 @@ Crafty.scene('Game', function () {
         .start();
 
     Crafty.bind('CreateAsteroid', function () {
-        CreateAsteroid(1);
+        CreateAsteroid(1,true);
     })
 
 });
