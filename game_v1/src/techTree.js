@@ -13,12 +13,12 @@ var tech = {
 		'researched':false,
 		'reqs':[]
 	},
-	'advancedMiner':{
-		'name':'Advanced Asteroid Miner',
-		'description':'Upgrades the cargo hold of the miner so it can mine 3 asteroids in one trip. Requires the Asteroid Miner.',
-		'cost':10000000,
-		'researched':false,
-		'reqs':['basicMiner']
+	'largeSynopticSurveyTelescope':{
+		'name': 'Large Synoptic Survey Telescope',
+		'description':'Build the LSST on the El Penon peak of Cerro Pachon. This telescope can take a picture of the entire night sky in only a few nights of observation. It automatically identifies the spectral type and value of all asteroids, so you no longer need to send probes!',
+		'cost': 8000000,
+		'researched': false,
+		'reqs': []
 	},
 	'arkydTelescope':{
 		'name':'Arkyd Public Space Telescope',
@@ -27,48 +27,50 @@ var tech = {
 		'researched':false,
 		'reqs':[]
 	},
-	'largeSynopticSurveyTelescope':{
-		'name': 'Large Synoptic Survey Telescope',
-		'description':'Build the LSST on the El Penon peak of Cerro Pachon. This telescope can take a picture of the entire night sky in only a few nights of observation. It automatically identifies the spectral type and value of all asteroids, so you no longer need to send probes!',
-		'cost': 8000000,
-		'researched': false,
-		'reqs': []
+	'advancedMiner':{
+		'name':'Advanced Asteroid Miner',
+		'description':'Upgrades the cargo hold of the miner so it can mine 3 asteroids in one trip. Requires the Asteroid Miner.',
+		'cost':10000000,
+		'researched':false,
+		'reqs':['basicMiner']
 	},
 	'metalRefining':{
 		'name':'Orbiting Metal Refinery',
-		'description':'Allows for the refining of raw metals in space. Doubles the value of metal rich asteroids!',
+		'description':'Allows for the refining of raw metals in space. Can act as a return point for mined asteroids. Doubles the value of metal rich asteroids!',
 		'cost':10000000,
 		'researched':false,
 		'reqs':['basicMiner']
 	},
 	'liquidHydrogenRefining':{
 		'name':'Liquid Hydrogen Refining',
-		'description':'Process hydrogen from asteroids to create rocket fuel in space. Doubles the value of water and hydrogen rich asteroids',
+		'description':'Process hydrogen from asteroids to create rocket fuel in space. Can act as a return point for mined asteroids. Doubles the value of water and hydrogen rich asteroids',
 		'cost':10000000,
 		'researched':false,
 		'reqs':['basicMiner']
 	},
 	'spaceFactory':{
 		'name':'Space Factory',
-		'description':'Help NASA construct large orbiting stations! Building things on earth is easy, but it\'s expensive to get them to space. Why not build factories in space instead? Note, you\'ll need to get the raw materials to your factory! Requires an Orbiting Metal Refinery.',
+		'description':'Help NASA construct large orbiting stations! Building things on earth is easy, but it\'s expensive to get them to space. Why not build factories in space instead? Construct this in time to aid the ESA Solar Orbiter mission in 2017 to get a bonus from the ESA. Requires an Orbiting Metal Refinery.',
 		'cost':15000000,
 		'researched':false,
 		'reqs':['metalRefining']
 	},
 	'spaceGasStation':{
 		'name':'Orbiting Gas Station',
-		'description':'Help NASA explore deeper into the solar system! Once you have rocket fuel in space, new missions from earth only need to get to the gas station, refuel before venturing further into the cosmos. Get a $1,000,000 refueling bonus each time the ISS passes it. Requires Liquid Hydrogen Refining.',
+		'description':'Help NASA explore deeper into the solar system! Constuct this in time to aid the James Web Space Telescope mission in 2018 to get a big bonus from NASA. Get a $1,000,000 refueling bonus each time the ISS passes it. Requires Liquid Hydrogen Refining.',
 		'cost':15000000,
 		'researched':false,
 		'reqs':['liquidHydrogenRefining']
 	},
 	'orbitingAsteroidDefense':{
 		'name':'Orbiting Asteroid Defense Platform',
-		'description':'Capable of defending Earth from the incoming asteroid! Requires and Orbiting Gas Station and a Space Factory.',
+		'description':'Capable of defending Earth from the incoming asteroid! Requires and Orbiting Gas Station and a Space Factory. Build it to beat the game!',
 		'cost':30000000,
 		'researched': false,
 		'reqs':['spaceGasStation','spaceFactory']
-	},
+	}
+
+/*,
 	'waterMining':{
 		'name':'Water Miner',
 		'description':'Asteroids have many different compositions. Water asteroids are the easiest to mine.',
@@ -97,6 +99,7 @@ var tech = {
 		'researched':false,
 		'reqs':['ironMining']
 	},
+*/
 };
 
 

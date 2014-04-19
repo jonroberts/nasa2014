@@ -587,10 +587,15 @@ Crafty.c('Ship', {
                 this.cargo_value = 0;
                 this.destroy();
             })
-            .onHit('HRefinery', function (data) {
-                updateScore(this.cargo_value * Game.hrefinery_bonus);
-                gasStation.fueled = true;
+            .onHit('HydrogenRefining', function (data) {
+                updateScore(this.cargo_value);
                 this.cargo_value = 0;
+                this.destroy();
+            })
+            .onHit('MetalRefining', function (data) {
+                updateScore(this.cargo_value);
+                this.cargo_value = 0;
+                this.destroy();
             })
             .onHit('GasStation', function (data) {
                 if (gasStation.fueled) {
