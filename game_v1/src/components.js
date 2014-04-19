@@ -375,7 +375,7 @@ Crafty.c('Rock', {
         this.bind("Click", function (e) {
             e.preventDefault();
             e.stopPropagation();
-            window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.prov_des, '_blank')
+            window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.name, '_blank')
         });
 
 
