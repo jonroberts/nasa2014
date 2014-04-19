@@ -43,7 +43,7 @@ Crafty.scene('Game', function () {
     dateDisplay.value = new Date();
     dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
 
-    researchButton = Crafty.e("2D, DOM, Text, researchButton, Mouse")
+    researchButton = Crafty.e("2D, DOM, Text, researchButton, Mouse, Keyboard")
         .attr({x: 10, y: 10, w: 20, h: 15})
         .css({'padding-top': '5px'})
         .textFont({ size: '30px'})
@@ -54,6 +54,15 @@ Crafty.scene('Game', function () {
             $('#techTree')
                 .css({'top': offset.top + 20, 'left': offset.left + 20})
                 .toggle();
+        })
+        .bind("KeyDown", function(e) {
+            if (e.key == Crafty.keys.R) {
+                buildTechTree();
+                var offset = $('#' + researchButton.getDomId()).offset();
+                $('#techTree')
+                    .css({'top': offset.top + 20, 'left': offset.left + 20})
+                    .toggle();
+            }
         });
 
     this.player = Crafty.e('Probe').at(38, 38);
@@ -99,12 +108,6 @@ Crafty.scene('Game', function () {
             } else {
                 pauseIndicator.destroy();
             }
-        } else if (e.key == Crafty.keys.R) {
-            buildTechTree();
-            var offset = $('#' + researchButton.getDomId()).offset();
-            $('#techTree')
-                .css({'top': offset.top + 20, 'left': offset.left + 20})
-                .toggle();
         }
     });
 

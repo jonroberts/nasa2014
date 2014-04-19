@@ -1,6 +1,6 @@
 Crafty.c('BuyProbe', {
     init: function () {
-        this.requires('Actor, spr_buy_probe, Mouse, HTML');
+        this.requires('Actor, spr_buy_probe, Mouse, HTML, Keyboard');
 
         var info_box = Crafty.e("2D, DOM, Text, infoBox")
             .attr({w: 75, alpha: 0.8})
@@ -18,9 +18,10 @@ Crafty.c('BuyProbe', {
             .textFont({ size: '12px' });
 
         this.bind('Click', function (data) {
-            activeShip.destroy();
-            activeShip = Crafty.e('Probe').at(38, 38);
-            updateScore(-1 * Game.probe_cost);
+//            activeShip.destroy();
+//            activeShip = Crafty.e('Probe').at(38, 38);
+//            updateScore(-1 * Game.probe_cost);
+            this.createProbe();
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -32,6 +33,18 @@ Crafty.c('BuyProbe', {
         this.bind('MouseOut', function (data) {
             info_box.css({display: 'None'});
         });
+
+        this.bind("KeyDown", function(e) {
+            if (e.key == Crafty.keys['1']) {
+                this.createProbe();
+            }
+        });
+    },
+
+    createProbe: function() {
+        activeShip.destroy();
+        activeShip = Crafty.e('Probe').at(38, 38);
+        updateScore(-1 * Game.probe_cost);
     }
 });
 
@@ -55,9 +68,10 @@ Crafty.c('BuyShip', {
             .textFont({ size: '12px' });
 
         this.bind('Click', function (data) {
-            activeShip.destroy();
-            activeShip = Crafty.e('Ship').at(38, 36);
-            updateScore(-1 * Game.ship_cost);
+//            activeShip.destroy();
+//            activeShip = Crafty.e('Ship').at(38, 36);
+//            updateScore(-1 * Game.ship_cost);
+            this.createShip();
         });
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -70,6 +84,18 @@ Crafty.c('BuyShip', {
         this.bind('MouseOut', function (data) {
             info_box.css({display: 'None'});
         });
+
+        this.bind("KeyDown", function(e) {
+            if (e.key == Crafty.keys['2']) {
+                this.createShip();
+            }
+        });
+    },
+
+    createShip: function() {
+        activeShip.destroy();
+        activeShip = Crafty.e('Ship').at(38, 36);
+        updateScore(-1 * Game.ship_cost);
     }
 });
 
