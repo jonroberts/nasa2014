@@ -1,30 +1,36 @@
-function StartAsteroids(limit, day) {
-    $.getJSON(Game.server_url, {'limit': limit, 'day': day}, function(data) {
+function StartAsteroids(day) {
+    $.getJSON(Game.server_url, {'limit': Game.num_asteroids, 'day': day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'noval_accept_prob': Game.noval_accept_prob }, function(data) {
         Game.asteroids=data.results;
         Game.start();
     });
 }
 
 function CreateAsteroid(limit) {
-    $.getJSON(Game.server_url, {'limit': limit, 'day': Game.day}, function(data) {
+    $.getJSON(Game.server_url, {'limit': 1, 'day': Game.day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'noval_accept_prob': Game.noval_accept_prob}, function(data) {
         Game.asteroids = data.results;
-        addSingleAsteroid(Game.asteroids[Math.floor(Math.random() * Game.asteroids.length)]);
+        addSingleAsteroid(Game.asteroids[0])//;Math.floor(Math.random() * Game.asteroids.length)]);
     });
 }
 
+function asteroidY(earthdist) {
+    return Game.map_grid.height - (Math.round( (earthdist - Game.min_asteroid_distance)*(Game.map_grid.height - 2.0 - 7.0)/(Game.max_asteroid_distance - Game.min_asteroid_distance) + 7.0));
+}
+
 function addAsteroid(asteroid) {
-    var x = Math.floor(Math.random() * Game.map_grid.width);
-    var y = Game.map_grid.height - (Math.round(asteroid['earth_dist'] * 7.0) + 7);
+    var x = Math.floor(Math.random() * Game.map_grid.width*0.8);
+    var y = asteroidY(asteroid['earth_dist']);
     _addAsteroid(asteroid, x, y);
 }
 
 function addSingleAsteroid(asteroid) {
     var x = 0;
-    var y = Game.map_grid.height - (Math.round(asteroid['earth_dist'] * 7.0) + 7);
+    var y = asteroidY(asteroid['earth_dist']);
     _addAsteroid(asteroid, x, y);
 }
 
 function _addAsteroid(asteroid, x, y) {
+console.log(asteroid.earth_dist + ' -> ' + y + '  ,  ' + Game.map_grid.height + '  , ' + x + '  ,  ' + Game.map_grid.width);
+
     if (y < 0) {
         return;
     }
@@ -36,7 +42,11 @@ function _addAsteroid(asteroid, x, y) {
         ast_scale = 1
     }
 
-    console.log(asteroid['diameter'] + ' -> ' + ast_scale);
+    //console.log(asteroid['diameter'] + ' -> ' + ast_scale + ' --- ' + Game.map_grid.height);
+
+
+    asteroid['astclass'] = asteroidClass(asteroid);
+//console.log(asteroid.spec + ' , ' + asteroid.astclass );
 
     Crafty.e('Rock').at(x, y).attr({
         asteroid_data: asteroid,
@@ -54,12 +64,12 @@ function asteroidScale(d) {
         return 1.0;
     }
     d = Math.max(d,1.0);
-    d = Math.min(d,30.0);
+    d = Math.min(d,10.0);
     return 1.0 + (d - 1.0)/10.0;
 }
 
 function asteroidInfoHtml(asteroid_data, isprobed) {
-    unprobed = '<p>Unexplored!</p>';
+    unprobed = '<h4 style="border-bottom: 1px solid #111">Unexplored!</h4>';
     spec_type = 'Send probe to find out!';
     tval = 'Send probe to find out!';
     dist = asteroid_data.earth_dist.toFixed(2) + ' AU';
@@ -84,13 +94,22 @@ function asteroidInfoHtml(asteroid_data, isprobed) {
     pha = asteroid_data.pha == 'Y' ? '<p class="hazard">Potentially Hazardous Object!</p>' : '';
     neo = asteroid_data.neo == 'Y' ? '<p>Near Earth Object</p>' : '';
 
+
+//isprobed=true;
     if (isprobed) {
-        unprobed = '';
+	unprobed = '<h4 style="border-bottom: 1px solid #111">Resources: ' + asteroid_data.astclass + '<br>Value: $' + Game.asteroid_base_value[asteroid_data.astclass].toLocaleString() + '</h4>';
+
         spec_type = asteroid_data.spec;
         minerals_key = SPECTRAL_INDEX[asteroid_data.spec];
         minerals = '';
+        first = true;
         for (key in minerals_key) {
-            minerals = minerals + ' ' + key;
+            if (first == false) {
+                minerals = minerals + ', ' + key;
+            } else {
+                minerals = key;
+                first = false;
+            }
         }
         if (asteroid_data.value < 1E-20) {
             asteroid_data.value = 0.0;
@@ -106,8 +125,8 @@ function asteroidInfoHtml(asteroid_data, isprobed) {
     html = html + unprobed;
     html = html + '<p>Spectral Type: ' + spec_type + '</p>';
     html = html + '<p>Minerals: ' + minerals + '</p>';
-    html = html + '<p>Price per kg: ' + price_per_kg + '</p>';
-    html = html + '<p>Total Value: ' + tval + '</p>';
+    html = html + '<p>Asterank Price Per kg: ' + price_per_kg + '</p>';
+    html = html + '<p>Asterank Value: ' + tval + '</p>';
     html = html + '<p>Distance: ' + dist + '</p>';
     html = html + '<p>Delta-V: ' + deltav + '</p>';
     html = html + '<p>Diameter: ' + diameter + '</p>';
@@ -116,3 +135,8 @@ function asteroidInfoHtml(asteroid_data, isprobed) {
 
     return html;
 }
+
+function asteroidClass(asteroid) {
+    return SPECTRAL_INDEX_TYPE[asteroid.spec];
+}
+    

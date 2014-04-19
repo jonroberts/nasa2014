@@ -20,16 +20,32 @@ Game = {
     scaleAsteroidFactor: 0.2,
 
     paused: false,
-    starting_money: 15000000,
     asteroids: undefined,
     framerate_ms: 100,
     day: 0,
 
+    min_asteroid_distance: 0.5,
+    max_asteroid_distance: 3.0,
+    noval_accept_prob: 0.7,
+    num_asteroids: 50,
+    
     // url of the asteroid server
-//    server_url: 'http://localhost:8100/get_random_asteroids',
+    server_url: 'http://localhost:8100/get_random_asteroids',
 //    server_url: 'http://localhost/get_random_asteroids',
-    server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
+//    server_url: 'http://server.spacerocksgame.org/get_random_asteroids',
 
+
+
+
+    starting_money: 15000000,
+    asteroid_base_value: { 'None': 0, 'Hydrogen': 1000000, 'Metals': 1000000, 'Platinum': 10000000, 'Water': 1000000 },
+    fuel_cost_per_pixel: 1000,
+    probe_fuel_cost_per_pixel: 0,
+
+    ship_cost: 300000,
+    probe_cost: 100000,
+
+    hrefinery_bonus: 2.0,
     // effects of research
     research: {
         mining_efficiency: {

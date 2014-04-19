@@ -149,6 +149,7 @@ Crafty.c('Rock', {
     },
 
     hit: function () {
+	Crafty.trigger('CreateAsteroid', this);
         this.destroy();
     },
 
@@ -219,7 +220,7 @@ Crafty.c('ISS', {
 // This is the player-controlled character
 Crafty.c('Ship', {
     init: function () {
-        var classes = 'Actor, Controls, Collision, spr_player, SpriteAnimation, Mouse';
+        var classes = 'Actor, Controls, Collision, spr_player, SpriteAnimation, Mouse, 2D';
         if (Game.debug) {
             classes += ', DebugCanvas, VisibleMBR';
         }
@@ -230,7 +231,8 @@ Crafty.c('Ship', {
                 xspeed: 0, yspeed: 0, speed: 0,
                 decay: 0.95, // deceleration when keys are released
                 speed_factor: 0.04, // acceleration of the ship
-                cargo: 0,
+                cargo_value: 0,
+                cargo_num: 0,
                 fuel: 1000,
                 thrusters: null
             })
@@ -326,8 +328,11 @@ Crafty.c('Ship', {
                 }
 
             })
-            .bind('Moved', function () {
-                updateScore(-100);
+            .bind('Move', function (data) {
+		deltay = this._y - data._y;
+		if (deltay < 0) {
+	                updateScore(deltay * Game.fuel_cost_per_pixel);
+		}
                 this.fuel -= 10;
             })
             .bind('Click', function (data) {
@@ -340,17 +345,18 @@ Crafty.c('Ship', {
                 var asteroid = data[0].obj;
 
                 // resources extracted according to researched efficiency
-                this.cargo += +(asteroid.price * Game.research.mining_efficiency.water);
+                this.cargo_value += Game.asteroid_base_value[asteroid.asteroid_data.astclass];
                 asteroid.hit();
             })
             .onHit('BaseProngs', function (data) {
-                updateScore(this.cargo / 2.);
-                this.cargo = 0;
+                updateScore(this.cargo_value);
+                this.cargo_value = 0;
+                this.destroy();
             })
             .onHit('HRefinery', function (data) {
-                updateScore(this.cargo);
+                updateScore(this.cargo_value * Game.hrefinery_bonus);
                 gasStation.fueled = true;
-                this.cargo = 0;
+                this.cargo_value = 0;
             })
             .onHit('GasStation', function (data) {
                 if (gasStation.fueled) {
@@ -426,7 +432,7 @@ Crafty.c('Thruster', {
 // This is the player-controlled character
 Crafty.c('Probe', {
     init: function () {
-        this.requires('Actor, Controls, Collision, spr_probe, SpriteAnimation, Mouse')
+        this.requires('Actor, Controls, Collision, spr_probe, SpriteAnimation, Mouse, 2D')
             .attr({
                 move: {left: false, right: false, up: false, down: false},
                 xspeed: 0, yspeed: 0, speed: 0,
@@ -521,8 +527,11 @@ Crafty.c('Probe', {
                     this.pauseAnimation();
                 }
             })
-            .bind('Moved', function () {
-                updateScore(-50);
+            .bind('Move', function (data) {
+		deltay = this._y - data._y;
+		if (deltay < 0) {
+	                updateScore(deltay * Game.probe_fuel_cost_per_pixel);
+		}
             })
             .bind('Click', function (data) {
                 console.log(this);

@@ -13,6 +13,7 @@ import numpy as np
 import json
 import math
 import gzip
+import random
 from random import randrange
 import estimate
 import scoring
@@ -45,6 +46,12 @@ for f in fs:
 
 
 ##
+def DistanceToEarth(ast,earth_vec,jed=jed_cur):
+    ast_pos_vec = AsteroidPositionVector(ast,jed=jed)
+    ast_pos_earth = ast_pos_vec - earth_vec
+    earth_dist = math.sqrt( np.dot(ast_pos_earth , ast_pos_earth ) )
+    return earth_dist
+
 def AsteroidPositionVector(ast,jed=jed_cur):
     return KeplerToHeliocentric(jed,ast['i'],ast['om'],ast['w'],ast['ma'],ast['n'],ast['epoch'],ast['e'],ast['a'],-1.0)
 
@@ -137,17 +144,17 @@ def GetClosestAsteroids(limit,day):
     
 ##
 
-def GetRandomList(limit,leng):
+def GetRandomList(limit,leng,exclude=[]):
     ret = []
     while len(ret) < limit:
         cur = randrange(leng)
-        if not cur in ret:
+        if not cur in ret and not cur in exclude:
             ret.append(cur)
     
     return ret
 
 ##
-def GetRandomAsteroids(limit, day):    
+def GetRandomAsteroids(limit, day, max_dist = 3, min_dist = 0.5, noval_keep_frac=0.5):    
     day = day + jed_apr142014
     jed_cur = day
     
@@ -155,27 +162,32 @@ def GetRandomAsteroids(limit, day):
     earth_pos_vec_2 = EarthPositionVector(day + 1)
     
    
-    sel = GetRandomList(limit,len(asteroids))
+    
     
     ast = []
+    ids = []
     
-    
-    
-    for i in sel:
-        ast.append(asteroids[i])
+    while len(ast) < limit:
+        sel = GetRandomList(limit-len(ast),len(asteroids),ids)
+        for i in sel:
+            asteroids[i]['earth_dist'] = DistanceToEarth(asteroids[i],earth_pos_vec,day)
+            if asteroids[i]['earth_dist'] < max_dist and asteroids[i]['earth_dist'] > min_dist:
+                asteroids[i]['value'] = estimate.valuePerKg(asteroids[i]['spec'])
+                if asteroids[i]['value'] < 1E-10:
+                    asteroids[i]['value'] = 0.0
+                    
+                if asteroids[i]['value'] > 1E-10 or random.random() < noval_keep_frac: 
+                    ast.append(asteroids[i])
+                    ids.append(i)
     
     
     for i,a in enumerate(ast):
-        ast[i]['pos_vec']=AsteroidPositionVector(a,day)
-        ast[i]['pos_vec_earth'] = ast[i]['pos_vec']-earth_pos_vec
-        ast[i]['earth_dist'] = math.sqrt( np.dot(ast[i]['pos_vec_earth'] , ast[i]['pos_vec_earth'] ) )
-        ast[i]['pos_vec_2']=AsteroidPositionVector(a,day+1)
-        ast[i]['pos_vec_earth_2'] = a['pos_vec_2']-earth_pos_vec_2
-        ast[i]['earth_dist_2'] = math.sqrt( np.dot(ast[i]['pos_vec_earth_2'] , ast[i]['pos_vec_earth_2'] ) )
+        #ast[i]['earth_dist'] = DistanceToEarth(a,earth_pos_vec,day)
+        ast[i]['earth_dist_2'] = DistanceToEarth(a,earth_pos_vec,day+1)
         ast[i]['earth_dv'] = (ast[i]['earth_dist_2'] - ast[i]['earth_dist']) * 149597871.0 / 86400.0
         
         ast[i]['price'] = estimate.valuePerKg(ast[i]['spec']) * scoring.DEFAULT_MASS
-        ast[i]['value'] = estimate.valuePerKg(ast[i]['spec'])
+        #ast[i]['value'] = estimate.valuePerKg(ast[i]['spec'])
         ast[i]['pos_vec']=0
         ast[i]['pos_vec_2']=0
         ast[i]['pos_vec_earth']=0
