@@ -554,6 +554,123 @@ Crafty.c('Probe', {
     }
 });
 
+// This is the player-controlled character
+Crafty.c('MissionRocket', {
+    init: function () {
+        this.requires('Actor, spr_player, Mouse')
+            .attr({
+                yspeed: 0,
+                speed_factor: 0.04, // acceleration of the ship
+                thrusters: null
+            })
+            .origin("center");
+
+        var info_box = Crafty.e("2D, DOM, Text")
+            .attr({w: 200, alpha: 0.8, visible: false})
+            .css({
+                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                color: '#111',
+                textShadow: '0 -1px 1px #666',
+                'border-radius': '5px',
+                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
+                padding: '7px 10px',
+                border: '1px solid #AAA',
+                display: 'block'
+            });
+
+        this.bind('MouseOver', function (data) {
+            info_box.text(missionInfoHtml(this.mission_data, this.mission_date));
+
+            var jqInfoBox = $('#' + info_box.getDomId());
+            info_box.dom_height = jqInfoBox.height();
+
+            if (this._x >= Game.width() - 250) {
+                info_box.x = this._x - 225;
+            } else {
+                info_box.x = this._x + 25;
+            }
+
+            if (this._y >= Game.height() / 2) {
+                info_box.y = this._y - info_box.dom_height;
+            } else {
+                info_box.y = this._y + 5;
+            }
+
+            jqInfoBox.css('height', 'inherit');
+            this.attach(info_box);
+            info_box.visible = true;
+        });
+        this.bind('MouseOut', function (data) {
+            info_box.visible = false;
+        });
+        this.bind("EnterFrame", function (frame) {
+            if (!Game.paused) {
+                //acceleration and movement vector
+                this.yspeed -= this.speed_factor;
+                this.y += this.yspeed;
+
+                info_box.rotation = 0;
+                if (this._x >= (Game.width()) - 250) {
+                    info_box.x = this._x - 225;
+                } else {
+                    info_box.x = this._x + 25;
+                }
+
+                if (this._y >= Game.height() / 2) {
+                    if (info_box.dom_height) {
+                        info_box.y = this._y - info_box.dom_height;
+                    } else {
+                        info_box.y = this._y - $('#' + info_box.getDomId()).height()
+                    }
+
+                } else {
+                    info_box.y = this._y + 5;
+                }
+
+                if (this._x > Crafty.viewport.width || this._y > Crafty.viewport.height ||
+                    this._x < -64 || this._y < -64) {
+                    this.destroy()
+                }
+            }
+        });
+
+        this.bind("Click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            window.open(this.mission_data['link'], '_blank')
+        });
+
+        var thruster1 = Crafty.e('Thruster');
+        thruster1.rotate({
+            cos: 1 - Math.cos(this.rotation * Math.PI / 180),
+            sin: 1 - Math.sin(this.rotation * Math.PI / 180),
+            o: {
+                x: this._origin.x,
+                y: this._origin.y
+            }
+        });
+        thruster1._globalZ = this._globalZ - 1;
+        thruster1.shift(this._x, this._y);
+        thruster1.start(this.rotation);
+
+        var thruster2 = Crafty.e('Thruster');
+        thruster2.rotate({
+            cos: -Math.cos(this.rotation * Math.PI / 180),
+            sin: -Math.sin(this.rotation * Math.PI / 180),
+            o: {
+                x: this._origin.x,
+                y: this._origin.y
+            }
+        });
+        thruster2._globalZ = this._globalZ - 1;
+        thruster2.shift(this._x, this._y);
+        thruster2.start(this.rotation);
+
+        this.thrusters = [thruster1, thruster2];
+        this.attach(this.thrusters[0], this.thrusters[1]);
+    }
+});
+
 /**
  * Creates a timer component, which calls a function on an interval.
  * The example below prints "!" once per second for five seconds, and

@@ -106,6 +106,7 @@ Crafty.scene('Game', function () {
                 Game.day += 1;
                 dateDisplay.value.setTime(dateDisplay.value.getTime() + 86400000);
                 dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
+                Crafty.trigger('CheckMissionDate');
             }
         })
         .start();
