@@ -197,7 +197,10 @@ function research(key){
 		Crafty.e('HydrogenRefining').at(0,36);
 	}
 	if(key=='spaceGasStation'){
-		Crafty.e('BuyGasStation').at(7,39);
+		Crafty.e('GasStation').at(20, 37);//e('BuyGasStation').at(7,39);
+	}
+	if(key=='spaceFactory'){
+		Crafty.e('SpaceFactory').at(18, 37);//e('BuyGasStation').at(7,39);
 	}
 	if(key=='largeSynopticSurveyTelescope'){
 		Crafty.e('LSST').at(42,39);

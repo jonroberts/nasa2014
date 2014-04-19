@@ -54,6 +54,13 @@ Crafty.c('GasStation', {
     }
 });
 
+Crafty.c('SpaceFactory', {
+    init: function () {
+        this.requires('Actor, spr_gas_station');
+    }
+});
+
+
 Crafty.c('LSST', {
     init: function () {
         this.requires('Actor, spr_h_refinery,Mouse');
@@ -97,7 +104,7 @@ Crafty.c('ArkydTelescope', {
             .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)});
 	
 
-	CreateAsteroid(Game.num_asteroids);
+	CreateAsteroid(Game.num_asteroids,false);
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
