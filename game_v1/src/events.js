@@ -13,13 +13,11 @@ Crafty.bind('CheckMissionDate', function () {
         if (future_events[dateStr]['destination'] && future_events[dateStr]['destination'] === 'ISS') {
             var y_shuttle = (Game.map_grid.height - 1) * Game.map_grid.tile.height;
             var velocity_ratio = iss._entry.obj.x_speed/0.1;
-            var tile_ratio = .9; // adjustment for the difference in tile sizes
-
-            var x_shuttle = iss._x + (y_shuttle - iss._y) * velocity_ratio * tile_ratio;
+            var x_shuttle = (iss._x + (y_shuttle - iss._y) * velocity_ratio) % Game.width();
 
             Crafty.e('ISSShuttle')
                 .attr({mission_data: future_events[dateStr], mission_date: dateStr})
-                .at(Math.floor(x_shuttle / Game.map_grid.tile.width), Game.map_grid.height - 1);
+                .at(Math.round(x_shuttle / Game.map_grid.tile.width), Game.map_grid.height - 1);
         } else {
             Crafty.e('MissionRocket')
                 .attr({mission_data: future_events[dateStr], mission_date: dateStr})
@@ -159,6 +157,7 @@ Crafty.c('ISSShuttle', {
     init: function () {
         this.requires('Actor, spr_iss, Mouse')
             .attr({ yspeed: -0.1, w: 12, h: 12 })
+//            .attr({ yspeed: -0.1 })
             .origin("center");
 
         var info_box = Crafty.e("2D, DOM, Text")
@@ -229,7 +228,8 @@ Crafty.c('ISSShuttle', {
                     info_box.y = this._y + 5;
                 }
 
-                if (this._y <= iss._y + 8) {
+//                if (this._y <= iss._y + (iss._h)) {
+                if (this._y <= iss._y + 1) {
                     this.destroy()
                 }
             }
