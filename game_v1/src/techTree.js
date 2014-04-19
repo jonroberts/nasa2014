@@ -57,7 +57,7 @@ var tech = {
 	},
 	'spaceGasStation':{
 		'name':'Orbiting Gas Station',
-		'description':'Help NASA explore deeper into the solar system! Once you have rocket fuel in space, new missions from earth only need to get to the gas station, refuel before venturing further into the cosmos. Required to build a space based hydrogen fuel station. Requires Liquid Hydrogen Refining.',
+		'description':'Help NASA explore deeper into the solar system! Once you have rocket fuel in space, new missions from earth only need to get to the gas station, refuel before venturing further into the cosmos. Get a $1,000,000 refueling bonus each time the ISS passes it. Requires Liquid Hydrogen Refining.',
 		'cost':15000000,
 		'researched':false,
 		'reqs':['liquidHydrogenRefining']
@@ -197,7 +197,10 @@ function research(key){
 		Crafty.e('HydrogenRefining').at(0,36);
 	}
 	if(key=='spaceGasStation'){
-		Crafty.e('BuyGasStation').at(7,39);
+		Crafty.e('GasStation').at(20, 37);//e('BuyGasStation').at(7,39);
+	}
+	if(key=='spaceFactory'){
+		Crafty.e('SpaceFactory').at(18, 37);//e('BuyGasStation').at(7,39);
 	}
 	if(key=='largeSynopticSurveyTelescope'){
 		Crafty.e('LSST').at(42,39);
