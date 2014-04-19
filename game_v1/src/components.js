@@ -51,7 +51,7 @@ Crafty.c('HRefinery', {
 Crafty.c('GasStation', {
     init: function () {
         this.requires('Actor, spr_gas_station, Mouse');
-    
+
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
@@ -84,7 +84,7 @@ Crafty.c('GasStation', {
 Crafty.c('SpaceFactory', {
     init: function () {
         this.requires('Actor, spr_gas_station, Mouse');
-    
+
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
@@ -119,9 +119,9 @@ Crafty.c('LSST', {
     init: function () {
         this.requires('Actor, spr_h_refinery,Mouse');
 
-	Game.all_asteroids_probed = true;
+        Game.all_asteroids_probed = true;
 
-	var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
             .text('The Large Synoptic Sky Telescope')
             .css({
@@ -151,14 +151,13 @@ Crafty.c('LSST', {
 });
 
 
-
 Crafty.c('ArkydTelescope', {
     init: function () {
         this.requires('Actor, Collision, spr_iss, Mouse')
             .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)});
-	
 
-	CreateAsteroid(Game.num_asteroids,false);
+
+        CreateAsteroid(Game.num_asteroids, false);
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
@@ -201,10 +200,10 @@ Crafty.c('MetalRefining', {
     init: function () {
         this.requires('Actor, Collision, spr_h_refinery, Mouse')
             .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)});
-	
 
-	Game.asteroid_base_value['Metals'] = Game.asteroid_base_value['Metals'] * Game.metal_refinery_bonus;
-	Game.asteroid_base_value['Platinum'] = Game.asteroid_base_value['Platinum'] * Game.metal_refinery_bonus;
+
+        Game.asteroid_base_value['Metals'] = Game.asteroid_base_value['Metals'] * Game.metal_refinery_bonus;
+        Game.asteroid_base_value['Platinum'] = Game.asteroid_base_value['Platinum'] * Game.metal_refinery_bonus;
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
@@ -247,10 +246,10 @@ Crafty.c('HydrogenRefining', {
     init: function () {
         this.requires('Actor, Collision, spr_iss, Mouse')
             .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)});
-	
 
-	Game.asteroid_base_value['Hydrogen'] = Game.asteroid_base_value['Hydrogen'] * Game.hydrogen_refinery_bonus;
-	Game.asteroid_base_value['Water'] = Game.asteroid_base_value['Water'] * Game.hydrogen_refinery_bonus;
+
+        Game.asteroid_base_value['Hydrogen'] = Game.asteroid_base_value['Hydrogen'] * Game.hydrogen_refinery_bonus;
+        Game.asteroid_base_value['Water'] = Game.asteroid_base_value['Water'] * Game.hydrogen_refinery_bonus;
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
@@ -383,7 +382,7 @@ Crafty.c('Rock', {
     },
 
     hit: function () {
-	Crafty.trigger('CreateAsteroid', this);
+        Crafty.trigger('CreateAsteroid', this);
         this.destroy();
     },
 
@@ -561,10 +560,10 @@ Crafty.c('Ship', {
 
             })
             .bind('Move', function (data) {
-		deltay = this._y - data._y;
-		if (deltay < 0) {
-	                updateScore(deltay * Game.fuel_cost_per_pixel);
-		}
+                deltay = this._y - data._y;
+                if (deltay < 0) {
+                    updateScore(deltay * Game.fuel_cost_per_pixel);
+                }
                 this.fuel -= 10;
             })
             .bind('Click', function (data) {
@@ -576,11 +575,11 @@ Crafty.c('Ship', {
                 // resources extracted according to researched efficiency
                 this.stopMovement();
                 var asteroid = data[0].obj;
-		if (this.cargo_num < Game.max_ship_cargo) {
-	                this.cargo_value += Game.asteroid_base_value[asteroid.asteroid_data.astclass];
-			this.cargo_num = this.cargo_num + 1;
-	                asteroid.hit();
-		}
+                if (this.cargo_num < Game.max_ship_cargo) {
+                    this.cargo_value += Game.asteroid_base_value[asteroid.asteroid_data.astclass];
+                    this.cargo_num = this.cargo_num + 1;
+                    asteroid.hit();
+                }
             })
             .onHit('BaseProngs', function (data) {
                 updateScore(this.cargo_value);
@@ -762,10 +761,10 @@ Crafty.c('Probe', {
                 }
             })
             .bind('Move', function (data) {
-		deltay = this._y - data._y;
-		if (deltay < 0) {
-	                updateScore(deltay * Game.probe_fuel_cost_per_pixel);
-		}
+                deltay = this._y - data._y;
+                if (deltay < 0) {
+                    updateScore(deltay * Game.probe_fuel_cost_per_pixel);
+                }
             })
             .bind('Click', function (data) {
                 console.log(this);
