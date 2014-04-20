@@ -373,7 +373,17 @@ Crafty.c('Rock', {
         this.bind("Click", function (e) {
             e.preventDefault();
             e.stopPropagation();
-            window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + this.asteroid_data.name, '_blank')
+
+            var query = this.asteroid_data.name;
+            if (!query || query === '') {
+                query = this.asteroid_data['id'];
+                if (!query.startsWith('a0')) {
+                    query = this.asteroid_data.full_name;
+                } else {
+                    query = query.replace('a0', '');
+                }
+            }
+            window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + query, '_blank')
         });
 
 
