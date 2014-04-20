@@ -385,21 +385,21 @@ Crafty.c('Rock', {
             }
             window.open('http://www.minorplanetcenter.net/db_search_alt/show_object?utf8=%E2%9C%93&object_id=' + query, '_blank')
         });
-
-
     },
-
     hit: function () {
         Crafty.trigger('CreateAsteroid', this);
         this.destroy();
     },
-
     hitShip: function (data) {
         if (data[0] == activeShip) {
             activeShip.destroy();
             activeShip = undefined;
         }
-    }
+    },
+	gotProbed: function(){
+		this.probed=true;
+		this.sprite(this.spr_id, this.row);
+	}    
 });
 
 Crafty.c('ISS', {
@@ -785,8 +785,7 @@ Crafty.c('Probe', {
             .collision()
             .onHit('Rock', function (data) {
                 var asteroid = data[0].obj;
-                asteroid.isprobed = true;
-                asteroid.sprite(0, 1);
+				asteroid.gotProbed()
                 this.destroy();
             });
     },

@@ -45,15 +45,27 @@ function _addAsteroid(asteroid, x, y) {
 
     asteroid['astclass'] = asteroidClass(asteroid);
     //console.log(asteroid.spec + ' , ' + asteroid.astclass );
+	
+	var spr_id=Math.floor(Math.random()*5.);
+	var material=SPECTRAL_INDEX_TYPE[asteroid.spec];
+	var row=SPECTRAL_CODE[material];
+
+	var probed=(Game.showAllSpectra)?true:false;
 
     Crafty.e('Rock').at(x, y).attr({
         asteroid_data: asteroid,
         rotation_rate: (Game.framerate_ms / (10 * asteroid['rot_per'])),
         w: Game.map_grid.tile.width * ast_scale,
         h: Game.map_grid.tile.height * ast_scale,
-        x_speed: Math.abs(asteroid['earth_dv'] / 100)
-    }).origin('center');
+        x_speed: Math.abs(asteroid['earth_dv'] / 100),
+        spr_id: spr_id,
+        material: material,
+        row: row,
+        probed: probed
+    }).origin('center')
+    .sprite(spr_id, 0);
 
+	
     Game.occupied[x][y] = true;
 }
 
@@ -112,7 +124,8 @@ function asteroidInfoHtml(asteroid_data, isprobed) {
     html += '<div class="ib-border"></div>';
     html += '<div class="ib-details">';
     html += '<p><span>Spectral Type:</span> ' + spec_type + '</p>';
-    html += '<p><span>Minerals:</span> ' + minerals + '</p>';
+    html += '<p><span>Primary Value:</span> ' + SPECTRAL_INDEX_TYPE[asteroid_data.spec] + '</p>';
+    html += '<p><span>Other Minerals:</span> ' + minerals + '</p>';
     html += '<p><span>Asterank Price Per kg:</span> ' + price_per_kg + '</p>';
     html += '<p><span>Asterank Value:</span> ' + tval + '</p>';
     html += '<p><span>Distance:</span> ' + dist + '</p>';

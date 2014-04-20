@@ -235,6 +235,7 @@ function research(key){
 		Crafty.e('SpaceFactory').at(18, 37);//e('BuyGasStation').at(7,39);
 	}
 	if(key=='largeSynopticSurveyTelescope'){
+		Crafty.trigger('ShowAllSpectra');
 		Crafty.e('LSST').at(42,39);
 	}
 	if(key=='arkydTelescope'){

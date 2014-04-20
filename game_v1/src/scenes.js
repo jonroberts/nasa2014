@@ -167,6 +167,14 @@ Crafty.scene('Game', function () {
         Game.mining_ability['Hydrogen'] = true;
     });
 
+	Crafty.bind('ShowAllSpectra',function(){
+		Game.showAllSpectra=true;
+		Crafty("Rock").each(function(ix){
+			var asteroid=Crafty(Crafty("Rock")[""+ix]);
+			asteroid.gotProbed();
+		});
+	})
+
     Crafty.bind('EnableWaterMining', function () {
         Game.mining_ability['Water'] = true;
     });
@@ -230,8 +238,8 @@ Crafty.scene('Loading', function () {
 
     // Load our sprite map image
     Crafty.load([
-        'assets/16x16_forest_1.gif',
-        'assets/16x16_forest_2.gif',
+        'assets/16x16_sprites_1.gif',
+        'assets/16x16_sprites_2.gif',
         'assets/ship.png',
         'assets/base.png',
         'assets/probe.png',
@@ -240,19 +248,19 @@ Crafty.scene('Loading', function () {
     ], function () {
         // Define the individual sprites in the image
         // These components' names are prefixed with "spr_"
-        Crafty.sprite(16, 'assets/16x16_forest_1.gif', {
+        Crafty.sprite(16, 'assets/16x16_sprites_1.gif', {
             spr_base: [0, 0],
             spr_baseProngs: [0, 1],
             spr_h_refinery: [1, 1],
             spr_gas_station: [1, 0]
         });
-        Crafty.sprite(16, 'assets/16x16_forest_2.gif', {
+        Crafty.sprite(16, 'assets/16x16_sprites_2.gif', {
             spr_buy_probe: [1, 0],
             spr_buy_ship: [0, 0],
             spr_visited: [0, 1],
             spr_rock: [1, 1]
         });
-        Crafty.sprite(16, 'assets/asteroids_16.gif', {
+        Crafty.sprite(64, 'assets/asteroids_64.gif', {
             spr_rock_1: [0, 0],
             spr_rock_2: [0, 1],
             spr_rock_3: [0, 2],
