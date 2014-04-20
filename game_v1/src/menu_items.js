@@ -22,7 +22,7 @@ Crafty.c('BuyProbe', {
             this.createProbe();
         });
         this.bind('MouseOver', function (data) {
-            info_box.x = this._x + 15;
+            info_box.x = this._x + 5;
             info_box.y = this._y - 45;
             $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);
@@ -72,7 +72,7 @@ Crafty.c('BuyShip', {
             this.createShip();
         });
         this.bind('MouseOver', function (data) {
-            info_box.x = this._x + 15;
+            info_box.x = this._x + 5;
             info_box.y = this._y - 45;
             $('#' + info_box.getDomId()).css('height', 'inherit');
             this.attach(info_box);

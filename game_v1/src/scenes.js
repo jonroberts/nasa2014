@@ -186,6 +186,8 @@ Crafty.scene('Game', function () {
             .toggle();
     });
 
+    $('.topMenu').removeClass('topMenu-highlight');
+
     this.purchaseMenu = Crafty.e("2D, DOM, Text")
         .attr({w: 45, h: 22, x: 0, y: Game.height() - 42, alpha: 0.5})
         .text('<div></div>')
@@ -291,6 +293,36 @@ Crafty.scene('Game', function () {
 
 });
 
+Crafty.scene('Intro', function() {
+
+    var intro_html = "<p>In 2020 a huge asteroid will hit Earth. If you don't build an asteroid defence platform in time, life will be over.</p>"
+        + "<p>Build ships, telescopes and satellites to explore Near Earth Asteroids and liberate their resources, but be quick!</p>"
+        + "<h3>Controls</h3>"
+        + "<p><strong>left, right, up, down:</strong> move current ship<br>"
+        + "<strong>Space:</strong> pause/restart<br>"
+        + "<strong>1:</strong> purchase a probe<br>"
+        + "<strong>2:</strong> purchase a mining ship (if available)<br>"
+        + "<strong>M:</strong> show upcoming missions and launch events<br>"
+        + "<strong>R:</strong> show research tree</p>"
+        + "<button onclick='start()'><span style='padding:5px;'>Start Game</span></button>"
+        + "<h3>About the Data</h3>"
+        + "<p>All the asteroids in the game are real. Their distance from earth folows their true distance on the day shown, their rotation follows their measured rotation, as does their velocity, composition and estimated value. Click any asteroid to find out more. The space missions you'll see are actual NASA missions in the future.</p>"
+        + "<p>We've sped up time (a lot) for the sake of gameplay, and there's no asteroid that we know about that will strike Earth in 2020. But we don't know there isn't - and that's why we need to be smarter than the dinosaurs. For more details, check out the <a href='https://github.com/jonroberts/nasa2014' target=_blank>github for the project</a>.</p>"
+        + "<p>Space Rocks! was created as part of the <a href='https://2014.spaceappschallenge.org' target=_blank>International Space Apps Challenge</a> by <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Jeff Allen</a>, <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Matt Lipson</a> and <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Jonathan Roberts</a>. Check out <a href='https://2014.spaceappschallenge.org/awards/#globalnom' target=_blank>all the other awesome projects nominated for global judging</a>.</p>"
+
+    var intro = $('<div id="logo" data-intro="' + intro_html + '"><img src="./assets/Logo_120.png" title="space rocks"></div>');
+
+//    $('body').append(intro);
+    $('body').prepend(intro);
+    $('#logo').show();
+    $('body').chardinJs();
+    $('body').chardinJs('start');
+    $('body').on('chardinJs:stop',function(){
+        $('#logo').hide();
+        Crafty.scene('Game');
+    })
+});
+
 // Loading scene
 // -------------
 // Handles the loading of binary assets such as images and audio files
@@ -352,6 +384,11 @@ Crafty.scene('Loading', function () {
         }, 0, 0);
 
         // Now that our sprites are ready to draw, start the game
-        Crafty.scene('Game');
+        if (Game.showIntro) {
+            Crafty.scene('Intro');
+        } else {
+            Crafty.scene('Game');
+        }
+
     })
 });
