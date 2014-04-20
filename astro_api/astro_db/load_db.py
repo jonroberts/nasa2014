@@ -30,7 +30,7 @@ keys_to_keep = [u'diameter', u'epoch_mjd', u'full_name', u'pha', u'neo', u'profi
     u'id', u'score', u'per_y', u'sigma_n', u'epoch_cal', u'orbit_id',
     u'condition_code', u'rot_per', u'last_obs', u'price', u'spec_T', u'epoch',
     u'n_obs_used', u'moid', u'spec_B', u'e', u'GM', u'class', u'a', u'om',
-    u'ma', u'name', u'i', u'prefix', u'spec', u'w', u'n', u'first_obs']
+    u'ma', u'name', u'i', u'prefix', u'spec', u'w', u'n', u'first_obs',u'H',u'albedo']
 
 keys_to_drop = [ key for key in keys if key not in keys_to_keep ]
 
