@@ -57,7 +57,8 @@ Crafty.c('GasStation', {
             .attr({w: 75, alpha: 0.8})
             .text('Orbiting Gas Station')
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',
@@ -90,7 +91,8 @@ Crafty.c('SpaceFactory', {
             .attr({w: 75, alpha: 0.8})
             .text('Space Factory')
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',
@@ -125,7 +127,8 @@ Crafty.c('LSST', {
             .attr({w: 75, alpha: 0.8})
             .text('The Large Synoptic Sky Telescope')
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',
@@ -163,7 +166,8 @@ Crafty.c('ArkydTelescope', {
             .attr({w: 75, alpha: 0.8})
             .text('The ArkydTelescope')
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',
@@ -209,7 +213,8 @@ Crafty.c('MetalRefining', {
             .attr({w: 75, alpha: 0.8})
             .text('Orbiting Metal Refinery')
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',
@@ -255,7 +260,8 @@ Crafty.c('HydrogenRefining', {
             .attr({w: 75, alpha: 0.8})
             .text('Orbiting Hydrogen Refinery')
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',
@@ -305,7 +311,8 @@ Crafty.c('Rock', {
             .attr({w: 200, alpha: 0.8, visible: false})
             .text('An Asteroid!')
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',
@@ -414,7 +421,8 @@ Crafty.c('ISS', {
             .attr({w: 75, alpha: 0.8})
             .text('The ISS')
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',

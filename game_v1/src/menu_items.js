@@ -6,7 +6,8 @@ Crafty.c('BuyProbe', {
             .attr({w: 75, alpha: 0.8})
             .text('Buy Probe ($' + Game.probe_cost.toLocaleString() + ')')
             .css({
-                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#B6B4E6, #1790ED) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 'border': '1px solid #CCCCCC',
                 'border-radius': '15px',
                 'box-shadow': '0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset',
@@ -55,7 +56,8 @@ Crafty.c('BuyShip', {
             .attr({w: 75, alpha: 0.8})
             .text('Buy Ship ($' + Game.ship_cost.toLocaleString() + ')')
             .css({
-                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#B6B4E6, #1790ED) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 'border': '1px solid #CCCCCC',
                 'border-radius': '15px',
                 'box-shadow': '0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset',
@@ -105,7 +107,8 @@ Crafty.c('BuyGasStation', {
             .attr({w: 75, alpha: 0.8})
             .text('Buy Space Gas Station ($1000000)')
             .css({
-                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#B6B4E6, #1790ED) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 'border': '1px solid #CCCCCC',
                 'border-radius': '15px',
                 'box-shadow': '0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset',
@@ -142,7 +145,8 @@ Crafty.c('BuyHRefinery', {
             .attr({w: 75, alpha: 0.8})
             .text('Buy Refinery ($1000000)')
             .css({
-                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#B6B4E6, #1790ED) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 'border': '1px solid #CCCCCC',
                 'border-radius': '15px',
                 'box-shadow': '0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset',

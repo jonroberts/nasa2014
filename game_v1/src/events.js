@@ -82,7 +82,7 @@ function futureMissions(n) {
         return 0;
     });
 
-    console.log(mission_dates);
+//    console.log(mission_dates);
 
     var missions = [];
     $.each(mission_dates.slice(0, n), function (i, d) {
@@ -127,7 +127,8 @@ Crafty.c('BaseMissionClass', {
         this.info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 200, alpha: 0.8, visible: false})
             .css({
-                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
                 color: '#111',
                 textShadow: '0 -1px 1px #666',
                 'border-radius': '5px',

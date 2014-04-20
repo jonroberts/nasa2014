@@ -173,7 +173,8 @@ Crafty.scene('Game', function () {
         .attr({w: 45, h: 22, x: 0, y: Game.height() - 42, alpha: 0.5})
         .text('<div></div>')
         .css({
-            'background': '-moz-linear-gradient(center top , rgba(220, 220, 238, 0.3) 0%, rgba(170, 187, 238, 0.3) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+//            'background': '-moz-linear-gradient(center top , rgba(220, 220, 238, 0.3) 0%, rgba(170, 187, 238, 0.3) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+            'background': 'linear-gradient(rgba(220, 220, 238, 0.3), rgba(170, 187, 238, 0.3)) repeat scroll 0 0 rgba(0, 0, 0, 0)',
             'border': '1px solid #CCCCCC',
             'border-radius': '10px',
             'box-shadow': '0 1px 3px #FFFFFF, 0 1px 0 #666666 inset, 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.8) inset',
