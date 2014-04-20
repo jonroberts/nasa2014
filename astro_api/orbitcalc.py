@@ -18,6 +18,8 @@ from random import randrange
 import estimate
 import scoring
 import asteroidtypes
+import jdcal
+import time
 
 
 ##
@@ -57,6 +59,13 @@ for ast in asteroids:
 
 
 ##
+def CurrentJulianDay():
+    y = int(time.strftime("%Y"))
+    m = int(time.strftime("%m"))
+    d = int(time.strftime("%d"))
+    return sum(jdcal.gcal2jd(y, m, d))
+
+
 def DistanceToEarth(ast,earth_vec,jed=jed_cur):
     ast_pos_vec = AsteroidPositionVector(ast,jed=jed)
     ast_pos_earth = ast_pos_vec - earth_vec
@@ -227,7 +236,7 @@ def GetRandomType(n,w,m,h,p):
         
         
 def GetAsteroidsByType(limit, day, max_dist = 3, min_dist = 0.5, none_frac=0.3, water_frac=0.4, metals_frac=0.14, hydrogen_frac=0.15, platinum_frac=0.01):
-    day = day + jed_apr142014
+    day = day + CurrentJulianDay()
     jed_cur = day
 
     earth_pos_vec = EarthPositionVector(day)
