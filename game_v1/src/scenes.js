@@ -21,6 +21,9 @@ var dateDisplay = undefined;
 
 Crafty.scene('Game', function () {
 
+    // autopause will stop the game from progressing when on another window, like when an object is clicked on
+    Crafty.settings.modify('autoPause', true);
+
     console.log('running');
     // A 2D array to keep track of all occupied tiles
     Game.occupied = new Array(Game.map_grid.width);
