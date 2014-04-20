@@ -94,10 +94,9 @@ Crafty.scene('Game', function () {
 //            $("#techTree").hide();
 //        });
 
-    var researchButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, researchButton, topMenu")
+    var researchButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, researchButton, topMenu, topMenu-bg")
         .attr({x: 10, y: 6, h: 10})
         .css({
-            'background': 'linear-gradient(rgba(70, 132, 181, 0.5), rgba(70, 132, 181, 0.7)) repeat scroll 0 0 rgba(0, 0, 0, 0)',
             'border': '1px solid #CCCCCC',
             'border-radius': '5px',
             'box-shadow': '0 1px 3px #FFFFFF, 0 1px 0 #666666 inset, 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.8) inset',
@@ -109,16 +108,6 @@ Crafty.scene('Game', function () {
             'min-width': '0'
         })
         .text('Research')
-//        .bind('Click', function () {
-//            $("#missionList").hide();
-//
-//            buildTechTree();
-//            var offset = $('#' + researchButton.getDomId()).offset();
-//            $('#techTree')
-////                .css({'top': offset.top + 20, 'left': offset.left + 20})
-//                .css({'top': offset.top + 24, 'left': offset.left + 5})
-//                .toggle();
-//        })
         .bind("KeyDown", function(e) {
             if (e.key == Crafty.keys.R) {
                 if (!(Crafty.keydown[Crafty.keys.CTRL] || Crafty.keydown[224])) {
@@ -126,11 +115,12 @@ Crafty.scene('Game', function () {
                 }
 
                 $("#missionList").hide();
+                $(".missionsButton").addClass('topMenu-bg').removeClass('topMenu-highlight');
 
                 buildTechTree();
+                $('.researchButton').toggleClass('topMenu-bg').toggleClass('topMenu-highlight');
                 var offset = $('#' + researchButton.getDomId()).offset();
                 $('#techTree')
-//                    .css({'top': offset.top + 20, 'left': offset.left + 20})
                     .css({'top': offset.top + 24, 'left': offset.left + 5})
                     .toggle();
             }
@@ -139,19 +129,19 @@ Crafty.scene('Game', function () {
 
     $('.researchButton').click(function(){
         $("#missionList").hide();
+        $(".missionsButton").addClass('topMenu-bg').removeClass('topMenu-highlight');
 
         buildTechTree();
+        $(this).toggleClass('topMenu-bg').toggleClass('topMenu-highlight');
         var offset = $('#' + researchButton.getDomId()).offset();
         $('#techTree')
             .css({'top': offset.top + 24, 'left': offset.left + 5})
             .toggle();
     });
 
-    var missionsButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, missionsButton, topMenu")
+    var missionsButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, missionsButton, topMenu, topMenu-bg")
         .attr({x: 10, y: 6, h: 10})
         .css({
-//            'background': '-moz-linear-gradient(center top , rgba(220, 220, 238, 0.3) 0%, rgba(170, 187, 238, 0.3) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-            'background': 'linear-gradient(rgba(70, 132, 181, 0.5), rgba(70, 132, 181, 0.7)) repeat scroll 0 0 rgba(0, 0, 0, 0)',
             'border': '1px solid #CCCCCC',
             'border-radius': '5px',
             'box-shadow': '0 1px 3px #FFFFFF, 0 1px 0 #666666 inset, 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.8) inset',
@@ -167,8 +157,10 @@ Crafty.scene('Game', function () {
                 retainCanvasFocus(e);
 
                 $("#techTree").hide();
+                $(".researchButton").addClass('topMenu-bg').removeClass('topMenu-highlight');
 
                 buildMissionList();
+                $('.missionsButton').toggleClass('topMenu-bg').toggleClass('topMenu-highlight');
                 var offset = $('#' + missionsButton.getDomId()).offset();
                 $('#missionList')
                     .css({'top': offset.top + 24, 'left': offset.left + 5})
@@ -177,7 +169,6 @@ Crafty.scene('Game', function () {
         })
         .bind("CheckMissionDate", function() {
             var next_event = futureMissions(1)[0];
-//            $('.missionsButton').css({'width': ''});
             $('.topMenu').css({'width': ''});
             this.text('<div>Next Mission: ' + next_event['date'] + ', ' + next_event['name'] + '</div>');
         })
@@ -185,8 +176,10 @@ Crafty.scene('Game', function () {
 
     $('.missionsButton').click(function(){
         $("#techTree").hide();
+        $(".researchButton").addClass('topMenu-bg').removeClass('topMenu-highlight');
 
         buildMissionList();
+        $('.missionsButton').toggleClass('topMenu-bg').toggleClass('topMenu-highlight');
         var offset = $('#' + missionsButton.getDomId()).offset();
         $('#missionList')
             .css({'top': offset.top + 24, 'left': offset.left + 5})
@@ -197,7 +190,6 @@ Crafty.scene('Game', function () {
         .attr({w: 45, h: 22, x: 0, y: Game.height() - 42, alpha: 0.5})
         .text('<div></div>')
         .css({
-//            'background': '-moz-linear-gradient(center top , rgba(220, 220, 238, 0.3) 0%, rgba(170, 187, 238, 0.3) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
             'background': 'linear-gradient(rgba(220, 220, 238, 0.3), rgba(170, 187, 238, 0.3)) repeat scroll 0 0 rgba(0, 0, 0, 0)',
             'border': '1px solid #CCCCCC',
             'border-radius': '10px',
