@@ -19,7 +19,8 @@ function CreateAsteroid(limit, single) {
 }
 
 function asteroidY(earthdist) {
-    return Game.map_grid.height - (Math.round((earthdist - Game.min_asteroid_distance) * (Game.map_grid.height - 2.0 - 7.0) / (Game.max_asteroid_distance - Game.min_asteroid_distance) + 7.0));
+    var cay = Game.map_grid.height - (Math.round((earthdist - Game.min_asteroid_distance) * (Game.map_grid.height - 2.0 - 7.0) / (Game.max_asteroid_distance - Game.min_asteroid_distance) + 7.0));
+    return cay
 }
 
 function addAsteroid(asteroid) {
@@ -35,26 +36,25 @@ function addSingleAsteroid(asteroid) {
 }
 
 function _addAsteroid(asteroid, x, y) {
+
     if (y < 0) {
         return;
     }
 
     var ast_scale = Game.scaleAsteroids ? asteroidScale(asteroid['diameter']) : 1;
 
-    //console.log(asteroid['diameter'] + ' -> ' + ast_scale + ' --- ' + Game.map_grid.height);
-
     asteroid['astclass'] = asteroidClass(asteroid);
-    //console.log(asteroid.spec + ' , ' + asteroid.astclass );
-	
+
 	var spr_id=Math.floor(Math.random()*5.);
 	var material=SPECTRAL_INDEX_TYPE[asteroid.spec];
 	var row=SPECTRAL_CODE[material];
 
 	var probed=(Game.showAllSpectra)?true:false;
 
+
     Crafty.e('Rock').at(x, y).attr({
         asteroid_data: asteroid,
-        rotation_rate: (Game.framerate_ms / (10 * asteroid['rot_per'])),
+        rotation_rate: ( asteroidRotation(asteroid['rot_per']) ),
         w: Game.map_grid.tile.width * ast_scale,
         h: Game.map_grid.tile.height * ast_scale,
         x_speed: Math.abs(asteroid['earth_dv'] / 100),
@@ -76,6 +76,14 @@ function asteroidScale(d) {
     d = Math.max(d, 1.0);
     d = Math.min(d, 10.0);
     return 1.0 + (d - 1.0) / 10.0;
+}
+
+function asteroidRotation(r) {
+    if (r=="" || isNaN(r)) {
+        r = 1000.0;
+    }
+    
+    return Game.framerate_ms / (10 * r);
 }
 
 function asteroidInfoHtml(asteroid_data, isprobed) {

@@ -3,6 +3,8 @@
 <head>
     <link rel="shortcut icon" type="image/png" href="favicon.png"/>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<link href="./css/chardin.css" rel="stylesheet">
+	<script src="./lib/chardin.min.js"></script>
     <script src="src/spectral_data.js"></script>
     <script src="src/techTree.js"></script>
     <script src="lib/crafty-min.js"></script>
@@ -297,7 +299,28 @@
     </style>
 </head>
 <body>
-<div id='techTree' style='display:none'></div>
-<div id='missionList' style='display:none'></div>
+<div id='techTree' data-intro="Research technology to unlock the resources in asteroids."></div>
+<div id='missionList' data-intro="Keep an eye on future space launches - if you can provide fuel for them in space you'll get paid by NASA."></div>
+<div id='logo' style='width:100%; position:absolute; margin-bottom:50px; height:140px;'  data-intro="
+				<p>In 2020 a huge asteroid will hit Earth. If you don't build an asteroid defence platform in time, life will be over.</p>
+				<p>Build ships, telescopes and satellites to explore Near Earth Asteroids and liberate their resources, but be quick!</p>
+				<h3>Controls</h3>
+				<p><strong>left, right, up, down:</strong> move current ship<br>
+				   <strong>Space:</strong> pause/restart<br>
+				   <strong>R:</strong> show research tree</p>
+				<button onclick='start()'><span style='padding:5px;'>Start Game</span></button>
+				<h3>About the Data</h3>
+				<p>All the asteroids in the game are real. Their distance from earth folows their true distance on the day shown, their rotation follows their measured rotation, as does their velocity, composition and estimated value. Click any asteroid to find out more. The space missions you'll see are actual NASA missions in the future.</p>
+				<p>We've sped up time (a lot) for the sake of gameplay, and there's no asteroid that we know about that will strike Earth in 2020. But we don't know there isn't - and that's why we need to be smarter than the dinosaurs. For more details, check out the <a href='https://github.com/jonroberts/nasa2014' target=_blank>github for the project</a>.</p>
+				<p>Space Rocks! was created as part of the <a href='https://2014.spaceappschallenge.org' target=_blank>International Space Apps Challenge</a> by <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Jeff Allen</a>, <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Matt Lipson</a> and <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Jonathan Roberts</a>. Check out <a href='https://2014.spaceappschallenge.org/awards/#globalnom' target=_blank>all the other awesome projects nominated for global judging</a>.</p>" style="color:white; margin-left:auto; margin-right: auto;"><img src='./assets/Logo_120.png' title='space rocks'></div><!--Space Rocks!</h1>-->
+
+<script>
+$('body').chardinJs();
+$('body').chardinJs('start');
+function start(){$('body').chardinJs('stop');}
+$('body').on('chardinJs:stop',function(){
+	$('#logo').hide();
+})
+</script>
 </body>
 </html>
