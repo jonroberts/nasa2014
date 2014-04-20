@@ -215,7 +215,7 @@ function research(key){
 		Crafty.trigger('AdvancedMiner');
 	}
 	if(key=='waterMining'){
-		Crafty.e('BuyShip').at(3,39);
+		Crafty.e('BuyShip').at(4,39);
 		Crafty.trigger('EnableWaterMining');
 	}
 	if(key=='metalsMining'){
