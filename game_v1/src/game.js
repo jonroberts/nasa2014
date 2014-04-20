@@ -48,7 +48,7 @@ Game = {
 
     max_ship_cargo: 1,
     all_asteroids_probed: false,
-    starting_money: 8000000,
+    starting_money: 80000000,
     asteroid_base_value: { 'None': 0, 'Hydrogen': 2000000, 'Metals': 2000000, 'Platinum': 20000000, 'Water': 2000000 },
     fuel_cost_per_pixel: 1000,
     probe_fuel_cost_per_pixel: 0,
