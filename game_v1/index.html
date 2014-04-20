@@ -68,24 +68,33 @@
             z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
         }
 
-        .researchButton {
+        /*.researchButton {*/
+            /*background: rgba(70, 132, 181, 0.8);*/
+            /*border-radius: 50px;*/
+            /*padding-top: 0;*/
+            /*width: 20px;*/
+            /*height: 20px;*/
+            /*border: 1px solid #3f3f3f;*/
+            /*z-index: 100;*/
+            /*cursor: pointer;*/
+            /*color: white;*/
+            /*font-size: xx-large;*/
+        /*}*/
+
+        .menuButton {
             background: rgba(70, 132, 181, 0.8);
             border-radius: 50px;
-            padding-top: 0px;
+            padding-top: 0;
             width: 20px;
             height: 20px;
             border: 1px solid #3f3f3f;
-            /*position: absolute;*/
-            /*top: 5px;*/
-            /*left: 5px;*/
             z-index: 100;
-            /*cursor: hand;*/
             cursor: pointer;
             color: white;
             font-size: xx-large;
         }
 
-        #techTree {
+        #techTree, #missionList {
             padding-top: 0px;
             position: absolute;
             /*top: 5px;*/
@@ -122,6 +131,45 @@
         #techTree div.invalid {
             opacity: 0.5;
             cursor: default;
+        }
+
+        #missionList div.mission-list-row {
+            background: rgba(70, 132, 181, 0.8);
+            border: 1px solid black;
+            min-width: 150px;
+            padding: 5px;
+            font-size: 12px;
+            display: block;
+            text-align: left;
+            font-weight: lighter;
+        }
+
+        #missionList div.mission-list-row:hover {
+            background: rgba(70, 132, 181, 1);
+        }
+
+        #missionList div.ib-top-name {
+            /*font-weight: bold;*/
+            /*margin-bottom: 5px;*/
+            font-size: 12px;
+        }
+
+        #missionList div.ib-top-img {
+            /*border-radius: 10px;*/
+            /*display: inline-block;*/
+            height: 36px;
+            /*overflow: hidden;*/
+            width: 36px;
+            /*box-shadow: 0 2px 2px rgba(50, 50, 50, 0.5);*/
+        }
+
+        #missionList div.ib-top-img img {
+            width: 36px;
+            height: 36px;
+        }
+
+        #missionList div.ib-top {
+            padding: 2px 5px 0;
         }
 
         .infoBox {
@@ -220,20 +268,7 @@
     </style>
 </head>
 <body>
-<!--<div id='researchButton' onclick='showHideTechTree()'>*</div>-->
 <div id='techTree' style='display:none'></div>
-<!--  <h2>Asteroiding</h2>
-
-  <p>Deflect and mine asteroids as they come past earth</p>
-
-  <p class="controls">Controls: Use W, A, S, and D or arrow keys to move around.</p>-->
-<!--<div id="info_box" class="popup">-->
-<!--<h3 id='info_title'></h3>-->
-
-<!--<div id='info_desc'></div>-->
-<!--</div>-->
-<!--<div id="cr-stage"></div>-->
-
-<!--<p class="bottom">Protect earth from the asteroids!</p>-->
+<div id='missionList' style='display:none'></div>
 </body>
 </html>

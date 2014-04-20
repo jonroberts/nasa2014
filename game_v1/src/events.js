@@ -56,6 +56,60 @@ function missionInfoHtml(mission_data, mission_date) {
     return html
 }
 
+function futureMissions(n) {
+    if (!n) {
+        n = 10;
+    }
+
+    var mission_dates = Object.keys(future_events).filter(function(e) {
+        return new Date(e) > dateDisplay.value;
+    }).sort(function(a, b){
+        var date_a = new Date(a),
+            date_b = new Date(b);
+
+        if(date_a < date_b) return -1;
+        if(date_a > date_b) return 1;
+        return 0;
+    });
+
+    console.log(mission_dates);
+
+    var missions = [];
+    $.each(mission_dates.slice(0, n), function(i, d) {
+        var m = future_events[d];
+        m['date'] = d;
+        missions.push(m);
+    });
+
+    return missions;
+}
+
+function buildMissionList(){
+    $('#missionList').empty();
+
+    $.each(futureMissions(), function(i, mission) {
+        var d = mission['date'];
+
+        var text = '<div class="mission-list-row"><div class="ib-top">';
+        text += '<div class="ib-top-img"><img src="' + mission['image'] + '"></div>';
+        text += "<div class='ib-top-right'><div class='ib-top-name'>" + mission['name'] + '</div>';
+        text += "<div class='ib-top-launch'>" + d + "</div></div>";
+        text += '</div></div>';
+
+        text = $(text).click(function () {
+            window.open(mission['link'], '_blank')
+        });
+
+        $('#missionList').append(text);
+    });
+}
+
+/**
+ *
+ * Event component definitions
+ *
+ */
+
 // Deep space (i.e. outside the viewport) mission rocket
 Crafty.c('MissionRocket', {
     init: function () {

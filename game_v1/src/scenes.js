@@ -38,18 +38,20 @@ Crafty.scene('Game', function () {
         .textFont({ size: '14px' });
 
     dateDisplay = Crafty.e("2D, DOM, Text")
-        .attr({x: Game.width() - 170, y: 10, w: 200, h: 50})
+        .attr({x: Game.width() - 170, y: 6, w: 200, h: 50})
         .css({color: "#fff"})
         .textFont({ size: '14px' });
     dateDisplay.value = new Date();
     dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
 
-    researchButton = Crafty.e("2D, DOM, Text, researchButton, Mouse, Keyboard")
-        .attr({x: 10, y: 10, w: 20, h: 15})
+    var researchButton = Crafty.e("2D, DOM, Text, menuButton, Mouse, Keyboard")
+        .attr({x: 10, y: 6, w: 20, h: 16})
         .css({'padding-top': '5px'})
         .textFont({ size: '30px'})
         .text('*')
         .bind('Click', function () {
+            $("#missionList").hide();
+
             buildTechTree();
             var offset = $('#' + researchButton.getDomId()).offset();
             $('#techTree')
@@ -58,12 +60,46 @@ Crafty.scene('Game', function () {
         })
         .bind("KeyDown", function(e) {
             if (e.key == Crafty.keys.R) {
+                $("#missionList").hide();
+
                 buildTechTree();
                 var offset = $('#' + researchButton.getDomId()).offset();
                 $('#techTree')
                     .css({'top': offset.top + 20, 'left': offset.left + 20})
                     .toggle();
             }
+        })
+        .bind("CloseMenuWindow", function(){
+            $("#techTree").hide();
+        });
+
+    var missionsButton = Crafty.e("2D, DOM, Text, menuButton, Mouse, Keyboard")
+        .attr({x: 40, y: 6, w: 20, h: 16})
+        .css({'padding-top': '5px'})
+        .textFont({ size: '30px'})
+        .text('*')
+        .bind('Click', function () {
+            $("#techTree").hide();
+
+            buildMissionList();
+            var offset = $('#' + missionsButton.getDomId()).offset();
+            $('#missionList')
+                .css({'top': offset.top + 20, 'left': offset.left + 20})
+                .toggle();
+        })
+        .bind("KeyDown", function(e) {
+            if (e.key == Crafty.keys.M) {
+                $("#techTree").hide();
+
+                buildMissionList();
+                var offset = $('#' + missionsButton.getDomId()).offset();
+                $('#missionList')
+                    .css({'top': offset.top + 20, 'left': offset.left + 20})
+                    .toggle();
+            }
+        })
+        .bind("CloseMenuWindow", function(){
+            $("#missionList").hide();
         });
 
     this.purchaseMenu = Crafty.e("2D, DOM, Text")
