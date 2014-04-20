@@ -12,6 +12,8 @@ Game = {
 
     debug: false,
 
+	showAllSpectra: false,
+
     // show thrusters from ship engines
     showThrusters: true,
 

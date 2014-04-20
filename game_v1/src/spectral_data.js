@@ -259,3 +259,12 @@ var SPECTRAL_INDEX_TYPE = {
     'Xk': 'Metals',
     'comet': 'None'
 };
+
+var SPECTRAL_CODE={
+	'None':2,
+	'Hydrogen':5,
+	'Water':3,
+	'Metals':4,
+	'Platinum':1
+}
+
