@@ -61,20 +61,64 @@ Crafty.scene('Game', function () {
     dateDisplay.value = new Date();
     dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
 
-    var researchButton = Crafty.e("2D, DOM, Text, menuButton, Mouse, Keyboard")
-        .attr({x: 10, y: 6, w: 20, h: 16})
-        .css({'padding-top': '5px'})
-        .textFont({ size: '30px'})
-        .text('*')
-        .bind('Click', function () {
-            $("#missionList").hide();
+//    var researchButton = Crafty.e("2D, DOM, Text, menuButton, Mouse, Keyboard")
+//        .attr({x: 10, y: 6, w: 20, h: 16})
+//        .css({'padding-top': '5px'})
+//        .textFont({ size: '30px'})
+//        .text('*')
+//        .bind('Click', function () {
+//            $("#missionList").hide();
+//
+//            buildTechTree();
+//            var offset = $('#' + researchButton.getDomId()).offset();
+//            $('#techTree')
+//                .css({'top': offset.top + 20, 'left': offset.left + 20})
+//                .toggle();
+//        })
+//        .bind("KeyDown", function(e) {
+//            if (e.key == Crafty.keys.R) {
+//                if (!(Crafty.keydown[Crafty.keys.CTRL] || Crafty.keydown[224])) {
+//                    retainCanvasFocus(e);
+//                }
+//
+//                $("#missionList").hide();
+//
+//                buildTechTree();
+//                var offset = $('#' + researchButton.getDomId()).offset();
+//                $('#techTree')
+//                    .css({'top': offset.top + 20, 'left': offset.left + 20})
+//                    .toggle();
+//            }
+//        })
+//        .bind("CloseMenuWindow", function(){
+//            $("#techTree").hide();
+//        });
 
-            buildTechTree();
-            var offset = $('#' + researchButton.getDomId()).offset();
-            $('#techTree')
-                .css({'top': offset.top + 20, 'left': offset.left + 20})
-                .toggle();
+    var researchButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, researchButton, topMenu")
+        .attr({x: 10, y: 6, h: 10})
+        .css({
+            'background': 'linear-gradient(rgba(70, 132, 181, 0.5), rgba(70, 132, 181, 0.7)) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+            'border': '1px solid #CCCCCC',
+            'border-radius': '5px',
+            'box-shadow': '0 1px 3px #FFFFFF, 0 1px 0 #666666 inset, 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.8) inset',
+            'margin': '0 15px',
+            'padding': '5px 10px',
+            'text-shadow': '0 1px 2px #111111',
+            'cursor': 'pointer',
+            'position': 'relative',
+            'min-width': '0'
         })
+        .text('Research')
+//        .bind('Click', function () {
+//            $("#missionList").hide();
+//
+//            buildTechTree();
+//            var offset = $('#' + researchButton.getDomId()).offset();
+//            $('#techTree')
+////                .css({'top': offset.top + 20, 'left': offset.left + 20})
+//                .css({'top': offset.top + 24, 'left': offset.left + 5})
+//                .toggle();
+//        })
         .bind("KeyDown", function(e) {
             if (e.key == Crafty.keys.R) {
                 if (!(Crafty.keydown[Crafty.keys.CTRL] || Crafty.keydown[224])) {
@@ -86,54 +130,30 @@ Crafty.scene('Game', function () {
                 buildTechTree();
                 var offset = $('#' + researchButton.getDomId()).offset();
                 $('#techTree')
-                    .css({'top': offset.top + 20, 'left': offset.left + 20})
+//                    .css({'top': offset.top + 20, 'left': offset.left + 20})
+                    .css({'top': offset.top + 24, 'left': offset.left + 5})
                     .toggle();
             }
         })
-        .bind("CloseMenuWindow", function(){
-            $("#techTree").hide();
-        });
+        .textFont({ size: '12px' });
 
-//    var missionsButton = Crafty.e("2D, DOM, Text, menuButton, Mouse, Keyboard")
-//        .attr({x: 40, y: 6, w: 20, h: 16})
-//        .css({'padding-top': '5px'})
-//        .textFont({ size: '30px'})
-//        .text('*')
-//        .bind('Click', function () {
-//            $("#techTree").hide();
-//
-//            buildMissionList();
-//            var offset = $('#' + missionsButton.getDomId()).offset();
-//            $('#missionList')
-//                .css({'top': offset.top + 20, 'left': offset.left + 20})
-//                .toggle();
-//        })
-//        .bind("KeyDown", function(e) {
-//            if (e.key == Crafty.keys.M) {
-//                retainCanvasFocus(e);
-//
-//                $("#techTree").hide();
-//
-//                buildMissionList();
-//                var offset = $('#' + missionsButton.getDomId()).offset();
-//                $('#missionList')
-//                    .css({'top': offset.top + 20, 'left': offset.left + 20})
-//                    .toggle();
-//            }
-//        })
-//        .bind("CloseMenuWindow", function(){
-//            $("#missionList").hide();
-//        });
+    $('.researchButton').click(function(){
+        $("#missionList").hide();
 
-    var missionsButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, missionsButton")
-//        .attr({x: 40, y: 6, w: 250, h: 10})
-//        .attr({x: 40, y: 6, h: 10})
-        .attr({x: 40, y: 6, h: 10})
+        buildTechTree();
+        var offset = $('#' + researchButton.getDomId()).offset();
+        $('#techTree')
+            .css({'top': offset.top + 24, 'left': offset.left + 5})
+            .toggle();
+    });
+
+    var missionsButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, missionsButton, topMenu")
+        .attr({x: 10, y: 6, h: 10})
         .css({
 //            'background': '-moz-linear-gradient(center top , rgba(220, 220, 238, 0.3) 0%, rgba(170, 187, 238, 0.3) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
             'background': 'linear-gradient(rgba(70, 132, 181, 0.5), rgba(70, 132, 181, 0.7)) repeat scroll 0 0 rgba(0, 0, 0, 0)',
             'border': '1px solid #CCCCCC',
-            'border-radius': '10px',
+            'border-radius': '5px',
             'box-shadow': '0 1px 3px #FFFFFF, 0 1px 0 #666666 inset, 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.8) inset',
             'margin': '0 15px',
             'padding': '5px 10px',
@@ -142,16 +162,6 @@ Crafty.scene('Game', function () {
             'position': 'relative',
             'min-width': '0'
         })
-//        .bind('Click', function () {
-//            console.log('clicked');
-//            $("#techTree").hide();
-//
-//            buildMissionList();
-//            var offset = $('#' + missionsButton.getDomId()).offset();
-//            $('#missionList')
-//                .css({'top': offset.top + 24, 'left': offset.left + 10})
-//                .toggle();
-//        })
         .bind("KeyDown", function(e) {
             if (e.key == Crafty.keys.M) {
                 retainCanvasFocus(e);
@@ -161,13 +171,14 @@ Crafty.scene('Game', function () {
                 buildMissionList();
                 var offset = $('#' + missionsButton.getDomId()).offset();
                 $('#missionList')
-                    .css({'top': offset.top + 24, 'left': offset.left + 10})
+                    .css({'top': offset.top + 24, 'left': offset.left + 5})
                     .toggle();
             }
         })
         .bind("CheckMissionDate", function() {
             var next_event = futureMissions(1)[0];
-            $('.missionsButton').css({'width': ''});
+//            $('.missionsButton').css({'width': ''});
+            $('.topMenu').css({'width': ''});
             this.text('<div>Next Mission: ' + next_event['date'] + ', ' + next_event['name'] + '</div>');
         })
         .textFont({ size: '12px' });
@@ -178,7 +189,7 @@ Crafty.scene('Game', function () {
         buildMissionList();
         var offset = $('#' + missionsButton.getDomId()).offset();
         $('#missionList')
-            .css({'top': offset.top + 24, 'left': offset.left + 10})
+            .css({'top': offset.top + 24, 'left': offset.left + 5})
             .toggle();
     });
 
