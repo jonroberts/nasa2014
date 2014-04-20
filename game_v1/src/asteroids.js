@@ -68,7 +68,7 @@ function asteroidScale(d) {
 
 function asteroidInfoHtml(asteroid_data, isprobed) {
 //    unprobed = '<h4 style="border-bottom: 1px solid #111">Unexplored!</h4>';
-    unprobed = '<div>Unexplored!</div>';
+    unprobed = '<div class="unexplored">Unexplored!</div>';
     spec_type = 'Send probe to find out!';
     tval = 'Send probe to find out!';
     dist = asteroid_data.earth_dist.toFixed(2) + ' AU';
@@ -89,7 +89,7 @@ function asteroidInfoHtml(asteroid_data, isprobed) {
     pha = asteroid_data.pha == 'Y' ? '<p class="neo-status hazard">Potentially Hazardous Object!</p>' : '';
     neo = asteroid_data.neo == 'Y' ? '<p class="neo-status">Near Earth Object</p>' : '';
 
-    isprobed = true;
+//    isprobed = true;
     if (isprobed) {
 //        unprobed = '<h4 style="border-bottom: 1px solid #111">Resources: ' + asteroid_data.astclass + '<br>Value: $' + Game.asteroid_base_value[asteroid_data.astclass].toLocaleString() + '</h4>';
         unprobed = '<div>Resources: ' + asteroid_data.astclass + '<br>Value: $' + Game.asteroid_base_value[asteroid_data.astclass].toLocaleString() + '</div>';
