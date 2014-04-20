@@ -21,7 +21,7 @@ Game = {
     scaleAsteroids: true,
     scaleAsteroidFactor: 0.2,
 
-    paused: false,
+    paused: true,
     asteroids: undefined,
     framerate_ms: 100,
     day: 0,
