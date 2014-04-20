@@ -94,54 +94,12 @@ Crafty.scene('Game', function () {
             $("#techTree").hide();
         });
 
-    var missionsButton = Crafty.e("2D, DOM, Text, menuButton, Mouse, Keyboard")
-        .attr({x: 40, y: 6, w: 20, h: 16})
-        .css({'padding-top': '5px'})
-        .textFont({ size: '30px'})
-        .text('*')
-        .bind('Click', function () {
-            $("#techTree").hide();
-
-            buildMissionList();
-            var offset = $('#' + missionsButton.getDomId()).offset();
-            $('#missionList')
-                .css({'top': offset.top + 20, 'left': offset.left + 20})
-                .toggle();
-        })
-        .bind("KeyDown", function(e) {
-            if (e.key == Crafty.keys.M) {
-                retainCanvasFocus(e);
-
-                $("#techTree").hide();
-
-                buildMissionList();
-                var offset = $('#' + missionsButton.getDomId()).offset();
-                $('#missionList')
-                    .css({'top': offset.top + 20, 'left': offset.left + 20})
-                    .toggle();
-            }
-        })
-        .bind("CloseMenuWindow", function(){
-            $("#missionList").hide();
-        });
-
-//    var missionsButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, missionsButton")
-////        .attr({x: 40, y: 6, w: 250, h: 10})
-////        .attr({x: 40, y: 6, h: 10})
-//        .attr({x: 40, y: 6, h: 10})
-//        .css({
-//            'background': '-moz-linear-gradient(center top , rgba(220, 220, 238, 0.3) 0%, rgba(170, 187, 238, 0.3) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-//            'border': '1px solid #CCCCCC',
-//            'border-radius': '10px',
-//            'box-shadow': '0 1px 3px #FFFFFF, 0 1px 0 #666666 inset, 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.8) inset',
-//            'margin': '0 15px',
-//            'padding': '5px 10px',
-//            'text-shadow': '0 1px 2px #111111',
-//            'cursor': 'pointer',
-//            'position': 'static'
-//        })
+//    var missionsButton = Crafty.e("2D, DOM, Text, menuButton, Mouse, Keyboard")
+//        .attr({x: 40, y: 6, w: 20, h: 16})
+//        .css({'padding-top': '5px'})
+//        .textFont({ size: '30px'})
+//        .text('*')
 //        .bind('Click', function () {
-//            console.log('clicked');
 //            $("#techTree").hide();
 //
 //            buildMissionList();
@@ -163,11 +121,66 @@ Crafty.scene('Game', function () {
 //                    .toggle();
 //            }
 //        })
-//        .bind("CheckMissionDate", function() {
-//            var next_event = futureMissions(1)[0];
-//            this.text('<div>Next Mission: ' + next_event['date'] + ', ' + next_event['name']);
+//        .bind("CloseMenuWindow", function(){
+//            $("#missionList").hide();
+//        });
+
+    var missionsButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, missionsButton")
+//        .attr({x: 40, y: 6, w: 250, h: 10})
+//        .attr({x: 40, y: 6, h: 10})
+        .attr({x: 40, y: 6, h: 10})
+        .css({
+//            'background': '-moz-linear-gradient(center top , rgba(220, 220, 238, 0.3) 0%, rgba(170, 187, 238, 0.3) 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+            'background': 'linear-gradient(rgba(70, 132, 181, 0.5), rgba(70, 132, 181, 0.7)) repeat scroll 0 0 rgba(0, 0, 0, 0)',
+            'border': '1px solid #CCCCCC',
+            'border-radius': '10px',
+            'box-shadow': '0 1px 3px #FFFFFF, 0 1px 0 #666666 inset, 0 -1px 1px rgba(0, 0, 0, 0.5), 0 1px 1px rgba(255, 255, 255, 0.8) inset',
+            'margin': '0 15px',
+            'padding': '5px 10px',
+            'text-shadow': '0 1px 2px #111111',
+            'cursor': 'pointer',
+            'position': 'relative',
+            'min-width': '0'
+        })
+//        .bind('Click', function () {
+//            console.log('clicked');
+//            $("#techTree").hide();
+//
+//            buildMissionList();
+//            var offset = $('#' + missionsButton.getDomId()).offset();
+//            $('#missionList')
+//                .css({'top': offset.top + 24, 'left': offset.left + 10})
+//                .toggle();
 //        })
-//        .textFont({ size: '12px' });
+        .bind("KeyDown", function(e) {
+            if (e.key == Crafty.keys.M) {
+                retainCanvasFocus(e);
+
+                $("#techTree").hide();
+
+                buildMissionList();
+                var offset = $('#' + missionsButton.getDomId()).offset();
+                $('#missionList')
+                    .css({'top': offset.top + 24, 'left': offset.left + 10})
+                    .toggle();
+            }
+        })
+        .bind("CheckMissionDate", function() {
+            var next_event = futureMissions(1)[0];
+            $('.missionsButton').css({'width': ''});
+            this.text('<div>Next Mission: ' + next_event['date'] + ', ' + next_event['name'] + '</div>');
+        })
+        .textFont({ size: '12px' });
+
+    $('.missionsButton').click(function(){
+        $("#techTree").hide();
+
+        buildMissionList();
+        var offset = $('#' + missionsButton.getDomId()).offset();
+        $('#missionList')
+            .css({'top': offset.top + 24, 'left': offset.left + 10})
+            .toggle();
+    });
 
     this.purchaseMenu = Crafty.e("2D, DOM, Text")
         .attr({w: 45, h: 22, x: 0, y: Game.height() - 42, alpha: 0.5})
