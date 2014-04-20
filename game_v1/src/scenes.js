@@ -16,6 +16,20 @@ function updateScore(val) {
     }
 }
 
+function retainCanvasFocus(e) {
+    if (e.stopPropagation) {
+        e.stopPropagation();
+    } else if (e.originalEvent.stopPropagation) {
+        e.originalEvent.stopPropagation();
+    }
+
+    if (e.preventDefault) {
+        e.preventDefault();
+    } else if (e.originalEvent.preventDefault) {
+        e.originalEvent.preventDefault();
+    }
+}
+
 
 var dateDisplay = undefined;
 
@@ -63,17 +77,7 @@ Crafty.scene('Game', function () {
         })
         .bind("KeyDown", function(e) {
             if (e.key == Crafty.keys.R) {
-                if (e.stopPropagation) {
-                    e.stopPropagation();
-                } else if (e.originalEvent.stopPropagation) {
-                    e.originalEvent.stopPropagation();
-                }
-
-                if (e.preventDefault) {
-                    e.preventDefault();
-                } else if (e.originalEvent.preventDefault) {
-                    e.originalEvent.preventDefault();
-                }
+                retainCanvasFocus(e);
 
                 $("#missionList").hide();
 
@@ -104,17 +108,7 @@ Crafty.scene('Game', function () {
         })
         .bind("KeyDown", function(e) {
             if (e.key == Crafty.keys.M) {
-                if (e.stopPropagation) {
-                    e.stopPropagation();
-                } else if (e.originalEvent.stopPropagation) {
-                    e.originalEvent.stopPropagation();
-                }
-
-                if (e.preventDefault) {
-                    e.preventDefault();
-                } else if (e.originalEvent.preventDefault) {
-                    e.originalEvent.preventDefault();
-                }
+                retainCanvasFocus(e);
 
                 $("#techTree").hide();
 
@@ -179,17 +173,7 @@ Crafty.scene('Game', function () {
 
     Crafty.bind('KeyDown', function (e) {
         if (e.key == Crafty.keys.SPACE) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            } else if (e.originalEvent.stopPropagation) {
-                e.originalEvent.stopPropagation();
-            }
-
-            if (e.preventDefault) {
-                e.preventDefault();
-            } else if (e.originalEvent.preventDefault) {
-                e.originalEvent.preventDefault();
-            }
+            retainCanvasFocus(e);
 
             Game.paused = !Game.paused;
 
