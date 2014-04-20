@@ -309,7 +309,8 @@ Crafty.scene('Loading', function () {
         'assets/base.png',
         'assets/probe.png',
         'assets/iss.png',
-        'assets/asteroids.gif'
+        'assets/asteroids.gif',
+        'assets/Rocket.png'
     ], function () {
         // Define the individual sprites in the image
         // These components' names are prefixed with "spr_"
@@ -344,6 +345,10 @@ Crafty.scene('Loading', function () {
 
         Crafty.sprite(16, 'assets/iss.png', {
             spr_iss: [0, 0],
+        }, 0, 0);
+        
+        Crafty.sprite(32, 'assets/Rocket.png',{
+            spr_rocket: [0, 0],
         }, 0, 0);
 
         // Now that our sprites are ready to draw, start the game

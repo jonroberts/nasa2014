@@ -319,6 +319,9 @@
 				<p>Space Rocks! was created as part of the <a href='https://2014.spaceappschallenge.org' target=_blank>International Space Apps Challenge</a> by <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Jeff Allen</a>, <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Matt Lipson</a> and <a href='https://2014.spaceappschallenge.org/project/space-rocks/' target=_blank>Jonathan Roberts</a>. Check out <a href='https://2014.spaceappschallenge.org/awards/#globalnom' target=_blank>all the other awesome projects nominated for global judging</a>.</p>" style="color:white; margin-left:auto; margin-right: auto;"><img src='./assets/Logo_120.png' title='space rocks'></div><!--Space Rocks!</h1>-->
 
 <script>
+function simulateKeyPress() {
+  jQuery.event.trigger({ type : 'keypress', which : 49 });
+}
 $('body').chardinJs();
 $('body').chardinJs('start');
 function start(){$('body').chardinJs('stop');}

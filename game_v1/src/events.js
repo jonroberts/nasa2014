@@ -249,8 +249,8 @@ Crafty.c('MissionRocket', {
 
 Crafty.c('ISSShuttle', {
     init: function () {
-        this.requires('BaseMissionClass, spr_iss')
-            .attr({ yspeed: -0.1, w: 12, h: 12 })
+        this.requires('BaseMissionClass, spr_rocket')
+            .attr({ yspeed: -0.1, w: 32, h: 32 })
             .origin("center");
 
         // set the z to be below the ISS
