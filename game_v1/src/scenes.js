@@ -244,7 +244,7 @@ Crafty.scene('Game', function () {
 			var asteroid=Crafty(Crafty("Rock")[""+ix]);
 			asteroid.gotProbed();
 		});
-	})
+	});
 
     Crafty.bind('EnableWaterMining', function () {
         Game.mining_ability['Water'] = true;
@@ -272,7 +272,9 @@ Crafty.scene('Game', function () {
                         }
                     });
             } else {
-                pauseIndicator.destroy();
+                if (pauseIndicator) {
+                    pauseIndicator.destroy();
+                }
             }
         }
     });
