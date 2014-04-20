@@ -1,3 +1,14 @@
+image_assets = {
+    agencies: {
+        'NASA': 'assets/agencies/nasa.png',
+        'ESA': 'assets/agencies/esa.png',
+        'JAXA': 'assets/agencies/jaxa.png',
+        'CSA': 'assets/agencies/csa.png',
+        'RSA': 'assets/agencies/rsa.png',
+        'MOIMG': 'assets/agencies/marsone.png'
+    }
+};
+
 Crafty.bind('CheckMissionDate', function () {
     var m = dateDisplay.value.getMonth() + 1;
     if (m < 10) m = '0' + m;
@@ -27,13 +38,22 @@ Crafty.bind('CheckMissionDate', function () {
 });
 
 function missionInfoHtml(mission_data, mission_date) {
-    return "<div class='info-box'><div class='ib-top'>" +
-        "<div class='ib-top-img'><img src='" + mission_data['image'] + "'></div>" +
-        "<div class='ib-top-right'><div class='ib-top-name'>" + mission_data['name'] + '</div>' +
-        "<div class='ib-top-launch'>Launch date: " + mission_date + "</div></div>" +
-        "<div class='ib-details'><div class='ib-agency'>Agency: " + mission_data['agency'] + "</div>" +
-        "<div class='ib-desc'>" + mission_data['description'] + "</div>" +
-        "</div></div></div>";
+    var html = "<div class='info-box'><div class='ib-top'>";
+    html += "<div class='ib-top-img'><img src='" + mission_data['image'] + "'></div>";
+    html += "<div class='ib-top-right'><div class='ib-top-name'>" + mission_data['name'] + '</div>';
+    html += "<div class='ib-top-launch'>Launch date: " + mission_date + "</div></div></div>";
+    html += "<div class='ib-border'></div>";
+    html += "<div class='ib-details'><div class='ib-agency'>Agency: ";
+
+    $.each(mission_data['agency'].split(', '), function(i, agency) {
+        html += "<div class='ib-agency-inner'><img src='" + image_assets.agencies[agency] + "'></div>";
+    });
+
+    html += "</div>";
+    html += "<div class='ib-desc'>" + mission_data['description'] + "</div>";
+    html += "</div></div></div>";
+
+    return html
 }
 
 // Deep space (i.e. outside the viewport) mission rocket
@@ -43,7 +63,9 @@ Crafty.c('MissionRocket', {
             .attr({
                 yspeed: 0,
                 speed_factor: 0.04, // acceleration of the ship
-                thrusters: null
+                thrusters: null,
+                w: 14,
+                h: 14
             })
             .origin("center");
 
@@ -157,7 +179,6 @@ Crafty.c('ISSShuttle', {
     init: function () {
         this.requires('Actor, spr_iss, Mouse')
             .attr({ yspeed: -0.1, w: 12, h: 12 })
-//            .attr({ yspeed: -0.1 })
             .origin("center");
 
         var info_box = Crafty.e("2D, DOM, Text")
@@ -206,8 +227,6 @@ Crafty.c('ISSShuttle', {
         });
         this.bind("EnterFrame", function (frame) {
             if (!Game.paused) {
-                //acceleration and movement vector
-//                this.yspeed -= this.speed_factor;
                 this.y += this.yspeed;
 
                 info_box.rotation = 0;
@@ -223,12 +242,10 @@ Crafty.c('ISSShuttle', {
                     } else {
                         info_box.y = this._y - $('#' + info_box.getDomId()).height()
                     }
-
                 } else {
                     info_box.y = this._y + 5;
                 }
 
-//                if (this._y <= iss._y + (iss._h)) {
                 if (this._y <= iss._y + 1) {
                     this.destroy()
                 }

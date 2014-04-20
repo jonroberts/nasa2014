@@ -336,8 +336,6 @@ Crafty.c('Rock', {
             jqInfoBox.css('height', 'inherit');
             this.attach(info_box);
             info_box.visible = true;
-
-//            testGlobal = info_box;
         });
         this.bind('MouseOut', function (data) {
             info_box.visible = false;
