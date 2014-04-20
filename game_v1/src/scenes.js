@@ -225,7 +225,7 @@ Crafty.scene('Loading', function () {
             spr_h_refinery: [1, 1],
             spr_gas_station: [1, 0]
         });
-        Crafty.sprite(16, 'assets/16x16_forest_2.gif', {
+        Crafty.sprite(32, 'assets/16x16_forest_3.gif', {
             spr_buy_probe: [1, 0],
             spr_buy_ship: [0, 0],
             spr_visited: [0, 1],
