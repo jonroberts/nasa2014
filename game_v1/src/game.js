@@ -87,6 +87,7 @@ Game = {
             Crafty.init(this.width(), this.height());
         }
         Crafty.canvas.init();
+        $('canvas')[0].setAttribute('tabIndex', '1');
 
         // Simply start the "Loading" scene to get things going
         Crafty.scene('Loading');

@@ -63,6 +63,18 @@ Crafty.scene('Game', function () {
         })
         .bind("KeyDown", function(e) {
             if (e.key == Crafty.keys.R) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else if (e.originalEvent.stopPropagation) {
+                    e.originalEvent.stopPropagation();
+                }
+
+                if (e.preventDefault) {
+                    e.preventDefault();
+                } else if (e.originalEvent.preventDefault) {
+                    e.originalEvent.preventDefault();
+                }
+
                 $("#missionList").hide();
 
                 buildTechTree();
@@ -92,6 +104,18 @@ Crafty.scene('Game', function () {
         })
         .bind("KeyDown", function(e) {
             if (e.key == Crafty.keys.M) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else if (e.originalEvent.stopPropagation) {
+                    e.originalEvent.stopPropagation();
+                }
+
+                if (e.preventDefault) {
+                    e.preventDefault();
+                } else if (e.originalEvent.preventDefault) {
+                    e.originalEvent.preventDefault();
+                }
+
                 $("#techTree").hide();
 
                 buildMissionList();
@@ -155,6 +179,18 @@ Crafty.scene('Game', function () {
 
     Crafty.bind('KeyDown', function (e) {
         if (e.key == Crafty.keys.SPACE) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            } else if (e.originalEvent.stopPropagation) {
+                e.originalEvent.stopPropagation();
+            }
+
+            if (e.preventDefault) {
+                e.preventDefault();
+            } else if (e.originalEvent.preventDefault) {
+                e.originalEvent.preventDefault();
+            }
+
             Game.paused = !Game.paused;
 
             if (Game.paused) {
@@ -216,7 +252,7 @@ Crafty.scene('Loading', function () {
         'assets/base.png',
         'assets/probe.png',
         'assets/iss.png',
-        'assets/asteroids.gif',
+        'assets/asteroids.gif'
     ], function () {
         // Define the individual sprites in the image
         // These components' names are prefixed with "spr_"

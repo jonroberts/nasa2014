@@ -33,6 +33,18 @@ Crafty.c('BuyProbe', {
 
         this.bind("KeyDown", function(e) {
             if (e.key == Crafty.keys['1']) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else if (e.originalEvent.stopPropagation) {
+                    e.originalEvent.stopPropagation();
+                }
+
+                if (e.preventDefault) {
+                    e.preventDefault();
+                } else if (e.originalEvent.preventDefault) {
+                    e.originalEvent.preventDefault();
+                }
+
                 this.createProbe();
             }
         });
@@ -81,6 +93,18 @@ Crafty.c('BuyShip', {
 
         this.bind("KeyDown", function(e) {
             if (e.key == Crafty.keys['2']) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else if (e.originalEvent.stopPropagation) {
+                    e.originalEvent.stopPropagation();
+                }
+
+                if (e.preventDefault) {
+                    e.preventDefault();
+                } else if (e.originalEvent.preventDefault) {
+                    e.originalEvent.preventDefault();
+                }
+
                 this.createShip();
             }
         });
