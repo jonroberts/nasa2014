@@ -215,7 +215,8 @@ Crafty.scene('Loading', function () {
         'assets/ship.png',
         'assets/base.png',
         'assets/probe.png',
-        'assets/ISS.png'
+        'assets/iss.png',
+        'assets/asteroids.gif',
     ], function () {
         // Define the individual sprites in the image
         // These components' names are prefixed with "spr_"
@@ -225,11 +226,18 @@ Crafty.scene('Loading', function () {
             spr_h_refinery: [1, 1],
             spr_gas_station: [1, 0]
         });
-        Crafty.sprite(32, 'assets/16x16_forest_3.gif', {
+        Crafty.sprite(16, 'assets/16x16_forest_2.gif', {
             spr_buy_probe: [1, 0],
             spr_buy_ship: [0, 0],
             spr_visited: [0, 1],
             spr_rock: [1, 1]
+        });
+        Crafty.sprite(16, 'assets/asteroids_16.gif', {
+            spr_rock_1: [0, 0],
+            spr_rock_2: [0, 1],
+            spr_rock_3: [0, 2],
+            spr_rock_4: [0, 3],
+            spr_rock_5: [0, 4]
         });
 
         // Define the PC's sprite to be the first sprite in the third row of sprite map

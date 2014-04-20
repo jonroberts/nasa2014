@@ -293,7 +293,7 @@ Crafty.c('HydrogenRefining', {
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
     init: function () {
-        this.requires('Actor, spr_rock, Mouse')
+        this.requires('Actor, spr_rock_1, Mouse')
             .origin('center')
             .attr({ isprobed: false });
 
