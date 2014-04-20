@@ -7,8 +7,8 @@ var tech = {
 		'reqs':[]
 	},
 	'waterMining':{
-		'name':'Water Miner',
-		'description':'An asteroid mining craft. Capable of mining a single water asteroid in one trip.',
+		'name':'Asteroid Miner (Water)',
+		'description':'An asteroid mining craft. Capable of mining water from a single asteroid in one trip.',
 		'cost':3000000,
 		'researched':false,
 		'reqs':[]
