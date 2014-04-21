@@ -144,7 +144,7 @@ Crafty.c('BaseMissionClass', {
         });
 
         this.bind('MouseOut', function (data) {
-//            this.info_box.visible = false;
+            this.info_box.visible = false;
         });
 
         this.bind("Click", function (e) {
