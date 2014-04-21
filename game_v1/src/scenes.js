@@ -288,6 +288,7 @@ Crafty.scene('Intro', function() {
     var intro = $('<div id="logo" data-intro="' + intro_html + '"><img src="./assets/Logo_120.png" title="space rocks"></div>');
 
 //    $('body').append(intro);
+	$('body').css('background-image','none');
     $('body').prepend(intro);
     $('#logo').show();
     $('body').chardinJs();
@@ -295,6 +296,7 @@ Crafty.scene('Intro', function() {
     $('body').on('chardinJs:stop',function(){
         $('#logo').hide();
         Crafty.scene('Game');
+		$('body').css('background',"rgb(0, 0, 0) url('./assets/Background2.jpg') no-repeat scroll 50% 50% / auto padding-box border-box");
     })
 });
 
