@@ -244,6 +244,10 @@ function research(key){
 	if(key=='metalRefining'){
 		Crafty.e('MetalRefining').at(0,36);
 	}
+	if(key=='orbitingAsteroidDefense'){
+		alert('Congratulations! You have built an asteroid defense platform and saved the earth from dangeous asteroid impacts!');
+	        location.reload();
+	}
 	updateScore(-tech[key].cost);
 	tech[key].researched=true;
 	buildTechTree();
