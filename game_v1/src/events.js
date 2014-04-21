@@ -56,9 +56,7 @@ function missionInfoHtml(mission_data, mission_date) {
     html += "<div class='ib-details'><div class='ib-agency'>Agency: ";
 
     $.each(mission_data['agency'].split(', '), function (i, agency) {
-        var agency_src = image_assets.agencies[agency];
-        if (agency_src.split('/')[2] == 'esa') image_assets.agencies[agency] += "-" + Game.infobox_pallate;
-        html += "<div class='ib-agency-inner'><img src='" + agency_src + ".png'></div>";
+        html += "<div class='ib-agency-inner'><img src='" + image_assets.agencies[agency] + ".png'></div>";
     });
 
     html += "</div>";
@@ -126,19 +124,26 @@ Crafty.c('BaseMissionClass', {
         this.requires('Actor, Mouse');
 
         this.info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
-            .attr({w: 200, alpha: 0.8, visible: false})
+            .attr({w: 200, alpha: 0.8, visible: false, populated: false})
             .css({
                 padding: '7px 10px',
                 display: 'block'
             });
 
         this.bind('MouseOver', function (data) {
-            this.info_box.text(missionInfoHtml(this.mission_data, this.mission_date));
+            if (!this.info_box.populated) {
+                this.info_box.text(missionInfoHtml(this.mission_data, this.mission_date));
+                this.info_box.populated = true;
+            }
+
+//            if (!this.info_box.dom_height) {
 
             var jqInfoBox = $('#' + this.info_box.getDomId());
             this.info_box.dom_height = jqInfoBox.height();
+//                jqInfoBox.css('height', 'inherit');
+//            }
 
-            this.adjustInfoBox(this.info_box);
+            this.adjustInfoBox();
 
             jqInfoBox.css('height', 'inherit');
             this.attach(this.info_box);
