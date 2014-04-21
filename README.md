@@ -1,4 +1,4 @@
-nasa2014
+Space Rocks!
 ========
 
 This is the repository for Space Rocks!, an entry to the Space Apps Challenge 2014. A live version of the project can be seen at [http://www.spacerocksgame.org](http://www.spacerocksgame.org)
