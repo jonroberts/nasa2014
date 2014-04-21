@@ -56,7 +56,9 @@ function missionInfoHtml(mission_data, mission_date) {
     html += "<div class='ib-details'><div class='ib-agency'>Agency: ";
 
     $.each(mission_data['agency'].split(', '), function (i, agency) {
-        html += "<div class='ib-agency-inner'><img src='" + image_assets.agencies[agency] + "-" + Game.infobox_pallate + ".png'></div>";
+        var agency_src = image_assets.agencies[agency];
+        if (agency_src.split('/')[2] == 'esa') image_assets.agencies[agency] += "-" + Game.infobox_pallate;
+        html += "<div class='ib-agency-inner'><img src='" + agency_src + ".png'></div>";
     });
 
     html += "</div>";
@@ -144,7 +146,7 @@ Crafty.c('BaseMissionClass', {
         });
 
         this.bind('MouseOut', function (data) {
-            this.info_box.visible = false;
+//            this.info_box.visible = false;
         });
 
         this.bind("Click", function (e) {
