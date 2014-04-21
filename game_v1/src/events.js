@@ -56,7 +56,7 @@ function missionInfoHtml(mission_data, mission_date) {
     html += "<div class='ib-details'><div class='ib-agency'>Agency: ";
 
     $.each(mission_data['agency'].split(', '), function (i, agency) {
-        html += "<div class='ib-agency-inner'><img src='" + image_assets.agencies[agency] + "'></div>";
+        html += "<div class='ib-agency-inner'><img src='" + image_assets.agencies[agency] + "-" + Game.infobox_pallate + "'></div>";
     });
 
     html += "</div>";
