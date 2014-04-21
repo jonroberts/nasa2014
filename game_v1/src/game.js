@@ -14,6 +14,9 @@ Game = {
 
     showIntro: true,
 
+    // set to 'light' or 'dark' to set the pallate of the infobox
+    infobox_pallate: 'dark',
+
 	showAllSpectra: false,
 
     // show thrusters from ship engines

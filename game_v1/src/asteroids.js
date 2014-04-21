@@ -132,7 +132,7 @@ function asteroidInfoHtml(asteroid_data, isprobed) {
 
     html = '<div><h3 style="font-size: 12px">Asteroid ' + asteroid_data.full_name + '</h3>';
     html += unprobed;
-    html += '<div class="ib-border"></div>';
+    html += '<div class="ib-border-' + Game.infobox_pallate + '"></div>';
     html += '<div class="ib-details">';
     html += '<p><span>Spectral Type:</span> ' + spec_type + '</p>';
     html += '<p><span>Primary Value:</span> ' + SPECTRAL_INDEX_TYPE[asteroid_data.spec] + '</p>';

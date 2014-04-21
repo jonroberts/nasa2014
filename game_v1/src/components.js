@@ -55,7 +55,7 @@ Crafty.c('GasStation', {
         this.requires('Actor, spr_gas_station, Mouse');
 
 
-        var info_box = Crafty.e("2D, DOM, Text, infobox")
+        var info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 75, alpha: 0.8})
             .text('Orbiting Gas Station');
 
@@ -78,7 +78,7 @@ Crafty.c('SpaceFactory', {
         this.requires('Actor, spr_gas_station, Mouse');
 
 
-        var info_box = Crafty.e("2D, DOM, Text, infobox")
+        var info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 75, alpha: 0.8})
             .text('Space Factory');
 
@@ -103,7 +103,7 @@ Crafty.c('LSST', {
 
         Game.all_asteroids_probed = true;
 
-        var info_box = Crafty.e("2D, DOM, Text, infobox")
+        var info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 75, alpha: 0.8})
             .text('The Large Synoptic Sky Telescope');
 
@@ -131,7 +131,7 @@ Crafty.c('ArkydTelescope', {
 
         CreateAsteroid(Game.num_asteroids, false);
 
-        var info_box = Crafty.e("2D, DOM, Text, infobox")
+        var info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 75, alpha: 0.8})
             .text('The Arkyd Telescope');
 
@@ -167,7 +167,7 @@ Crafty.c('MetalRefining', {
         Game.asteroid_base_value['Metals'] = Game.asteroid_base_value['Metals'] * Game.metal_refinery_bonus;
 //        Game.asteroid_base_value['Platinum'] = Game.asteroid_base_value['Platinum'] * Game.metal_refinery_bonus;
 
-        var info_box = Crafty.e("2D, DOM, Text, infobox")
+        var info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 75, alpha: 0.8})
             .text('Orbiting Metal Refinery');
 
@@ -202,7 +202,7 @@ Crafty.c('HydrogenRefining', {
         Game.asteroid_base_value['Hydrogen'] = Game.asteroid_base_value['Hydrogen'] * Game.hydrogen_refinery_bonus;
         Game.asteroid_base_value['Water'] = Game.asteroid_base_value['Water'] * Game.hydrogen_refinery_bonus;
 
-        var info_box = Crafty.e("2D, DOM, Text, infobox")
+        var info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 75, alpha: 0.8})
             .text('Orbiting Hydrogen Refinery');
 
@@ -236,7 +236,7 @@ Crafty.c('Rock', {
             .origin('center')
             .attr({ probed: false });
 
-        var info_box = Crafty.e("2D, DOM, Text, infobox")
+        var info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 200, alpha: 0.8, visible: false})
             .text('An Asteroid!')
             .css({
@@ -339,7 +339,7 @@ Crafty.c('ISS', {
                 updateScore(5000);
             });
 
-        var info_box = Crafty.e("2D, DOM, Text, infobox")
+        var info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 75, alpha: 0.8})
             .text('The ISS');
 

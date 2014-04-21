@@ -52,7 +52,7 @@ function missionInfoHtml(mission_data, mission_date) {
     html += "<div class='ib-top-img'><img src='" + mission_data['image'] + "'></div>";
     html += "<div class='ib-top-right'><div class='ib-top-name'>" + mission_data['name'] + '</div>';
     html += "<div class='ib-top-launch'>Launch date: " + mission_date + "</div></div></div>";
-    html += "<div class='ib-border'></div>";
+    html += "<div class='ib-border-" + Game.infobox_pallate + "'></div>";
     html += "<div class='ib-details'><div class='ib-agency'>Agency: ";
 
     $.each(mission_data['agency'].split(', '), function (i, agency) {
@@ -124,7 +124,7 @@ Crafty.c('BaseMissionClass', {
     init: function () {
         this.requires('Actor, Mouse');
 
-        this.info_box = Crafty.e("2D, DOM, Text, infobox")
+        this.info_box = Crafty.e("2D, DOM, Text, infobox-"+Game.infobox_pallate)
             .attr({w: 200, alpha: 0.8, visible: false})
             .css({
                 padding: '7px 10px',

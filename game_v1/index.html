@@ -1,332 +1,353 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<link href="./css/chardin.css" rel="stylesheet">
-	<script src="./lib/chardin.min.js"></script>
-    <script src="src/spectral_data.js"></script>
-    <script src="src/techTree.js"></script>
-    <script src="lib/crafty-min.js"></script>
-    <script src="src/events_data.js"></script>
-    <script src="src/events.js"></script>
-    <script src="src/game.js"></script>
-    <script src="src/asteroids.js"></script>
-    <script src="src/components.js"></script>
-    <script src="src/menu_items.js"></script>
-    <script src="src/scenes.js"></script>
-    <title>Space Rocks!</title>
-    <script>
-        $(function() { StartAsteroids(0); });
-    </script>
-    <style type="text/css" media="screen">
-        body {
-            background: #000 url('assets/Background2.jpg') no-repeat center center;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            color: #DDD;
-            font-family: sans-serif;
-        }
+<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link href="./css/chardin.css" rel="stylesheet">
+<script src="./lib/chardin.min.js"></script>
+<script src="src/spectral_data.js"></script>
+<script src="src/techTree.js"></script>
+<script src="lib/crafty-min.js"></script>
+<script src="src/events_data.js"></script>
+<script src="src/events.js"></script>
+<script src="src/game.js"></script>
+<script src="src/asteroids.js"></script>
+<script src="src/components.js"></script>
+<script src="src/menu_items.js"></script>
+<script src="src/scenes.js"></script>
+<title>Space Rocks!</title>
+<script>
+    $(function () {
+        StartAsteroids(0);
+    });
+</script>
+<style type="text/css" media="screen">
+body {
+    background: #000 url('assets/Background2.jpg') no-repeat center center;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #DDD;
+    font-family: sans-serif;
+}
 
-        .controls {
-            color: #BBB;
-        }
+.controls {
+    color: #BBB;
+}
 
-        #cr-stage {
-            margin: 20px auto 0;
-        }
+#cr-stage {
+    margin: 20px auto 0;
+}
 
-        .bottom {
-            font-size: 12px;
-            color: #888;
-            margin-top: 50px;
-        }
+.bottom {
+    font-size: 12px;
+    color: #888;
+    margin-top: 50px;
+}
 
-        .bottom a {
-            color: #AAA;
-        }
+.bottom a {
+    color: #AAA;
+}
 
-        .popup {
-            display: none;
-            margin: 10px 10px;
-            background-color: white;
-        }
+.popup {
+    display: none;
+    margin: 10px 10px;
+    background-color: white;
+}
 
-        #info_box {
-            display: none; /* ensures it’s invisible until it’s called */
-            position: absolute; /* makes the div go into a position that’s absolute to the browser viewing area */
-            left: 35%; /* positions the div halfway horizontally */
-            top: 25%; /* positions the div halfway vertically */
-            padding: 25px;
-            border: 2px solid #454545;
-            border-radius: 10px;
-            background-color: #000000;
-            color: white;
-            width: 200px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 30%;
-            z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
-        }
+#info_box {
+    display: none; /* ensures it’s invisible until it’s called */
+    position: absolute; /* makes the div go into a position that’s absolute to the browser viewing area */
+    left: 35%; /* positions the div halfway horizontally */
+    top: 25%; /* positions the div halfway vertically */
+    padding: 25px;
+    border: 2px solid #454545;
+    border-radius: 10px;
+    background-color: #000000;
+    color: white;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 30%;
+    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+}
 
-        /*.researchButton {*/
-            /*background: rgba(70, 132, 181, 0.8);*/
-            /*border-radius: 50px;*/
-            /*padding-top: 0;*/
-            /*width: 20px;*/
-            /*height: 20px;*/
-            /*border: 1px solid #3f3f3f;*/
-            /*z-index: 100;*/
-            /*cursor: pointer;*/
-            /*color: white;*/
-            /*font-size: xx-large;*/
-        /*}*/
+/*.researchButton {*/
+/*background: rgba(70, 132, 181, 0.8);*/
+/*border-radius: 50px;*/
+/*padding-top: 0;*/
+/*width: 20px;*/
+/*height: 20px;*/
+/*border: 1px solid #3f3f3f;*/
+/*z-index: 100;*/
+/*cursor: pointer;*/
+/*color: white;*/
+/*font-size: xx-large;*/
+/*}*/
 
-        .menuButton {
-            background: rgba(70, 132, 181, 0.8);
-            border-radius: 50px;
-            padding-top: 0;
-            width: 20px;
-            height: 20px;
-            border: 1px solid #3f3f3f;
-            z-index: 100;
-            cursor: pointer;
-            color: white;
-            font-size: xx-large;
-        }
+.menuButton {
+    background: rgba(70, 132, 181, 0.8);
+    border-radius: 50px;
+    padding-top: 0;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #3f3f3f;
+    z-index: 100;
+    cursor: pointer;
+    color: white;
+    font-size: xx-large;
+}
 
-        #techTree, #missionList {
-            padding-top: 0;
-            position: absolute;
-            z-index: 90;
-            cursor: pointer;
-            color: white;
-            font-size: xx-large;
-            display: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: moz-none;
-            -ms-user-select: none;
-            user-select: none;
-        }
+#techTree, #missionList {
+    padding-top: 0;
+    position: absolute;
+    z-index: 90;
+    cursor: pointer;
+    color: white;
+    font-size: xx-large;
+    display: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: moz-none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
-        #techTree div {
-            background: rgba(70, 132, 181, 0.8);
-            border: 1px solid black;
-            width: 150px;
-            padding: 5px;
-            font-size: medium;
-            display: block;
-            text-align: left;
-            font-weight: lighter;
-        }
+#techTree div {
+    background: rgba(70, 132, 181, 0.8);
+    border: 1px solid black;
+    width: 150px;
+    padding: 5px;
+    font-size: medium;
+    display: block;
+    text-align: left;
+    font-weight: lighter;
+}
 
-        #techTree div.researched {
-            background: rgba(0, 100, 0, 0.8);
-            cursor: default;
-        }
+#techTree div.researched {
+    background: rgba(0, 100, 0, 0.8);
+    cursor: default;
+}
 
-        #techTree div.researched:hover {
-            background: rgba(0, 100, 0, 0.8);
-        }
+#techTree div.researched:hover {
+    background: rgba(0, 100, 0, 0.8);
+}
 
-        #techTree div.invalid {
-            opacity: 0.5;
-            cursor: default;
-        }
+#techTree div.invalid {
+    opacity: 0.5;
+    cursor: default;
+}
 
-        #techTree div.invalid:hover {
-            opacity: 0.5;
-            background: rgba(70, 132, 181, 0.8);
-        }
+#techTree div.invalid:hover {
+    opacity: 0.5;
+    background: rgba(70, 132, 181, 0.8);
+}
 
-        #techTree div:hover {
-            background: rgba(70, 132, 181, 1);
-        }
+#techTree div:hover {
+    background: rgba(70, 132, 181, 1);
+}
 
-        #missionList div.mission-list-row {
-            background: rgba(70, 132, 181, 0.8);
-            border: 1px solid black;
-            min-width: 150px;
-            padding: 5px;
-            font-size: 12px;
-            display: block;
-            text-align: left;
-            font-weight: lighter;
-        }
+#missionList div.mission-list-row {
+    background: rgba(70, 132, 181, 0.8);
+    border: 1px solid black;
+    min-width: 150px;
+    padding: 5px;
+    font-size: 12px;
+    display: block;
+    text-align: left;
+    font-weight: lighter;
+}
 
-        #missionList div.mission-list-row:hover {
-            background: rgba(70, 132, 181, 1);
-        }
+#missionList div.mission-list-row:hover {
+    background: rgba(70, 132, 181, 1);
+}
 
-        #missionList div.ib-top-name {
-            /*font-weight: bold;*/
-            /*margin-bottom: 5px;*/
-            font-size: 12px;
-        }
+#missionList div.ib-top-name {
+    /*font-weight: bold;*/
+    /*margin-bottom: 5px;*/
+    font-size: 12px;
+}
 
-        #missionList div.ib-top-img {
-            /*border-radius: 10px;*/
-            /*display: inline-block;*/
-            height: 36px;
-            /*overflow: hidden;*/
-            width: 36px;
-            /*box-shadow: 0 2px 2px rgba(50, 50, 50, 0.5);*/
-        }
+#missionList div.ib-top-img {
+    /*border-radius: 10px;*/
+    /*display: inline-block;*/
+    height: 36px;
+    /*overflow: hidden;*/
+    width: 36px;
+    /*box-shadow: 0 2px 2px rgba(50, 50, 50, 0.5);*/
+}
 
-        #missionList div.ib-top-img img {
-            width: 36px;
-            height: 36px;
-        }
+#missionList div.ib-top-img img {
+    width: 36px;
+    height: 36px;
+}
 
-        #missionList div.ib-top {
-            padding: 2px 5px 0;
-        }
+#missionList div.ib-top {
+    padding: 2px 5px 0;
+}
 
-        /*.infoBox {*/
-            /*height: auto*/
-        /*}*/
+/*.infoBox {*/
+/*height: auto*/
+/*}*/
 
-        .infobox {
-            background: linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0);
-            color: #111;
-            text-shadow: 0 -1px 1px #666;
-            border-radius: 5px;
-            box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset;
-            padding: 10px;
-            border: 1px solid #AAA;
-            display: none;
-        }
+.buy_button {
+    background: linear-gradient(#B6B4E6, #1790ED) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    /*background: -moz-linear-gradient(center top, #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);*/
+    /*background: -webkit-gradient(linear, center top, center bottom, color-stop(0%,#B6B4E6), color-stop(100%,#1790ED));*/
+    /*background: -webkit-linear-gradient(center top, #B6B4E6 0%,#1790ED 100%);*/
+    border: 2px solid #CCCCCC;
+    border-radius: 25px;
+    box-shadow: 0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset;
+    font-size: 12px;
+    margin: 0 15px;
+    padding: 5px 20px;
+    text-shadow: 0 1px 2px #111111;
+    width: 75px;
+}
 
-        .buy_button {
-            background: linear-gradient(#B6B4E6, #1790ED) repeat scroll 0 0 rgba(0, 0, 0, 0);
-            /*background: -moz-linear-gradient(center top, #B6B4E6 0%, #1790ED 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);*/
-            /*background: -webkit-gradient(linear, center top, center bottom, color-stop(0%,#B6B4E6), color-stop(100%,#1790ED));*/
-            /*background: -webkit-linear-gradient(center top, #B6B4E6 0%,#1790ED 100%);*/
-            border: 2px solid #CCCCCC;
-            border-radius: 25px;
-            box-shadow: 0 1px 2px #FFFFFF, 0 -1px 1px #666666, 0 -1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.8) inset;
-            font-size: 12px;
-            margin: 0 15px;
-            padding: 5px 20px;
-            text-shadow: 0 1px 2px #111111;
-            width: 75px;
-        }
+.missionsButton, .researchButton {
+    float: left;
+}
 
-        .missionsButton, .researchButton {
-            float: left;
-        }
+.topMenu-bg {
+    background: linear-gradient(rgba(70, 132, 181, 0.5), rgba(70, 132, 181, 0.7)) repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
 
-        .topMenu-bg {
-            background: linear-gradient(rgba(70, 132, 181, 0.5), rgba(70, 132, 181, 0.7)) repeat scroll 0 0 rgba(0, 0, 0, 0);
-        }
+.topMenu-highlight {
+    background: linear-gradient(rgba(70, 132, 181, 0.7), rgba(70, 132, 181, 0.9)) repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
 
-        .topMenu-highlight {
-            background: linear-gradient(rgba(70, 132, 181, 0.7), rgba(70, 132, 181, 0.9)) repeat scroll 0 0 rgba(0, 0, 0, 0);
-        }
-        
-        p.hazard {
-            color: red;
-            text-shadow: 0 1px 0 #333333;
-        }
+p.hazard {
+    color: red;
+    text-shadow: 0 1px 0 #333333;
+}
 
-        p.neo-status {
-            text-align: center;
-            margin-top: 5px;
-            font-weight: bold;
-        }
+p.neo-status {
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
+}
 
-        div.unexplored {
-            /*color: #1790ED;*/
-            /*text-shadow: 0 1px 0 #333333;*/
-        }
+div.unexplored {
+    /*color: #1790ED;*/
+    /*text-shadow: 0 1px 0 #333333;*/
+}
 
-        .ib-top {
-            padding: 5px;
-            margin: 0 auto;
-            text-align: left;
-        }
+.infobox-light {
+    background: linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #111;
+    text-shadow: 0 -1px 1px #666;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset;
+    padding: 10px;
+    border: 1px solid #AAA;
+    display: none;
+}
 
-        .ib-top-img {
-            border-radius: 10px;
-            display: inline-block;
-            height: 48px;
-            overflow: hidden;
-            width: 48px;
-            box-shadow: 0 2px 2px rgba(50, 50, 50, 0.5);
-        }
+.infobox-dark {
+    background: linear-gradient(#111, #333) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #EEE;
+    text-shadow: 0 -1px 1px #AAA;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset;
+    padding: 10px;
+    border: 1px solid #AAA;
+    display: none;
+}
 
-        .ib-top-img img {
-            width: 48px;
-            height: 48px;
-        }
+.ib-border-light {
+    border-bottom: 1px solid #2E2E2E;
+    box-shadow: 0 2px 2px rgba(50, 50, 50, 0.5);
+    margin: 5px -10px 0;
+    opacity: 0.5;
+}
 
-        .ib-top-right {
-            display: inline-block;
-            margin-left: 10px;
-            padding: 0;
-            position: relative;
-            bottom: 5px
-        }
+.ib-border-dark {
+    border-bottom: 1px solid #D1D1D1;
+    box-shadow: 0 2px 2px rgba(200, 200, 200, 0.5);
+    margin: 5px -10px 0;
+    opacity: 0.5;
+}
 
-        .ib-top-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 16px;
-        }
+.ib-top {
+    padding: 5px;
+    margin: 0 auto;
+    text-align: left;
+}
 
-        .ib-top-name, .ib-top-launch {
-            display: block;
-        }
+.ib-top-img {
+    border-radius: 10px;
+    display: inline-block;
+    height: 48px;
+    overflow: hidden;
+    width: 48px;
+    box-shadow: 0 2px 2px rgba(50, 50, 50, 0.5);
+}
 
-        .ib-details {
-            clear: both;
-            padding: 15px 5px 5px;
-            margin: 0 auto;
-            display: block;
-            text-align: left;
-        }
+.ib-top-img img {
+    width: 48px;
+    height: 48px;
+}
 
-        .ib-agency {
-            margin-bottom: 15px;
-        }
+.ib-top-right {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 0;
+    position: relative;
+    bottom: 5px
+}
 
-        .ib-agency-inner {
-            display: inline-block;
-            margin-left: 5px;
-        }
+.ib-top-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
 
-        .ib-border {
-            border-bottom: 1px solid #2E2E2E;
-            box-shadow: 0 2px 2px rgba(50, 50, 50, 0.5);
-            margin: 5px -10px 0;
-            opacity: 0.5;
-        }
+.ib-top-name, .ib-top-launch {
+    display: block;
+}
 
-        .ib-details p span {
-            font-weight: bold;
-            margin-right: 5px;
-        }
+.ib-details {
+    clear: both;
+    padding: 15px 5px 5px;
+    margin: 0 auto;
+    display: block;
+    text-align: left;
+}
 
-        #logo {
-            width:100%;
-            position:absolute;
-            margin: 0 auto 50px;
-            height:140px;
-            color:white;
-            display: none;
-        }
-    </style>
+.ib-agency {
+    margin-bottom: 15px;
+}
+
+.ib-agency-inner {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.ib-details p span {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+#logo {
+    width: 100%;
+    position: absolute;
+    margin: 0 auto 50px;
+    height: 140px;
+    color: white;
+    display: none;
+}
+</style>
 </head>
 <body>
 <div id='techTree' data-intro="Research technology to unlock the resources in asteroids."></div>
-<div id='missionList' data-intro="Keep an eye on future space launches - if you can provide fuel for them in space you'll get paid by NASA."></div>
+<div id='missionList'
+     data-intro="Keep an eye on future space launches - if you can provide fuel for them in space you'll get paid by NASA."></div>
 
 
 <script>
-    function start(){
+    function start() {
         $('body').chardinJs('stop');
     }
 </script>
