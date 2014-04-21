@@ -11,7 +11,7 @@ function updateScore(val) {
     score.value += val;
     score.text('Capital: $' + (score.value / 1000000.).toFixed(3) + ' Million');
     if (score.value < 0) {
-        alert('You have run out of money and will remain trapped on earth!');
+        alert('You have run out of money and will be unable to stop the asteroid from hitting the earth!');
         location.reload();
     }
 }
@@ -275,13 +275,17 @@ Crafty.scene('Game', function () {
     Game.day = 0;
 
     var timer = Crafty.e('Timer')
-        .interval(Game.framerate_ms * 4.5)
+        .interval(Game.framerate_ms * 4.5 )
         .callback(function () {
             if (!Game.paused) {
                 Game.day += 1;
                 dateDisplay.value.setTime(dateDisplay.value.getTime() + 86400000);
                 dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
                 Crafty.trigger('CheckMissionDate');
+		if (dateDisplay.value.getFullYear() > 2020) {
+			alert('You have failed to stop the asteroid from hitting the earth! You must restart the game.');
+			location.reload();
+		}
             }
         })
         .start();
