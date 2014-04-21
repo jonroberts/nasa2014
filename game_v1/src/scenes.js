@@ -162,6 +162,7 @@ Crafty.scene('Game', function () {
                 buildMissionList();
                 $('.missionsButton').toggleClass('topMenu-bg').toggleClass('topMenu-highlight');
                 var offset = $('#' + missionsButton.getDomId()).offset();
+
                 $('#missionList')
                     .css({'top': offset.top + 24, 'left': offset.left + 5})
                     .toggle();
@@ -185,8 +186,6 @@ Crafty.scene('Game', function () {
             .css({'top': offset.top + 24, 'left': offset.left + 5})
             .toggle();
     });
-
-    $('.topMenu').removeClass('topMenu-highlight');
 
     this.purchaseMenu = Crafty.e("2D, DOM, Text")
         .attr({w: 45, h: 22, x: 0, y: Game.height() - 42, alpha: 0.5})
