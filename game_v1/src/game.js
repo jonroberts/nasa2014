@@ -30,6 +30,15 @@ Game = {
 
     min_asteroid_distance: 0.5,
     max_asteroid_distance: 3.0,
+
+
+    none_prob_i: 0.05,
+    water_prob_i: 0.75,
+    hydrogen_prob_i: 0.1,
+    metals_prob_i: 0.1,
+    platinum_prob_i: 0.00,
+
+
     none_prob: 0.19,
     water_prob: 0.3,
     hydrogen_prob: 0.25,
@@ -50,8 +59,8 @@ Game = {
 
     max_ship_cargo: 1,
     all_asteroids_probed: false,
-    starting_money: 80000000,
-    asteroid_base_value: { 'None': 0, 'Hydrogen': 2000000, 'Metals': 2000000, 'Platinum': 20000000, 'Water': 2000000 },
+    starting_money: 8000000,
+    asteroid_base_value: { 'None': 0, 'Hydrogen': 2000000, 'Metals': 2000000, 'Platinum': 10000000, 'Water': 2000000 },
     fuel_cost_per_pixel: 1000,
     probe_fuel_cost_per_pixel: 0,
 

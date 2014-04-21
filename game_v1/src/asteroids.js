@@ -1,5 +1,5 @@
 function StartAsteroids(day) {
-    $.getJSON(Game.server_url, {'limit': Game.num_asteroids, 'day': day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'none': Game.none_prob, 'water': Game.water_prob, 'metals': Game.metals_prob, 'hydrogen': Game.hydrogen_prob, 'platinum': Game.platinum_prob }, function (data) {
+    $.getJSON(Game.server_url, {'limit': Game.num_asteroids, 'day': day, 'min_dist': Game.min_asteroid_distance, 'max_dist': Game.max_asteroid_distance, 'none': Game.none_prob_i, 'water': Game.water_prob_i, 'metals': Game.metals_prob_i, 'hydrogen': Game.hydrogen_prob_i, 'platinum': Game.platinum_prob_i }, function (data) {
         Game.asteroids = data.results;
         Game.start();
     });
@@ -52,7 +52,7 @@ function _addAsteroid(asteroid, x, y) {
 	var probed=(Game.showAllSpectra)?true:false;
 
 
-    Crafty.e('Rock').at(x, y).attr({
+    r = Crafty.e('Rock').at(x, y).attr({
         asteroid_data: asteroid,
         rotation_rate: ( asteroidRotation(asteroid['rot_per']) ),
         w: Game.map_grid.tile.width * ast_scale,
@@ -65,6 +65,9 @@ function _addAsteroid(asteroid, x, y) {
     }).origin('center')
     .sprite(spr_id, 0);
 
+    if (Game.all_asteroids_probed) {
+        r.gotProbed();
+    }
 	
     Game.occupied[x][y] = true;
 }

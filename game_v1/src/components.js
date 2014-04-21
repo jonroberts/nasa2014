@@ -207,7 +207,7 @@ Crafty.c('MetalRefining', {
 
 
         Game.asteroid_base_value['Metals'] = Game.asteroid_base_value['Metals'] * Game.metal_refinery_bonus;
-        Game.asteroid_base_value['Platinum'] = Game.asteroid_base_value['Platinum'] * Game.metal_refinery_bonus;
+//        Game.asteroid_base_value['Platinum'] = Game.asteroid_base_value['Platinum'] * Game.metal_refinery_bonus;
 
         var info_box = Crafty.e("2D, DOM, Text")
             .attr({w: 75, alpha: 0.8})
