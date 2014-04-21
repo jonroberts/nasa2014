@@ -173,7 +173,7 @@ var ships={
 		'component':'Ship',
 		'cost':0
 	}
-}
+};
 
 function showHideTechTree(){
 	buildTechTree();
@@ -248,5 +248,6 @@ function research(key){
 	tech[key].researched=true;
 	buildTechTree();
 	$('#techTree').hide();
+    $('.researchButton').toggleClass('topMenu-bg').toggleClass('topMenu-highlight');
 }
 

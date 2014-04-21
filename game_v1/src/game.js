@@ -12,6 +12,8 @@ Game = {
 
     debug: false,
 
+    showIntro: true,
+
 	showAllSpectra: false,
 
     // show thrusters from ship engines
@@ -21,7 +23,7 @@ Game = {
     scaleAsteroids: true,
     scaleAsteroidFactor: 0.2,
 
-    paused: true,
+    paused: false,
     asteroids: undefined,
     framerate_ms: 100,
     day: 0,
