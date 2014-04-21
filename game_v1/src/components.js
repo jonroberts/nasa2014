@@ -301,7 +301,7 @@ Crafty.c('Rock', {
     init: function () {
         this.requires('Actor, spr_rock_1, Mouse')
             .origin('center')
-            .attr({ isprobed: false });
+            .attr({ probed: false });
 
 
 //        this.gravity("platform")
@@ -323,7 +323,7 @@ Crafty.c('Rock', {
             });
 
         this.bind('MouseOver', function (data) {
-            info_box.text(asteroidInfoHtml(this.asteroid_data, (this.isprobed || Game.all_asteroids_probed)));
+            info_box.text(asteroidInfoHtml(this.asteroid_data, (this.probed || Game.all_asteroids_probed)));
 
             var jqInfoBox = $('#' + info_box.getDomId());
             info_box.dom_height = jqInfoBox.height();
@@ -793,7 +793,7 @@ Crafty.c('Probe', {
             .collision()
             .onHit('Rock', function (data) {
                 var asteroid = data[0].obj;
-				asteroid.gotProbed()
+				asteroid.gotProbed();
                 this.destroy();
             });
     },
