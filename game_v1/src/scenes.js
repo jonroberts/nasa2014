@@ -61,39 +61,6 @@ Crafty.scene('Game', function () {
     dateDisplay.value = new Date();
     dateDisplay.text((dateDisplay.value.getMonth() + 1) + '/' + dateDisplay.value.getDate() + '/' + dateDisplay.value.getFullYear());
 
-//    var researchButton = Crafty.e("2D, DOM, Text, menuButton, Mouse, Keyboard")
-//        .attr({x: 10, y: 6, w: 20, h: 16})
-//        .css({'padding-top': '5px'})
-//        .textFont({ size: '30px'})
-//        .text('*')
-//        .bind('Click', function () {
-//            $("#missionList").hide();
-//
-//            buildTechTree();
-//            var offset = $('#' + researchButton.getDomId()).offset();
-//            $('#techTree')
-//                .css({'top': offset.top + 20, 'left': offset.left + 20})
-//                .toggle();
-//        })
-//        .bind("KeyDown", function(e) {
-//            if (e.key == Crafty.keys.R) {
-//                if (!(Crafty.keydown[Crafty.keys.CTRL] || Crafty.keydown[224])) {
-//                    retainCanvasFocus(e);
-//                }
-//
-//                $("#missionList").hide();
-//
-//                buildTechTree();
-//                var offset = $('#' + researchButton.getDomId()).offset();
-//                $('#techTree')
-//                    .css({'top': offset.top + 20, 'left': offset.left + 20})
-//                    .toggle();
-//            }
-//        })
-//        .bind("CloseMenuWindow", function(){
-//            $("#techTree").hide();
-//        });
-
     var researchButton = Crafty.e("2D, DOM, Text, Mouse, Keyboard, researchButton, topMenu, topMenu-bg")
         .attr({x: 10, y: 6, h: 10})
         .css({

@@ -124,17 +124,10 @@ Crafty.c('BaseMissionClass', {
     init: function () {
         this.requires('Actor, Mouse');
 
-        this.info_box = Crafty.e("2D, DOM, Text")
+        this.info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 200, alpha: 0.8, visible: false})
             .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
                 padding: '7px 10px',
-                border: '1px solid #AAA',
                 display: 'block'
             });
 

@@ -48,25 +48,16 @@ Crafty.c('HRefinery', {
     }
 });
 
+
+
 Crafty.c('GasStation', {
     init: function () {
         this.requires('Actor, spr_gas_station, Mouse');
 
 
-        var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 75, alpha: 0.8})
-            .text('Orbiting Gas Station')
-            .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
-                padding: '10px',
-                border: '1px solid #AAA',
-                display: 'none'
-            });
+            .text('Orbiting Gas Station');
 
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -87,20 +78,9 @@ Crafty.c('SpaceFactory', {
         this.requires('Actor, spr_gas_station, Mouse');
 
 
-        var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 75, alpha: 0.8})
-            .text('Space Factory')
-            .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
-                padding: '10px',
-                border: '1px solid #AAA',
-                display: 'none'
-            });
+            .text('Space Factory');
 
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -123,20 +103,9 @@ Crafty.c('LSST', {
 
         Game.all_asteroids_probed = true;
 
-        var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 75, alpha: 0.8})
-            .text('The Large Synoptic Sky Telescope')
-            .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
-                padding: '10px',
-                border: '1px solid #AAA',
-                display: 'none'
-            });
+            .text('The Large Synoptic Sky Telescope');
 
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -162,20 +131,9 @@ Crafty.c('ArkydTelescope', {
 
         CreateAsteroid(Game.num_asteroids, false);
 
-        var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 75, alpha: 0.8})
-            .text('The ArkydTelescope')
-            .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
-                padding: '10px',
-                border: '1px solid #AAA',
-                display: 'none'
-            });
+            .text('The Arkyd Telescope');
 
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -209,20 +167,9 @@ Crafty.c('MetalRefining', {
         Game.asteroid_base_value['Metals'] = Game.asteroid_base_value['Metals'] * Game.metal_refinery_bonus;
 //        Game.asteroid_base_value['Platinum'] = Game.asteroid_base_value['Platinum'] * Game.metal_refinery_bonus;
 
-        var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 75, alpha: 0.8})
-            .text('Orbiting Metal Refinery')
-            .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
-                padding: '10px',
-                border: '1px solid #AAA',
-                display: 'none'
-            });
+            .text('Orbiting Metal Refinery');
 
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -252,24 +199,12 @@ Crafty.c('HydrogenRefining', {
         this.requires('Actor, Collision, spr_iss, Mouse')
             .attr({x_speed: 2.5 * Math.random() / -Math.log(Math.sqrt(Math.random()) / 10)});
 
-
         Game.asteroid_base_value['Hydrogen'] = Game.asteroid_base_value['Hydrogen'] * Game.hydrogen_refinery_bonus;
         Game.asteroid_base_value['Water'] = Game.asteroid_base_value['Water'] * Game.hydrogen_refinery_bonus;
 
-        var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 75, alpha: 0.8})
-            .text('Orbiting Hydrogen Refinery')
-            .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
-                padding: '10px',
-                border: '1px solid #AAA',
-                display: 'none'
-            });
+            .text('Orbiting Hydrogen Refinery');
 
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -294,8 +229,6 @@ Crafty.c('HydrogenRefining', {
     }
 });
 
-//var testGlobal = undefined;
-
 // A Rock is just an Actor with a certain sprite
 Crafty.c('Rock', {
     init: function () {
@@ -303,22 +236,11 @@ Crafty.c('Rock', {
             .origin('center')
             .attr({ probed: false });
 
-
-//        this.gravity("platform")
-//            .gravityConst(2);
-
-        var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 200, alpha: 0.8, visible: false})
             .text('An Asteroid!')
             .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
                 padding: '7px 10px',
-                border: '1px solid #AAA',
                 display: 'block'
             });
 
@@ -417,20 +339,9 @@ Crafty.c('ISS', {
                 updateScore(5000);
             });
 
-        var info_box = Crafty.e("2D, DOM, Text")
+        var info_box = Crafty.e("2D, DOM, Text, infobox")
             .attr({w: 75, alpha: 0.8})
-            .text('The ISS')
-            .css({
-//                'background': '-moz-linear-gradient(center top , #999 0%, #666 100%) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                'background': 'linear-gradient(#999, #666) repeat scroll 0 0 rgba(0, 0, 0, 0)',
-                color: '#111',
-                textShadow: '0 -1px 1px #666',
-                'border-radius': '5px',
-                'box-shadow': '0 1px 1px rgba(255, 255, 255, 0.8), 0 0 0 #666666, 0 1px 0 rgba(0, 0, 0, 0.5) inset, 0 0 0 rgba(255, 255, 255, 0.75) inset',
-                padding: '10px',
-                border: '1px solid #AAA',
-                display: 'none'
-            });
+            .text('The ISS');
 
         this.bind('MouseOver', function (data) {
             info_box.x = this._x + 15;
@@ -455,14 +366,6 @@ Crafty.c('ISS', {
         });
     }
 });
-
-//Crafty.c('TechTree', {
-//    init: function() {
-//        this.requires('2D, Mouse, HTML, DOM')
-//            .css({display: 'none'});
-//    }
-//});
-
 
 // This is the player-controlled character
 Crafty.c('Ship', {
@@ -545,12 +448,6 @@ Crafty.c('Ship', {
 
                             this.thrusters = [thruster1, thruster2];
                             this.attach(this.thrusters[0], this.thrusters[1]);
-
-//                            this.bind("Rotate", function(data) {
-//                                if (this.thrusters) {
-//                                    this.thrusters.updateRotation(data);
-//                                }
-//                            });
                         }
                     } else {
                         if (this.thrusters) {
