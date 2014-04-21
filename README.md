@@ -17,9 +17,9 @@ The endpoint of the API is http://server.spacerocksgame.org/get_asteroids_by_typ
 
 "day": The offset, relative to the current day, to calculate the distance and delta-v to Earth
 
-"min_dist": A minimum distance to Earth cut
+"min_dist": A minimum distance to Earth cut (AU)
 
-"max_dist": A maximum distance to Earth cut
+"max_dist": A maximum distance to Earth cut (AU)
 
 "none": Fraction of asteroids to return which have no valuable resources
 
