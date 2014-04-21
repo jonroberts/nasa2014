@@ -1,11 +1,11 @@
 image_assets = {
     agencies: {
-        'NASA': 'assets/agencies/nasa.png',
-        'ESA': 'assets/agencies/esa.png',
-        'JAXA': 'assets/agencies/jaxa.png',
-        'CSA': 'assets/agencies/csa.png',
-        'RSA': 'assets/agencies/rsa.png',
-        'MOIMG': 'assets/agencies/marsone.png'
+        'NASA': 'assets/agencies/nasa',
+        'ESA': 'assets/agencies/esa',
+        'JAXA': 'assets/agencies/jaxa',
+        'CSA': 'assets/agencies/csa',
+        'RSA': 'assets/agencies/rsa',
+        'MOIMG': 'assets/agencies/marsone'
     }
 };
 
@@ -56,7 +56,7 @@ function missionInfoHtml(mission_data, mission_date) {
     html += "<div class='ib-details'><div class='ib-agency'>Agency: ";
 
     $.each(mission_data['agency'].split(', '), function (i, agency) {
-        html += "<div class='ib-agency-inner'><img src='" + image_assets.agencies[agency] + "-" + Game.infobox_pallate + "'></div>";
+        html += "<div class='ib-agency-inner'><img src='" + image_assets.agencies[agency] + "-" + Game.infobox_pallate + ".png'></div>";
     });
 
     html += "</div>";
@@ -99,7 +99,6 @@ function buildMissionList() {
 
     $.each(futureMissions(), function (i, mission) {
         var d = mission['date'];
-
         var text = '<div class="mission-list-row"><div class="ib-top">';
         text += '<div class="ib-top-img"><img src="' + mission['image'] + '"></div>';
         text += "<div class='ib-top-right'><div class='ib-top-name'>" + mission['name'] + '</div>';
@@ -145,7 +144,7 @@ Crafty.c('BaseMissionClass', {
         });
 
         this.bind('MouseOut', function (data) {
-            this.info_box.visible = false;
+//            this.info_box.visible = false;
         });
 
         this.bind("Click", function (e) {
